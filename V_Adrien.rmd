@@ -1,0 +1,152 @@
+---
+title: "Analysis of the USJudgeRatings data set"
+author: "Adrien Toulouse"
+date: "10/30/2019"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Analysis of the USJudgeRatings dataset
+
+##Introduction and exploration of the dataset
+
+The USJudgeRatings dataset contains lawyers’ ratings of state judges in the US Superior Court in 1977.
+
+```{r upload data}
+data(USJudgeRatings)
+head(USJudgeRatings)
+```
+
+```{r Introduction}
+str(USJudgeRatings)
+```
+
+The data is stored in a dataframe.
+We are provided with 43 observations and 12 quantitative variables.
+
+The variables are : 
+CONT : Number of contacts of lawyer with judge.
+INTG : Judicial integrity
+DMNR : Demeanor
+DILG : Diligence
+CFMG : Case flow managing
+DECI : Prompt decisions
+PREP : Preparation for trial
+FAMI : Familiarity with law
+ORAL : Sound oral rulings
+WRIT : Sound written rulings
+PHYS : Physical ability
+RTEN : Worthy of retention
+
+The variables are the ratings received by the judges and seem to range from 0 to 10 (except the variable CONT which is the number of contact of the lawyer with the judge). 
+
+The last variable, RTEN, measures if the lawyers think that a judge is worthy staying in the US Superior Cour . Let's measure the correlations between the 11 first variables and the variable RTEN.
+
+## Descriptive statistics analysis of the dataset
+
+```{r missing values?}
+sum(is.na(USJudgeRatings))
+```
+
+There are no missing values in the data frame. 
+
+```{r outliers?}
+Outvals = boxplot(USJudgeRatings)
+```
+
+We observe the presence of outliers for 10 of the 12 variables (with large values for CONT and with low values for the other variables).
+
+```{r mistakes?}
+max(USJudgeRatings$CONT)
+rownames(USJudgeRatings)[which.max(USJudgeRatings$CONT)]
+```
+
+```{r lowest rating}
+min(USJudgeRatings$RTEN)
+rownames(USJudgeRatings)[which.min(USJudgeRatings$RTEN)]
+```
+
+The judge with the lowest rating for worthiness of retention is judge Bracken with a rating of 4.8 
+
+```{r highest rating}
+max(USJudgeRatings$RTEN)
+rownames(USJudgeRatings)[which.max(USJudgeRatings$RTEN)]
+```
+The judge with the highest rating for worthiness of retention is judge Rubinow with a rating of 9.2
+
+```{r summary}
+summary(USJudgeRatings)
+```
+
+We have a symetric distribution for all of the variables since median and mean are always close.
+
+```{r histograms}
+par(mfrow=c(2,2))
+hist(USJudgeRatings$CONT, main="CONT")
+hist(USJudgeRatings$PREP, main="PREP" )
+hist(USJudgeRatings$WRIT, main="WRIT")
+hist(USJudgeRatings$RTEN, main="RTEN")
+```
+
+```{r dispersion}
+round(sqrt(diag(var(USJudgeRatings))),2)
+```
+
+Regarding the dispersion, we look at the interquartile range (given by the boxplots) and the empirical standard deviation. Overall, the dispersions are not very high (around 1). 
+We find that the variables DMNR and RTEN have the largest standard deviation, while the DECI variable has the smallest.
+
+```{r linear relationships between variables 1}
+round(cor(USJudgeRatings),2)
+```
+
+```{r linear relationships between variables 2}
+library(corrplot)
+corrplot(cor(USJudgeRatings))
+```
+All the variables have strong positive correlation two by two except the variable CONT which is not correlated to all the other variables.
+The number of contacts of a lawyer with the judge doesn't seem to explain the ratings received by the judge. 
+
+```{r pairs}
+pairs(USJudgeRatings)
+```
+
+
+```{r density}
+par(mfrow=c(1,2))
+hist(USJudgeRatings$CONT, probability= TRUE, main="Histogram of CONT", xlab="CONT")
+d = density(USJudgeRatings$CONT, kernel = 'c', bw = 0.3)
+lines(d, col="red")
+
+hist(USJudgeRatings$RTEN, probability= TRUE, main="Histogram of RTEN" , xlab="RTEN")
+d = density(USJudgeRatings$RTEN, kernel = 'o', bw = 0.3)
+lines(d, col="red")
+```
+
+
+```{r ecdf}
+par(mfrow=c(1,2))
+plot(ecdf(USJudgeRatings$CONT), verticals = TRUE, do.points = FALSE, main = "ECDF CONT")
+plot(ecdf(USJudgeRatings$RTEN), verticals = TRUE, do.points = FALSE, main = "ECDF RTEN")
+```
+
+```{r QQ plot}
+qqnorm(USJudgeRatings$RTEN)
+qqline(USJudgeRatings$RTEN)
+```
+
+The QQ plots suggests that the RTEN variable is Gaussian.
+
+## Explaining the RTEN variable with a regression model
+
+We will use RTEN as our dependent variable and try to explain it by fitting a regression model. 
+We will try to find which of the other 11 variables explain the best our dependant variable and therefore which criterion are the most important for lawyers when evaluating if a judge is fit to stay at the Supreme Court.
+
+
+
+
+
+
+
