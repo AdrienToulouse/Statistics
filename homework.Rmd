@@ -69,7 +69,37 @@ $\begin{equation} L'(\theta) = 0 \iff -n +\frac{\sum_{k=1}^{\infty}x_{k}}{\theta
 
 The central limit theorem gives us that $\sqrt{n}(\hat\theta_{MLE}-\theta)$ converges towards a Gaussian $N(0,\theta)$
 
+## Question 6:
+
+By continuous mapping, $\sqrt{\hat\theta_{MLE}}$ converges in probability towards $\sqrt{\theta}$.
+Then, by Slutsky's theorem, we have that $\sqrt{n}\frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}}$ converges in law towards a gaussian $N(0,1)$.
+
+Let's check this result in R by simulating 1000 times our random variable $\sqrt{n}\frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}}$ with a sample size of 100: 
+
+```{r}
+Nattempts = 1000
+nsample = 100
+for (i in 1:Nattempts)  # can be written without the for loop (nicer) !
+{
+  poisson_sample = rpois(nsample, lambda = 3)
+  sample = sqrt(nsample) * (mean(poisson_sample) - poisson_sample) / sqrt(mean(poisson_sample))
+}  
+
+hist(sample)
+```
 
 
+```{r}
+qqnorm(sample)
+qqline(sample)
+```
 
+## Question 7:
 
+Let $Z_n$ be our random variable, so that $ Z_n = \sqrt{n}\frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}}$
+
+$\begin{equation} P(-z_{1-\alpha/2} ≤ Z_n ≤ z_{1-\alpha/2}) = 1- \alpha \iff P(-z_{1-\alpha/2} \sqrt{\frac{\hat\theta_{MLE}}{n}}≤ \hat\theta_{MLE} - \theta ≤ z_{1-\alpha/2}\sqrt{\frac{\hat\theta_{MLE}}{n}})= 1- \alpha \end{equation}$
+
+For $\alpha \in (0, 1)$,  an asymptotic confidence interval for $\theta$ of level $\alpha$ is therefore : 
+
+$[\hat\theta_{MLE}-z_{1-\alpha/2}\frac{\sqrt{\hat\theta_{MLE}}}{\sqrt{n}};\hat\theta_{MLE}+z_{1-\alpha/2}\frac{\sqrt{\hat\theta_{MLE}}}{\sqrt{n}} ]$
