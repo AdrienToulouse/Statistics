@@ -19,15 +19,16 @@ Some of the questions are a bit more technical: they are marked by a * and are o
 We recall that the Poisson distribution with parameter $\theta > 0$ has a pdf given by ($p(\theta, k), k \in \mathbb{N})$ w.r.t the counting measure on $\mathbb{N}$:
 $p(\theta, k) = exp(-\theta) \frac{\theta^k}{k!}$
 
-### Question 1: Is it a discrete or continuous distribution? Can you give 3 examples of phenomenons that could be modeled by such a distribution in statistics?
+## Question 1: Is it a discrete or continuous distribution? Can you give 3 examples of phenomenons that could be modeled by such a distribution in statistics?
 
 The poisson distribution is a discrete distribution since it has a countable number of possible values ($\mathbb{N}$).
 
-In statistics, we use this distribution to compute the probability of a given number of events in a time period or the probability of waiting some time until the next event.
+In statistics, we use this distribution to compute the probability of a given number of (rare) events in a time period or the probability of a discrete waiting time until the next event (eg. number of minutes).
 
-For examples:
+For example a poisson distribution can model:
 The number of patients arriving in an emergency room between 9 and 10am.
 The number of minutes we wait a bus at the bus stop.
+In quality control, the number of manufacturing defect.
 
 
 ## Question 2: Compute the mean and the variance of this distribution.
@@ -47,4 +48,28 @@ $= \theta * exp(-\theta)\sum_{i=0}^{\infty} ((i+1)\frac{\theta^{i}}{i!})$
 $= \theta * exp(-\theta)[\sum_{i=0}^{\infty} (i\frac{\theta^{i}}{i!}) + \sum_{i=0}^{\infty} (\frac{\theta^{i}}{i!})]$
 $= \theta * exp(-\theta)[\theta * exp(\theta) + exp(\theta)]$
 $= \theta (\theta + 1)$
+
+## Question 3: What are our observations? What distribution do they follow? Write the corresponding statistical model. What parameter are we trying to estimate?
+
+We are provided with n independent observations of a Poisson random variable of parameter $\theta$.
+The corresponding statistical model is $\mathbb{M} = \{p(.\mid \theta),\ \theta \in\Theta \}$
+We are trying to estimate $\theta$. 
+
+## Question 4: What is the likelihood function? Compute the Maximum Likelihood Estimator.
+
+The likelihood function is the function on $\theta$ that makes our n observations most likely. 
+
+$l(\theta) = \prod_{k=1}^{\infty} p(\theta,k) = \prod_{k=1}^{\infty} e^{-\theta} \frac{\theta^{x_{k}}}{x_{k}}$
+$L(\theta) = log(l(\theta)) = -n\theta + log(\theta)\sum_{k=1}^{\infty}x_{k}-\sum_{k=1}^{\infty}log(x_{k}!)$
+
+By derivating with respect to $\theta$ :
+$\begin{equation} L'(\theta) = 0 \iff -n +\frac{\sum_{k=1}^{\infty}x_{k}}{\theta} = 0 \iff \hat\theta_{MLE} \end{equation} = \overline{x}$
+
+## Question 5: Prove that √n(θˆML − θ) converges in distribution as n → ∞.
+
+The central limit theorem gives us that $\sqrt{n}(\hat\theta_{MLE}-\theta)$ converges towards a Gaussian $N(0,\theta)$
+
+
+
+
 
