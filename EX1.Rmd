@@ -220,9 +220,36 @@ We can conclude that our estimator $\hat\theta_{MLE}$ is efficient.
 ### Question 13
 
 $$
-\hat\theta_{2} = \frac{1}{n} \sum_{i=1}^{n} (X_i - \overline{X})^2 = \frac{1}{n} \sum_{i=1}^{n} (X_i - \theta + \theta - \overline{X})^2 = \frac{1}{n} \sum_{i=1}^{n} [(X_i - \theta)^2 + (\theta - \overline{X} )^2 +2(X_i - \theta)(\theta - \overline{X})]
+\hat\theta_{2} = \frac{1}{n} \sum_{i=1}^{n} (X_i - \overline{X_n})^2 = \frac{1}{n} \sum_{i=1}^{n} (X_i - \theta + \theta - \overline{X_n})^2 = \frac{1}{n} \sum_{i=1}^{n} [(X_i - \theta)^2 + (\theta - \overline{X_n} )^2 +2(X_i - \theta)(\theta - \overline{X_n})]
 $$
 $$
-= \frac{1}{n} \sum_{i=1}^{n} (X_i - \theta)^2 + (\theta - \overline{X} )^2  + \frac{2}{n}(\theta - \overline{X}) \sum_{i=1}^{n}(X_i - \theta) \\ 
-= \frac{1}{n} \sum_{i=1}^{n} (X_i - \theta)^2 + (\theta - \overline{X} )^2 + 2(\theta - \overline{X}) (\overline{X} - \theta ) = \frac{1}{n} \sum_{i=1}^{n} (X_i - \theta)^2 - (\theta - \overline{X})^2
+= \frac{1}{n} \sum_{i=1}^{n} (X_i - \theta)^2 + (\theta - \overline{X_n} )^2  + \frac{2}{n}(\theta - \overline{X_n}) \sum_{i=1}^{n}(X_i - \theta) \\ 
+= \frac{1}{n} \sum_{i=1}^{n} (X_i - \theta)^2 + (\theta - \overline{X_n} )^2 + 2(\theta - \overline{X_n}) (\overline{X_n} - \theta ) 
 $$
+$$
+= \frac{1}{n} \sum_{i=1}^{n} (X_i - \theta)^2 - (\theta - \overline{X_n})^2
+$$
+
+### Question 14
+
+$$
+\mathbb{E}(\theta - \overline{X_n})^2 = \mathbb{E}(\theta^2 - 2\theta\overline{X_n} + \overline{X_n}^2)= \theta^2 - 2\theta\mathbb{E}(\overline{X_n})+\mathbb{E}(\overline{X_n})^2
+$$ 
+$$
+=- \theta^2 + \mathbb{V}(\overline{X_n}) + \mathbb{E}(\overline{X_n})^2 = - \theta^2 + \frac{\theta}{n} + \theta^2 = \frac{\theta}{n}
+$$
+
+$$
+\mathbb{E}(\hat\theta_2) = \mathbb{E} (\frac{1}{n} \sum_{i=1}^{n} (X_i - \theta)^2 - (\theta - \overline{X_n})^2)
+$$
+
+
+$$
+= \frac{1}{n} \sum_{i=1}^{n}\mathbb{E}(X_i - \theta)^2 - \mathbb{E}(\theta - \overline{X_n})^2 = \frac{1}{n} \sum_{i=1}^{n}\mathbb{V}(X_i) - \frac{\theta}{n} = \theta(1-\frac{1}{n}) 
+$$
+Therefore the bias is,
+$$
+b_{\hat\theta_2} =  \frac{\theta}{n}
+$$
+
+We can get an unbiased estimator $\hat\theta_3$ by defining $\hat\theta_3 = \hat\theta_2 * (1-\frac{1}{n}) ^{-1}$  
