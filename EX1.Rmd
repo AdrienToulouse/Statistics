@@ -10,11 +10,6 @@ header-includes: \usepackage{dsfont}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-You are asked to provided answers to all these exercises as both Rmd and pdf files. The two files should be uploaded on Moodle on the 15th of November (23h59 Paris time).  
-This homework should be done by groups of 2. Only one submission per group on moodle, with both names indicated in the file.  
-This homework is composed of 2 independent problems.  
-Some of the questions are a bit more technical: they are marked by a * and are optional.  
-
 # Problem 1: Estimating parameters of a Poisson distribution to model the number of goals scored in football
 We recall that the Poisson distribution with parameter $\theta > 0$ has a pdf given by ($p(\theta, k), k \in \mathbb{N})$ w.r.t the counting measure on $\mathbb{N}$:  
 $$p(\theta, k) = e^{-\theta} \frac{\theta^k}{k!}$$
@@ -60,36 +55,59 @@ We are trying to estimate the parameter $\theta$.
 The likelihood function is the function on $\theta$ that makes our n observations most likely. 
 
 $$
-l(\theta) = \prod_{k=1}^{n} p(\theta,x_k) = \prod_{k=1}^{n} e^{-\theta} \frac{\theta^{x_{k}}}{x_{k}!}$ with $x_k \in \mathbb{N}, \forall k \in {1, ..., n}
+l(\theta) = \prod_{k=1}^{n} p(\theta,x_k) = \prod_{k=1}^{n} e^{-\theta} \frac{\theta^{x_{k}}}{x_{k}!}, with \ x_{k} \in \mathbb{N}, \forall k \in {1, ..., n}
 $$ 
 
 $$
 L(\theta) = log(l(\theta)) = \sum_{k=1} ^{n}(- \theta + x_k log(\theta) - log(x_k!)) = - n \theta + log(\theta) \sum_{k=1}^{n}x_{k} - \sum_{k=1}^{n}log(x_{k}!)
 $$
 
-By derivating with respect to $\theta$:
+By derivating with respect to $\theta$, we have:
 
 $$
-L'(\theta) = 0 \Leftrightarrow -n +\frac{\sum_{k=1}^{\infty}x_{k}}{\theta} = 0 \Leftrightarrow \hat\theta_{MLE} = \overline{x}
+L'(\theta) = -n +\frac{\sum_{k=1}^{n}x_{k}}{\theta} 
+$$
+Then, we set this derivative equal to zero to obtaine a critical point:
+$$
+L'(\theta) = 0 \Leftrightarrow -n +\frac{\sum_{k=1}^{n}x_{k}}{\theta} = 0 \Leftrightarrow \hat\theta = \overline{x}
+$$
+
+and this critical point is a local maximum, and we will assume that it is also a global maximum of the likelihood function:
+$$
+L''(\theta) = - \frac{\sum_{k=1}^{n}x_{k}}{\theta^2} < 0
+$$
+
+So, the maximum likelihood estimator is:
+$$
+\hat\theta_{MLE} = \overline{x}
 $$
 
 ### Question 5: Prove that ** converges in distribution as n.
 
-The central limit theorem gives us that $\sqrt{n}(\hat\theta_{MLE}-\theta)$ converges towards a Gaussian $N(0,\theta)$
+We have that:
+$$
+\mathbb{E}[\overline{x}] = \frac{1}{n} \sum _{k = 1} ^{n} \mathbb{E} [x_k] = \mathbb{E} [x_1] = \theta
+$$
+$$
+\mathbb{V}(\overline{x}) = \frac{1}{n^2} \sum _{k = 1} ^{n} \mathbb{V} (x_k) = \frac{1}{n} \mathbb{V} [x_1] = \frac {\theta} {n}
+$$
+Applying the central limit theorem, we have that $\sqrt{n}(\hat\theta_{MLE}-\theta)$ converges towards a Gaussian $\mathcal{N}(0,\theta)$.
 
 ### Question 6:
 
 By continuous mapping, $\sqrt{\hat\theta_{MLE}}$ converges in probability towards $\sqrt{\theta}$.
-Then, by Slutsky's theorem, we have that $\sqrt{n}\frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}}$ converges in law towards a gaussian $N(0,1)$.
+Then, by Slutsky's theorem, we have that $\sqrt{n}\frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}}$ converges in law towards a gaussian $\mathcal{N}(0,1)$.
 
 Let's check this result in R by simulating 1000 times our random variable $\sqrt{n}\frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}}$ with a sample size of 100: 
 
 ```{r}
 Nattempts = 1000
 nsample = 100
+lambda = 3
+sample = rep(0, 1000)
 for (i in 1:Nattempts)  # can be written without the for loop (nicer) !
-{poisson_sample = rpois(nsample, lambda = 3)
-  sample = sqrt(nsample) * (mean(poisson_sample) - poisson_sample) / sqrt(mean(poisson_sample))
+{poisson_sample = rpois(nsample, lambda)
+  sample[i] = sqrt(nsample) * (mean(poisson_sample) - lambda) / sqrt(mean(poisson_sample))
 }  
 
 hist(sample)
@@ -104,7 +122,12 @@ qqline(sample)
 
 Let $Z_n$ be our random variable, so that $Z_n = \sqrt{n}\frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}}$
 
-
+$$
+\mathbb{P} (-z_{1-\alpha/2} \leq Z_n \leq z_{1-\alpha/2}) = 1- \alpha \Leftrightarrow P(-z_{1-\alpha/2} \sqrt{\frac{\hat\theta_{MLE}}{n}} \leq \hat\theta_{MLE} - \theta \leq z_{1-\alpha/2}\sqrt{\frac{\hat\theta_{MLE}}{n}})= 1- \alpha
+$$
 
 For $\alpha \in (0, 1)$,  an asymptotic confidence interval for $\theta$ of level $\alpha$ is therefore : 
 
+$$
+[\hat\theta_{MLE}-z_{1-\alpha/2}\frac{\sqrt{\hat\theta_{MLE}}}{\sqrt{n}};\hat\theta_{MLE}+z_{1-\alpha/2}\frac{\sqrt{\hat\theta_{MLE}}}{\sqrt{n}} ]
+$$
