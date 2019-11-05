@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 We recall that the Poisson distribution with parameter $\theta > 0$ has a pdf given by ($p(\theta, k), k \in \mathbb{N})$ w.r.t the counting measure on $\mathbb{N}$:  
 $$p(\theta, k) = e^{-\theta} \frac{\theta^k}{k!}$$
 
-### Question 1:
+### Question 1
 
 The poisson distribution is a discrete distribution since it has a countable number of possible values ($\mathbb{N}$).
 
@@ -29,7 +29,7 @@ For example a poisson distribution can model:
 * In quality control, the number of manufacturing defect.
 
 
-### Question 2:
+### Question 2
 
 We assume that $\mathbb{X}$ follows a Poisson distribution with parameter $\theta > 0$.  
 
@@ -37,7 +37,10 @@ $$
 \mathbb{E}[\mathbb{X}] = \sum_{i=0}^{\infty} (i * p(\theta, i)) = \sum_{i=0}^{\infty} (i*e^{-\theta} \frac{\theta^{i}}{i!}) = \theta * e^{-\theta}\sum_{i=1}^{\infty} (\frac{\theta^{i-1}}{(i-1)!}) = \theta * e^{-\theta}\sum_{i=0}^{\infty} (\frac{\theta^{i}}{i!}) = \theta * e^{-\theta} * e^{\theta} = \theta  
 $$
 $$
-\mathbb{E}[\mathbb{X}^2] = \sum_{i=0}^{\infty} (i^2 * p(\theta, i)) = \sum_{i=0}^{\infty} (i^2*e^{-\theta} \frac{\theta^{i}}{i!}) = \theta * e^{-\theta}\sum_{i=1}^{\infty} (i\frac{\theta^{i-1}}{(i-1)!}) = \theta * e^{-\theta}\sum_{i=0}^{\infty} ((i+1)\frac{\theta^{i}}{i!}) \\
+\mathbb{E}[\mathbb{X}^2] = \sum_{i=0}^{\infty} (i^2 * p(\theta, i)) = \sum_{i=0}^{\infty} (i^2*e^{-\theta} \frac{\theta^{i}}{i!}) = \theta * e^{-\theta}\sum_{i=1}^{\infty} (i\frac{\theta^{i-1}}{(i-1)!}) = \theta * e^{-\theta}\sum_{i=0}^{\infty} ((i+1)\frac{\theta^{i}}{i!})
+$$
+
+$$
 = \theta * e^{-\theta}[\sum_{i=0}^{\infty} (i\frac{\theta^{i}}{i!}) + \sum_{i=0}^{\infty} (\frac{\theta^{i}}{i!})] = \theta * e^{-\theta}[\theta * e^{\theta} + e^{\theta}] = \theta (\theta + 1)
 $$
 
@@ -45,13 +48,13 @@ $$
 \mathbb{V} (\mathbb{X}) = \mathbb{E}[\mathbb{X}^2] - \mathbb{E}[\mathbb{X}]^2 = \theta (\theta + 1) - \theta^2 = \theta
 $$
 
-### Question 3:
+### Question 3
 
 We are provided with n independent observations of a Poisson random variable of parameter $\theta \in \Theta = \mathbb{R_+^*}$. Our observations are $X_k \sim Pois (\theta), \forall k \in {1, ..., n}$.  
 The corresponding statistical model is $$\mathbb{M} = \{p(.\mid \theta),\ \theta \in\Theta \}$$  
 We are trying to estimate the parameter $\theta$. 
 
-### Question 4:
+### Question 4
 
 The likelihood function is the function on $\theta$ that makes our n observations most likely. 
 
@@ -83,7 +86,7 @@ $$
 \hat\theta_{MLE} = \overline{x}
 $$
 
-### Question 5:
+### Question 5
 
 We have that:
 $$
@@ -95,7 +98,7 @@ $$
 $$
 Applying the central limit theorem, we have that $\sqrt{n}(\hat\theta_{MLE}-\theta)$ converges towards a Gaussian $\mathcal{N}(0,\theta)$.
 
-### Question 6:
+### Question 6
 
 By continuous mapping, $\sqrt{\hat\theta_{MLE}}$ converges in probability towards $\sqrt{\theta}$.
 Then, by Slutsky's theorem, we have that $\sqrt{n}\frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}}$ converges in law towards a gaussian $\mathcal{N}(0,1)$.
@@ -120,7 +123,7 @@ qqnorm(sample)
 qqline(sample)
 ```
 
-### Question 7:
+### Question 7
 
 Let $Z_n$ be our random variable, so that $Z_n = \sqrt{n}\frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}}$
 
@@ -134,7 +137,7 @@ $$
 [\hat \theta_{MLE} - z_{1-\alpha/2} \frac{\sqrt{\hat\theta_{MLE}}}{\sqrt{n}} ;\ \hat \theta_{MLE} + z_{1-\alpha/2} \frac{\sqrt{\hat\theta_{MLE}}} {\sqrt{n}}]
 $$
 
-### Question 8:
+### Question 8
 
 We apply the $\delta$-method with $g(x) = 2 \times \sqrt{x}$
 We have: $g'(x) = \frac {1} {\sqrt{x}}$  
@@ -143,7 +146,7 @@ $$
 \sqrt{n} (\hat \theta_{MLE} - \theta) \overset{d} {\to} \mathcal{N}(0,\ g'(\theta)^2 \times \theta) \Leftrightarrow \sqrt{n} (\hat \theta_{MLE} - \theta) \overset{d} {\to} \mathcal{N}(0,1)
 $$
 
-### Question 9:
+### Question 9
 
 Let $Z_n$ be our random variable, so that $Z_n = \sqrt{n} (2 \sqrt{\hat\theta_{MLE}} - 2 \sqrt{\theta})$
 
@@ -167,13 +170,13 @@ $$
 [**]
 $$
 
-### Question 10:
+### Question 10
 
 Based on the first moment of a poisson distribution, we easily have that:
 
 $$\hat \theta_{MME} = \overline{x}$$
 
-We then remark that $hat \theta_{MME} = hat \theta_{MLE}$
+We then remark that $\hat \theta_{MME} = \hat \theta_{MLE}$
 
 Based on the second moment of a poisson distribution, we have:
 
@@ -182,5 +185,44 @@ n^{-1} \sum _{k=1} ^{n} X_k^2 = \hat \theta_{2} (\hat \theta_{2} + 1)
 $$
 
 Let's define the function $h(x) = x(x + 1)$  
-Its inverse on $\mathbb{R}_+^*$ is $h^{-1} = \frac {1}{2} (- 1 + \sqrt{4 x + 1})$ and then we have that:
-$$\hat \theta_{2} = \frac {1}{2} (- 1 + \sqrt{4 (n^{-1} \sum _{k=1} ^{n} X_k^2) + 1})$$
+Its inverse on $\mathbb{R}_+^*$ is $h^{-1} = \frac {1}{2} - 1 + \sqrt{4 x + 1})$ and then we have that:
+$$\hat \theta_{2} = \frac {1}{2} [- 1 + \sqrt{(4 n^{-1} \sum _{k=1} ^{n} X_k^2) + 1}]$$
+
+### Question 11
+
+$\mathbb{E} (\hat\theta_{MLE}) = \frac{1}{n} \sum_{i=1}^{n} \mathbb{E}(X_i)$ by linearity of the expectation
+$\mathbb{E} (\hat\theta_{MLE}) = \frac{1}{n} * n\theta = \theta$
+
+Therefore, $\hat\theta_{MLE}$ is an unbiased estimator of $\theta$, ie. $b_\theta{^*}(\hat\theta_{MLE}) = 0$
+
+$\mathbb{V} (\hat\theta_{MLE}) = \frac{1}{n^2} \sum_{i=1}^{n} \mathbb{V}(X_i)$ by independance of the $X_i$
+$\mathbb{V} (\hat\theta_{MLE}) = \frac{1}{n^2} * n \theta = \frac{\theta}{n}$
+
+The quadratic risk Q is given by : 
+$Q = b_\theta{^*}(\hat\theta_{MLE}) + \mathbb{V^*} (\hat\theta_{MLE}) = 0 + \frac{\theta}{n} = \frac{\theta}{n}$
+
+### Question 12
+
+$\hat\theta_{MLE}$ is an unbiased estimator so the Cramer-Rao bound is given by:  
+$$\frac{1}{I_n(\theta^*)} = \frac{1}{\mathbb{E} (-L''(\theta^*))}$$ 
+
+$$L'(\theta^*) = -n + \frac{\sum_{i=1}^{n} x_k}{\theta}$$
+$$-L''(\theta^*) = \frac{\sum_{i=1}^{n} x_k}{\theta^2}$$
+
+Therefore, 
+$$\mathbb{E} (-L''(\theta^*)) = \frac{\sum_{i=1}^{n} \mathbb{E}(x_k)}{\theta^2} = \frac{n}{\theta}$$
+
+Finally, 
+$$\frac{1}{I_n(\theta^*)} = \frac{\theta}{n} = \mathbb{V} (\hat\theta_{MLE})$$
+
+We can conclude that our estimator $\hat\theta_{MLE}$ is efficient.
+
+### Question 13
+
+$$
+\hat\theta_{2} = \frac{1}{n} \sum_{i=1}^{n} (X_i - \overline{X})^2 = \frac{1}{n} \sum_{i=1}^{n} (X_i - \theta + \theta - \overline{X})^2 = \frac{1}{n} \sum_{i=1}^{n} [(X_i - \theta)^2 + (\theta - \overline{X} )^2 +2(X_i - \theta)(\theta - \overline{X})]
+$$
+$$
+= \frac{1}{n} \sum_{i=1}^{n} (X_i - \theta)^2 + (\theta - \overline{X} )^2  + \frac{2}{n}(\theta - \overline{X}) \sum_{i=1}^{n}(X_i - \theta) \\ 
+= \frac{1}{n} \sum_{i=1}^{n} (X_i - \theta)^2 + (\theta - \overline{X} )^2 + 2(\theta - \overline{X}) (\overline{X} - \theta ) = \frac{1}{n} \sum_{i=1}^{n} (X_i - \theta)^2 - (\theta - \overline{X})^2
+$$

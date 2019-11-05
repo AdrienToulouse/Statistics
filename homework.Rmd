@@ -107,7 +107,7 @@ For $\alpha \in (0, 1)$,  an asymptotic confidence interval for $\theta$ of leve
 $[\hat\theta_{MLE}-z_{1-\alpha/2}\frac{\sqrt{\hat\theta_{MLE}}}{\sqrt{n}};\hat\theta_{MLE}+z_{1-\alpha/2}\frac{\sqrt{\hat\theta_{MLE}}}{\sqrt{n}} ]$
 
 
-## Question 11
+### Question 11
 
 $\mathbb{E} (\hat\theta_{MLE}) = \frac{1}{n} \sum_{i=1}^{n} \mathbb{E}(X_i)$ by linearity of the expectation
 $\mathbb{E} (\hat\theta_{MLE}) = \frac{1}{n} * n\theta = \theta$
@@ -120,7 +120,7 @@ $\mathbb{V} (\hat\theta_{MLE}) = \frac{1}{n^2} * n \theta = \frac{\theta}{n}$
 The quadratic risk Q is given by : 
 $Q = b_\theta{^*}(\hat\theta_{MLE}) + \mathbb{V^*} (\hat\theta_{MLE}) = 0 + \frac{\theta}{n} = \frac{\theta}{n}$
 
-## Question 12
+### Question 12
 
 $\hat\theta_{MLE}$ is an unbiased estimator so the Cramer-Rao bound is given by:  
 $\frac{1}{I_n(\theta^*)} = \frac{1}{\mathbb{E} (-L''(\theta^*))}$  
