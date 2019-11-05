@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 We recall that the Poisson distribution with parameter $\theta > 0$ has a pdf given by ($p(\theta, k), k \in \mathbb{N})$ w.r.t the counting measure on $\mathbb{N}$:  
 $$p(\theta, k) = e^{-\theta} \frac{\theta^k}{k!}$$
 
-### Question 1: Is it a discrete or continuous distribution? Can you give 3 examples of phenomenons that could be modeled by such a distribution in statistics?
+### Question 1:
 
 The poisson distribution is a discrete distribution since it has a countable number of possible values ($\mathbb{N}$).
 
@@ -29,7 +29,7 @@ For example a poisson distribution can model:
 * In quality control, the number of manufacturing defect.
 
 
-### Question 2: Compute the mean and the variance of this distribution.
+### Question 2:
 
 We assume that $\mathbb{X}$ follows a Poisson distribution with parameter $\theta > 0$.  
 
@@ -37,20 +37,21 @@ $$
 \mathbb{E}[\mathbb{X}] = \sum_{i=0}^{\infty} (i * p(\theta, i)) = \sum_{i=0}^{\infty} (i*e^{-\theta} \frac{\theta^{i}}{i!}) = \theta * e^{-\theta}\sum_{i=1}^{\infty} (\frac{\theta^{i-1}}{(i-1)!}) = \theta * e^{-\theta}\sum_{i=0}^{\infty} (\frac{\theta^{i}}{i!}) = \theta * e^{-\theta} * e^{\theta} = \theta  
 $$
 $$
-\mathbb{E}[\mathbb{X}^2] = \sum_{i=0}^{\infty} (i^2 * p(\theta, i)) = \sum_{i=0}^{\infty} (i^2*e^{-\theta} \frac{\theta^{i}}{i!}) = \theta * e^{-\theta}\sum_{i=1}^{\infty} (i\frac{\theta^{i-1}}{(i-1)!}) = \theta * e^{-\theta}\sum_{i=0}^{\infty} ((i+1)\frac{\theta^{i}}{i!})
-$$
-
-$$
+\mathbb{E}[\mathbb{X}^2] = \sum_{i=0}^{\infty} (i^2 * p(\theta, i)) = \sum_{i=0}^{\infty} (i^2*e^{-\theta} \frac{\theta^{i}}{i!}) = \theta * e^{-\theta}\sum_{i=1}^{\infty} (i\frac{\theta^{i-1}}{(i-1)!}) = \theta * e^{-\theta}\sum_{i=0}^{\infty} ((i+1)\frac{\theta^{i}}{i!}) \\
 = \theta * e^{-\theta}[\sum_{i=0}^{\infty} (i\frac{\theta^{i}}{i!}) + \sum_{i=0}^{\infty} (\frac{\theta^{i}}{i!})] = \theta * e^{-\theta}[\theta * e^{\theta} + e^{\theta}] = \theta (\theta + 1)
 $$
 
-### Question 3: What are our observations? What distribution do they follow? Write the corresponding statistical model. What parameter are we trying to estimate?
+$$
+\mathbb{V} (\mathbb{X}) = \mathbb{E}[\mathbb{X}^2] - \mathbb{E}[\mathbb{X}]^2 = \theta (\theta + 1) - \theta^2 = \theta
+$$
+
+### Question 3:
 
 We are provided with n independent observations of a Poisson random variable of parameter $\theta \in \Theta = \mathbb{R_+^*}$. Our observations are $X_k \sim Pois (\theta), \forall k \in {1, ..., n}$.  
 The corresponding statistical model is $$\mathbb{M} = \{p(.\mid \theta),\ \theta \in\Theta \}$$  
 We are trying to estimate the parameter $\theta$. 
 
-### Question 4: What is the likelihood function? Compute the Maximum Likelihood Estimator.
+### Question 4:
 
 The likelihood function is the function on $\theta$ that makes our n observations most likely. 
 
@@ -67,7 +68,7 @@ By derivating with respect to $\theta$, we have:
 $$
 L'(\theta) = -n +\frac{\sum_{k=1}^{n}x_{k}}{\theta} 
 $$
-Then, we set this derivative equal to zero to obtaine a critical point:
+Then, we set this derivative equal to zero to obtain a critical point:
 $$
 L'(\theta) = 0 \Leftrightarrow -n +\frac{\sum_{k=1}^{n}x_{k}}{\theta} = 0 \Leftrightarrow \hat\theta = \overline{x}
 $$
@@ -82,12 +83,13 @@ $$
 \hat\theta_{MLE} = \overline{x}
 $$
 
-### Question 5: Prove that ** converges in distribution as n.
+### Question 5:
 
 We have that:
 $$
 \mathbb{E}[\overline{x}] = \frac{1}{n} \sum _{k = 1} ^{n} \mathbb{E} [x_k] = \mathbb{E} [x_1] = \theta
 $$
+
 $$
 \mathbb{V}(\overline{x}) = \frac{1}{n^2} \sum _{k = 1} ^{n} \mathbb{V} (x_k) = \frac{1}{n} \mathbb{V} [x_1] = \frac {\theta} {n}
 $$
@@ -103,11 +105,11 @@ Let's check this result in R by simulating 1000 times our random variable $\sqrt
 ```{r}
 Nattempts = 1000
 nsample = 100
-lambda = 3
+theta = 3
 sample = rep(0, 1000)
 for (i in 1:Nattempts)  # can be written without the for loop (nicer) !
-{poisson_sample = rpois(nsample, lambda)
-  sample[i] = sqrt(nsample) * (mean(poisson_sample) - lambda) / sqrt(mean(poisson_sample))
+{poisson_sample = rpois(nsample, theta)
+  sample[i] = sqrt(nsample) * (mean(poisson_sample) - theta) / sqrt(mean(poisson_sample))
 }  
 
 hist(sample)
@@ -123,11 +125,62 @@ qqline(sample)
 Let $Z_n$ be our random variable, so that $Z_n = \sqrt{n}\frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}}$
 
 $$
-\mathbb{P} (-z_{1-\alpha/2} \leq Z_n \leq z_{1-\alpha/2}) = 1- \alpha \Leftrightarrow P(-z_{1-\alpha/2} \sqrt{\frac{\hat\theta_{MLE}}{n}} \leq \hat\theta_{MLE} - \theta \leq z_{1-\alpha/2}\sqrt{\frac{\hat\theta_{MLE}}{n}})= 1- \alpha
+\mathbb{P} (-z_{1-\alpha/2} \leq Z_n \leq z_{1-\alpha/2}) = 1- \alpha \Leftrightarrow \mathbb{P}(-z_{1-\alpha/2} \sqrt{\frac{\hat\theta_{MLE}}{n}} \leq \hat\theta_{MLE} - \theta \leq z_{1-\alpha/2}\sqrt{\frac{\hat\theta_{MLE}}{n}})= 1- \alpha
 $$
 
 For $\alpha \in (0, 1)$,  an asymptotic confidence interval for $\theta$ of level $\alpha$ is therefore : 
 
 $$
-[\hat\theta_{MLE}-z_{1-\alpha/2}\frac{\sqrt{\hat\theta_{MLE}}}{\sqrt{n}};\hat\theta_{MLE}+z_{1-\alpha/2}\frac{\sqrt{\hat\theta_{MLE}}}{\sqrt{n}} ]
+[\hat \theta_{MLE} - z_{1-\alpha/2} \frac{\sqrt{\hat\theta_{MLE}}}{\sqrt{n}} ;\ \hat \theta_{MLE} + z_{1-\alpha/2} \frac{\sqrt{\hat\theta_{MLE}}} {\sqrt{n}}]
 $$
+
+### Question 8:
+
+We apply the $\delta$-method with $g(x) = 2 \times \sqrt{x}$
+We have: $g'(x) = \frac {1} {\sqrt{x}}$  
+So, 
+$$
+\sqrt{n} (\hat \theta_{MLE} - \theta) \overset{d} {\to} \mathcal{N}(0,\ g'(\theta)^2 \times \theta) \Leftrightarrow \sqrt{n} (\hat \theta_{MLE} - \theta) \overset{d} {\to} \mathcal{N}(0,1)
+$$
+
+### Question 9:
+
+Let $Z_n$ be our random variable, so that $Z_n = \sqrt{n} (2 \sqrt{\hat\theta_{MLE}} - 2 \sqrt{\theta})$
+
+We know that $Z_n \overset{d} {\to} \mathcal{N}(0,1)$
+$$
+\mathbb{P} (-z_{1-\alpha/2} \leq Z_n \leq z_{1-\alpha/2}) = 1- \alpha \Leftrightarrow \mathbb{P}(- \frac {z_{1-\alpha/2}} {2 \sqrt{n}} \leq \sqrt{\hat\theta_{MLE}} - \sqrt{\theta} \leq \frac {z_{1-\alpha/2}} {2 \sqrt{n}}) = 1- \alpha
+$$
+$$
+ \Leftrightarrow \mathbb{P} (\sqrt{\hat\theta_{MLE}} - \frac {z_{1-\alpha/2}} {2 \sqrt{n}} \leq \sqrt{\theta} \leq \sqrt{\hat\theta_{MLE}} + \frac {z_{1-\alpha/2}} {2 \sqrt{n}}) = 1- \alpha 
+$$
+
+For $\alpha \in (0, 1)$,  an asymptotic confidence interval for $\theta$ of level $\alpha$ is therefore : 
+
+$$
+[\hat \theta_{MLE} - z_{1-\alpha/2} \frac{\sqrt{\hat\theta_{MLE}}}{\sqrt{n}} ;\ \hat \theta_{MLE} + z_{1-\alpha/2} \frac{\sqrt{\hat\theta_{MLE}}} {\sqrt{n}}]
+$$
+
+For $\alpha \in (0, 1)$,  an asymptotic confidence interval for $\theta$ of level $\alpha$ is therefore : 
+
+$$
+[**]
+$$
+
+### Question 10:
+
+Based on the first moment of a poisson distribution, we easily have that:
+
+$$\hat \theta_{MME} = \overline{x}$$
+
+We then remark that $hat \theta_{MME} = hat \theta_{MLE}$
+
+Based on the second moment of a poisson distribution, we have:
+
+$$
+n^{-1} \sum _{k=1} ^{n} X_k^2 = \hat \theta_{2} (\hat \theta_{2} + 1)
+$$
+
+Let's define the function $h(x) = x(x + 1)$  
+Its inverse on $\mathbb{R}_+^*$ is $h^{-1} = \frac {1}{2} (- 1 + \sqrt{4 x + 1})$ and then we have that:
+$$\hat \theta_{2} = \frac {1}{2} (- 1 + \sqrt{4 (n^{-1} \sum _{k=1} ^{n} X_k^2) + 1})$$
