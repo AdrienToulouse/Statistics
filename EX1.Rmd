@@ -143,7 +143,7 @@ We apply the $\delta$-method with $g(x) = 2 \times \sqrt{x}$
 We have: $g'(x) = \frac {1} {\sqrt{x}}$  
 So, 
 $$
-\sqrt{n} (\hat \theta_{MLE} - \theta) \overset{d} {\to} \mathcal{N}(0,\ g'(\theta)^2 \times \theta) \Leftrightarrow \sqrt{n} (\hat \theta_{MLE} - \theta) \overset{d} {\to} \mathcal{N}(0,1)
+\sqrt{n} (g(\hat \theta_{MLE}) - g(\theta)) \overset{d} {\to} \mathcal{N}(0,\ g'(\theta)^2 \times \theta) \Leftrightarrow \sqrt{n} (g(\hat \theta_{MLE}) - g(\theta)) \overset{d} {\to} \mathcal{N}(0,1)
 $$
 
 ### Question 9
