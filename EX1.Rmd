@@ -269,8 +269,35 @@ Using the previous questions, we know that:
 $$\hat\theta_{2} = \frac{1}{n} \sum_{i=1}^{n} (X_i - \theta)^2 - (\theta - \overline{X_n})^2$$
 therefore, we have:
 $$
-\sqrt{n} (\hat\theta_{2} - \theta) = \frac{1}{\sqrt{n}} \sum_{i=1}^{n} (X_i - \theta)^2 - \sqrt{n} (\theta - \overline{X_n})^2 - \sqrt{n} \theta = 
+\sqrt{n} (\hat\theta_{2} - \theta) = \frac{1}{\sqrt{n}} \sum_{i=1}^{n} (X_i - \theta)^2 - \sqrt{n} (\theta - \overline{X_n})^2 - \sqrt{n} \theta = \sqrt{n} (\overline{Y_n} - \theta) -  \sqrt{n} (\theta - \overline{X_n})^2
 $$
+
+where 
+$$\forall i \in[\![1,n]\!], Yi = (X_i - \theta)^2 $$
+$$\bar{Y_n} = \frac{1}{n} \sum_{i=1}^{n}Y_i $$
+
+Since :
+$$
+\mathbb{E}(Y_i) = \mathbb{V}(X_i) = \theta
+$$
+and 
+$$
+\mathbb{V}(Y_i) = 2\theta^2 + \theta
+$$
+
+Applying the central limit theorem, we have that $\sqrt{n} (\overline{Y_n} - \theta)$ converges towards a Gaussian $\mathcal{N}(0,2\theta^2 + \theta)$.
+
+We also have:
+$$
+\sqrt{n} (\theta - \overline{X_n})^2 = \sqrt{n} (\theta - \overline{X_n})(\theta - \overline{X_n})
+$$
+Applying the central limit theorem, we have that $\sqrt{n} (\theta - \overline{X_n})$ converges towards a Gaussian $\mathcal{N}(0,\theta)$.
+On the other hand, applying the law of large numbers : $(\theta - \overline{X_n})$ converges in probability towards 0.
+
+Applying the Slutsky theorem, $\sqrt{n} (\theta - \overline{X_n})^2$ converges in distribution towards the constant 0. Therefore it converges in probability towards 0.
+
+Now, we can apply the Slutsky theorem to $\sqrt{n} (\overline{Y_n} - \theta) -  \sqrt{n} (\theta - \overline{X_n})^2$ which gives us finally that $\sqrt{n} (\hat\theta_{2} - \theta)$ converges in distribution towards a Gaussian $\mathcal{N}(0,2\theta^2 + \theta)$.
+
 
 ### Question 16
 
