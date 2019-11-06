@@ -1,7 +1,6 @@
 ---
 title: "Analysis of the USJudgeRatings data set"
-author: "Adrien Toulouse"
-date: "10/30/2019"
+author: "Adrien Toulouse & Paul-Antoine GIRARD"
 output: pdf_document
 ---
 

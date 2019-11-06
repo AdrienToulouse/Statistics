@@ -10,7 +10,7 @@ header-includes: \usepackage{dsfont}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Problem 1: Estimating parameters of a Poisson distribution to model the number of goals scored in football
+# Problem 1: Estimating parameters of a Poisson distribution
 We recall that the Poisson distribution with parameter $\theta > 0$ has a pdf given by ($p(\theta, k), k \in \mathbb{N})$ w.r.t the counting measure on $\mathbb{N}$:  
 $$p(\theta, k) = e^{-\theta} \frac{\theta^k}{k!}$$
 
@@ -18,13 +18,13 @@ $$p(\theta, k) = e^{-\theta} \frac{\theta^k}{k!}$$
 
 The poisson distribution is a discrete distribution since it has a countable number of possible values ($\mathbb{N}$).
 
-In statistics, we use this distribution to compute the probability of a given number of (rare) events in a time period or the probability of a discrete waiting time until the next event (eg. number of minutes).
+In statistics, we use this distribution to compute the probability of a given number of (rare) events in a time period.
 
 For example a poisson distribution can model:
 
 * The number of patients arriving in an emergency room between 9 and 10am.
 
-* The number of minutes we wait a bus at the bus stop.
+* The number of network failures per day.
 
 * In quality control, the number of manufacturing defect.
 
@@ -33,8 +33,9 @@ For example a poisson distribution can model:
 
 We assume that $\mathbb{X}$ follows a Poisson distribution with parameter $\theta > 0$.  
 
+We will use the fact that $e^{\theta} = \sum_{i=0}^{\infty} (\frac{\theta^{i}}{i!}), \forall \theta \in \mathbb{R}$
 $$
-\mathbb{E}[\mathbb{X}] = \sum_{i=0}^{\infty} (i * p(\theta, i)) = \sum_{i=0}^{\infty} (i*e^{-\theta} \frac{\theta^{i}}{i!}) = \theta * e^{-\theta}\sum_{i=1}^{\infty} (\frac{\theta^{i-1}}{(i-1)!}) = \theta * e^{-\theta}\sum_{i=0}^{\infty} (\frac{\theta^{i}}{i!}) = \theta * e^{-\theta} * e^{\theta} = \theta  
+\mathbb{E}[\mathbb{X}] = \sum_{i=0}^{\infty} (i * p(\theta, i)) = \sum_{i=0}^{\infty} (i*e^{-\theta} \frac{\theta^{i}}{i!}) = \theta * e^{-\theta}\sum_{i=1}^{\infty} (\frac{\theta^{i-1}}{(i-1)!}) = \theta * e^{-\theta} \sum_{i=0}^{\infty} (\frac{\theta^{i}}{i!}) = \theta * e^{-\theta} * e^{\theta} = \theta  
 $$
 $$
 \mathbb{E}[\mathbb{X}^2] = \sum_{i=0}^{\infty} (i^2 * p(\theta, i)) = \sum_{i=0}^{\infty} (i^2*e^{-\theta} \frac{\theta^{i}}{i!}) = \theta * e^{-\theta}\sum_{i=1}^{\infty} (i\frac{\theta^{i-1}}{(i-1)!}) = \theta * e^{-\theta}\sum_{i=0}^{\infty} ((i+1)\frac{\theta^{i}}{i!})
@@ -51,13 +52,14 @@ $$
 ### Question 3
 
 We are provided with n independent observations of a Poisson random variable of parameter $\theta \in \Theta = \mathbb{R_+^*}$. Our observations are $X_k \sim Pois (\theta), \forall k \in {1, ..., n}$.  
-The corresponding statistical model is $$\mathbb{M} = \{p(.\mid \theta),\ \theta \in\Theta \}$$  
+The corresponding statistical model is $(\mathbb{N}, \ ,\ \{p(.\mid \theta),\ \theta \in\Theta \})$ with $\mathbb{P}(x\mid \theta) = \mathbb{P}_{\theta} (\mathbb{X} = x)$
 We are trying to estimate the parameter $\theta$. 
 
 ### Question 4
 
 The likelihood function is the function on $\theta$ that makes our n observations most likely. 
 
+Using the independance of the $X_k$:
 $$
 l(\theta) = \prod_{k=1}^{n} p(\theta,x_k) = \prod_{k=1}^{n} e^{-\theta} \frac{\theta^{x_{k}}}{x_{k}!}, with \ x_{k} \in \mathbb{N}, \forall k \in {1, ..., n}
 $$ 
@@ -71,30 +73,28 @@ By derivating with respect to $\theta$, we have:
 $$
 L'(\theta) = -n +\frac{\sum_{k=1}^{n}x_{k}}{\theta} 
 $$
-Then, we set this derivative equal to zero to obtain a critical point:
-$$
-L'(\theta) = 0 \Leftrightarrow -n +\frac{\sum_{k=1}^{n}x_{k}}{\theta} = 0 \Leftrightarrow \hat\theta = \overline{x}
-$$
-
-and this critical point is a local maximum, and we will assume that it is also a global maximum of the likelihood function:
 $$
 L''(\theta) = - \frac{\sum_{k=1}^{n}x_{k}}{\theta^2} < 0
+$$
+Since, the second derivative of the log-likelihood function is negative, the function is concave and admits a global maximum, given by:
+$$
+L'(\theta) = 0 \Leftrightarrow -n +\frac{\sum_{k=1}^{n}X_{k}}{\theta} = 0 \Leftrightarrow \hat\theta_{MLE} = \overline{X}
 $$
 
 So, the maximum likelihood estimator is:
 $$
-\hat\theta_{MLE} = \overline{x}
+\hat\theta_{MLE} = \overline{X}
 $$
 
 ### Question 5
 
 We have that:
 $$
-\mathbb{E}[\overline{x}] = \frac{1}{n} \sum _{k = 1} ^{n} \mathbb{E} [x_k] = \mathbb{E} [x_1] = \theta
+\mathbb{E}[\overline{X}] = \frac{1}{n} \sum _{k = 1} ^{n} \mathbb{E} [X_k] = \mathbb{E} [X_1] = \theta
 $$
 
 $$
-\mathbb{V}(\overline{x}) = \frac{1}{n^2} \sum _{k = 1} ^{n} \mathbb{V} (x_k) = \frac{1}{n} \mathbb{V} [x_1] = \frac {\theta} {n}
+\mathbb{V}(\overline{X}) = \frac{1}{n^2} \sum _{k = 1} ^{n} \mathbb{V} (X_k) = \frac{1}{n} \mathbb{V} [X_1] = \frac {\theta} {n}
 $$
 Applying the central limit theorem, we have that $\sqrt{n}(\hat\theta_{MLE}-\theta)$ converges towards a Gaussian $\mathcal{N}(0,\theta)$.
 
@@ -104,31 +104,41 @@ By continuous mapping, $\sqrt{\hat\theta_{MLE}}$ converges in probability toward
 Then, by Slutsky's theorem, we have that $\sqrt{n}\frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}}$ converges in law towards a gaussian $\mathcal{N}(0,1)$.
 
 Let's check this result in R by simulating 1000 times our random variable $\sqrt{n}\frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}}$ with a sample size of 100: 
+```{r}
+estim <- function(x, theta){
+  n <- length(x)
+  est <- sqrt(n) * (mean(x) - theta) / sqrt(mean(x))
+  return(est)}
+```
 
 ```{r}
-Nattempts = 1000
+set.seed(43)
+Nattempts = 1e3
 nsample = 100
 theta = 3
-sample = rep(0, 1000)
-for (i in 1:Nattempts)  # can be written without the for loop (nicer) !
-{poisson_sample = rpois(nsample, theta)
-  sample[i] = sqrt(nsample) * (mean(poisson_sample) - theta) / sqrt(mean(poisson_sample))
-}  
+samples <- lapply(1:Nattempts, function(i) rpois(nsample, theta))
+realisations <- sapply(samples, function(x) estim(x, theta))
 
-hist(sample)
+hist(realisations, probability = TRUE)
+d = density(realisations, kernel='gaussian')
+lines(d, col = 'red')
 ```
 
 ```{r}
-qqnorm(sample)
-qqline(sample)
+qqnorm(realisations)
+qqline(realisations)
 ```
+
+This confirms what we found theoretically: the random variable follows a standard gaussian distribution. 
 
 ### Question 7
 
-Let $Z_n$ be our random variable, so that $Z_n = \sqrt{n}\frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}}$
+Let $Z_n = \sqrt{n} \frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}}$ be our random variable.
+
+Denote $z_{alpha}$ the $\alpha$-quantile for the standard Normal distribution.
 
 $$
-\mathbb{P} (-z_{1-\alpha/2} \leq Z_n \leq z_{1-\alpha/2}) = 1- \alpha \Leftrightarrow \mathbb{P}(-z_{1-\alpha/2} \sqrt{\frac{\hat\theta_{MLE}}{n}} \leq \hat\theta_{MLE} - \theta \leq z_{1-\alpha/2}\sqrt{\frac{\hat\theta_{MLE}}{n}})= 1- \alpha
+\lim \limits_{n \rightarrow + \infty} \mathbb{P} (-z_{1-\alpha/2} \leq Z_n \leq z_{1-\alpha/2}) \ge 1- \alpha \Leftrightarrow \lim \limits_{n \rightarrow + \infty} \mathbb{P}(-z_{1-\alpha/2} \sqrt{\frac{\hat\theta_{MLE}}{n}} \leq \hat\theta_{MLE} - \theta \leq z_{1-\alpha/2}\sqrt{\frac{\hat\theta_{MLE}}{n}}) \ge 1- \alpha
 $$
 
 For $\alpha \in (0, 1)$,  an asymptotic confidence interval for $\theta$ of level $\alpha$ is therefore : 
@@ -139,7 +149,7 @@ $$
 
 ### Question 8
 
-We apply the $\delta$-method with $g(x) = 2 \times \sqrt{x}$
+We apply the $\delta$-method with $g(x) = 2 \sqrt{x}$
 We have: $g'(x) = \frac {1} {\sqrt{x}}$  
 So, 
 $$
@@ -148,11 +158,11 @@ $$
 
 ### Question 9
 
-Let $Z_n$ be our random variable, so that $Z_n = \sqrt{n} (2 \sqrt{\hat\theta_{MLE}} - 2 \sqrt{\theta})$
+Let $W_n = \sqrt{n} (2 \sqrt{\hat\theta_{MLE}} - 2 \sqrt{\theta})$ be our random variable.
 
-We know that $Z_n \overset{d} {\to} \mathcal{N}(0,1)$
+We know by the last question that $W_n \overset{d} {\to} \mathcal{N}(0,1)$.
 $$
-\mathbb{P} (-z_{1-\alpha/2} \leq Z_n \leq z_{1-\alpha/2}) = 1- \alpha \Leftrightarrow \mathbb{P}(- \frac {z_{1-\alpha/2}} {2 \sqrt{n}} \leq \sqrt{\hat\theta_{MLE}} - \sqrt{\theta} \leq \frac {z_{1-\alpha/2}} {2 \sqrt{n}}) = 1- \alpha
+\lim \limits_{n \rightarrow + \infty} \mathbb{P} (-z_{1-\alpha/2} \leq W_n \leq z_{1-\alpha/2}) \ge 1- \alpha \Leftrightarrow \lim \limits_{n \rightarrow + \infty} \mathbb{P}(- \frac {z_{1-\alpha/2}} {2 \sqrt{n}} \leq \sqrt{\hat\theta_{MLE}} - \sqrt{\theta} \leq \frac {z_{1-\alpha/2}} {2 \sqrt{n}}) \ge 1- \alpha
 $$
 $$
  \Leftrightarrow \mathbb{P} (\sqrt{\hat\theta_{MLE}} - \frac {z_{1-\alpha/2}} {2 \sqrt{n}} \leq \sqrt{\theta} \leq \sqrt{\hat\theta_{MLE}} + \frac {z_{1-\alpha/2}} {2 \sqrt{n}}) = 1- \alpha 
@@ -174,43 +184,42 @@ $$
 
 Based on the first moment of a poisson distribution, we easily have that:
 
-$$\hat \theta_{MME} = \overline{x}$$
+$$\hat \theta_{MME} = \overline{X}$$
 
-We then remark that $\hat \theta_{MME} = \hat \theta_{MLE}$
+We can remark that $\hat \theta_{MME} = \hat \theta_{MLE}$
 
 Based on the second moment of a poisson distribution, we have:
 
-$$
-n^{-1} \sum _{k=1} ^{n} X_k^2 = \hat \theta_{2} (\hat \theta_{2} + 1)
-$$
+$$n^{-1} \sum _{k=1} ^{n} X_k^2 = \hat \theta_{2} (\hat \theta_{2} + 1)$$
 
 Let's define the function $h(x) = x(x + 1)$  
-Its inverse on $\mathbb{R}_+^*$ is $h^{-1} = \frac {1}{2} - 1 + \sqrt{4 x + 1})$ and then we have that:
+Its inverse on $\mathbb{R}_+^*$ is $h^{-1} (x) = \frac {1}{2} [- 1 + \sqrt{4 x + 1}]$ and this gives us:
 $$\hat \theta_{2} = \frac {1}{2} [- 1 + \sqrt{(4 n^{-1} \sum _{k=1} ^{n} X_k^2) + 1}]$$
 
 ### Question 11
 
-$\mathbb{E} (\hat\theta_{MLE}) = \frac{1}{n} \sum_{i=1}^{n} \mathbb{E}(X_i)$ by linearity of the expectation
-$\mathbb{E} (\hat\theta_{MLE}) = \frac{1}{n} * n\theta = \theta$
+$\mathbb{E} (\hat\theta_{MLE}) = \frac{1}{n} \sum_{i=1}^{n} \mathbb{E}(X_i)$ by linearity of the expectation.
+So, $$\mathbb{E} (\hat\theta_{MLE}) = \frac{1}{n} * n\theta = \theta$$
 
 Therefore, $\hat\theta_{MLE}$ is an unbiased estimator of $\theta$, ie. $b_\theta{^*}(\hat\theta_{MLE}) = 0$
 
-$\mathbb{V} (\hat\theta_{MLE}) = \frac{1}{n^2} \sum_{i=1}^{n} \mathbb{V}(X_i)$ by independance of the $X_i$
-$\mathbb{V} (\hat\theta_{MLE}) = \frac{1}{n^2} * n \theta = \frac{\theta}{n}$
+$\mathbb{V} (\hat\theta_{MLE}) = \frac{1}{n^2} \sum_{i=1}^{n} \mathbb{V}(X_i)$ by independance of the $X_k$.
+$$\mathbb{V} (\hat\theta_{MLE}) = \frac{1}{n^2} * n \theta = \frac{\theta}{n}$$
 
-The quadratic risk Q is given by : 
-$Q = b_\theta{^*}(\hat\theta_{MLE}) + \mathbb{V^*} (\hat\theta_{MLE}) = 0 + \frac{\theta}{n} = \frac{\theta}{n}$
+The quadratic risk Q is: 
+$$Q = b_\theta{^*}(\hat\theta_{MLE})^2 + \mathbb{V^*} (\hat\theta_{MLE}) = 0 + \frac{\theta}{n} = \frac{\theta}{n}$$
 
 ### Question 12
 
-$\hat\theta_{MLE}$ is an unbiased estimator so the Cramer-Rao bound is given by:  
-$$\frac{1}{I_n(\theta^*)} = \frac{1}{\mathbb{E} (-L''(\theta^*))}$$ 
+$\hat\theta_{MLE}$ is an unbiased estimator. So the Cramer-Rao bound is given by:  
+$$\frac{1}{I_n(\theta^*)} = \frac{1}{\mathbb{E} [-L''(\theta^*)]}$$ 
 
+By derivating the log-likelihood function with respect to $\theta$, we have:
 $$L'(\theta^*) = -n + \frac{\sum_{i=1}^{n} x_k}{\theta}$$
 $$-L''(\theta^*) = \frac{\sum_{i=1}^{n} x_k}{\theta^2}$$
 
 Therefore, 
-$$\mathbb{E} (-L''(\theta^*)) = \frac{\sum_{i=1}^{n} \mathbb{E}(x_k)}{\theta^2} = \frac{n}{\theta}$$
+$$\mathbb{E} [-L''(\theta^*)] = \frac{\sum_{i=1}^{n} \mathbb{E}[X_k]}{\theta^2} = \frac{n}{\theta}$$
 
 Finally, 
 $$\frac{1}{I_n(\theta^*)} = \frac{\theta}{n} = \mathbb{V} (\hat\theta_{MLE})$$
@@ -247,16 +256,16 @@ $$
 $$
 = \frac{1}{n} \sum_{i=1}^{n}\mathbb{E}(X_i - \theta)^2 - \mathbb{E}(\theta - \overline{X_n})^2 = \frac{1}{n} \sum_{i=1}^{n}\mathbb{V}(X_i) - \frac{\theta}{n} = \theta(1-\frac{1}{n}) 
 $$
-Therefore the bias is,
+Therefore the bias is:
 $$
-b_{\hat\theta_2} =  \frac{\theta}{n}
+b_{\hat\theta_2} =  -\frac{\theta}{n}
 $$
 
-We can get an unbiased estimator $\hat\theta_3$ by defining $\hat\theta_3 = \hat\theta_2 * (1-\frac{1}{n}) ^{-1}$  
+We can get an unbiased estimator $\hat\theta_3$ by defining $\hat\theta_3 = (1-\frac{1}{n}) ^{-1} \hat\theta_2$  
 
 ### Question 15
 
-Using the previous questions, whe know that:
+Using the previous questions, we know that:
 $$\hat\theta_{2} = \frac{1}{n} \sum_{i=1}^{n} (X_i - \theta)^2 - (\theta - \overline{X_n})^2$$
 therefore, we have:
 $$
