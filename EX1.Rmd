@@ -256,6 +256,12 @@ We can get an unbiased estimator $\hat\theta_3$ by defining $\hat\theta_3 = \hat
 
 ### Question 15
 
+Using the previous questions, whe know that:
+$$\hat\theta_{2} = \frac{1}{n} \sum_{i=1}^{n} (X_i - \theta)^2 - (\theta - \overline{X_n})^2$$
+therefore, we have:
+$$
+\sqrt{n} (\hat\theta_{2} - \theta) = \frac{1}{\sqrt{n}} \sum_{i=1}^{n} (X_i - \theta)^2 - \sqrt{n} (\theta - \overline{X_n})^2 - \sqrt{n} \theta = 
+$$
 
 ### Question 16
 
