@@ -8,9 +8,19 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Analysis of the USJudgeRatings dataset
+# Problem 2: Analysis of the USJudgeRatings dataset
 
-##Introduction and exploration of the dataset
+This exercise is open. You are asked to use the tools we have seen together to analyze the USJudgeRatings data set. This data set is provided in the package datasets. Your analysis should be reported here and include:
+
+* an introduction
+* a general description of the data
+* the use of descriptive statistics
+* the use of all techniques we have seen together that might be relevant 
+* a conclusion
+
+Overall, your analysis, including the graphs and the codes should not exceed 15 pages in pdf.
+
+### Introduction and exploration of the dataset
 
 The USJudgeRatings dataset contains lawyers’ ratings of state judges in the US Superior Court in 1977.
 
@@ -25,24 +35,34 @@ str(USJudgeRatings)
 
 The data is stored in a dataframe.
 We are provided with 43 observations and 12 quantitative variables.
+```{r}
+colnames(USJudgeRatings)
+```
 
-The variables are : 
-CONT : Number of contacts of lawyer with judge.
-INTG : Judicial integrity
-DMNR : Demeanor
-DILG : Diligence
-CFMG : Case flow managing
-DECI : Prompt decisions
-PREP : Preparation for trial
-FAMI : Familiarity with law
-ORAL : Sound oral rulings
-WRIT : Sound written rulings
-PHYS : Physical ability
-RTEN : Worthy of retention
+The variables are:
 
-The variables are the ratings received by the judges and seem to range from 0 to 10 (except the variable CONT which is the number of contact of the lawyer with the judge). 
+* CONT : Number of contacts of lawyer with judge.
+* INTG : Judicial integrity
+* DMNR : Demeanor
+* DILG : Diligence
+* CFMG : Case flow managing
+* DECI : Prompt decisions
+* PREP : Preparation for trial
+* FAMI : Familiarity with law
+* ORAL : Sound oral rulings
+* WRIT : Sound written rulings
+* PHYS : Physical ability
+* RTEN : Worthy of retention
 
-The last variable, RTEN, measures if the lawyers think that a judge is worthy staying in the US Superior Cour . Let's measure the correlations between the 11 first variables and the variable RTEN.
+An observation is the different ratings received by a judge. All the variables (except the variable CONT) are ranged from 0 to 10. 
+```{r}
+summary(USJudgeRatings)
+```
+
+The last variable, RTEN, seems to conclude the analysis. In fact, it says if the lawyers think that the judge is worthy staying in the US Superior Cour or not.
+
+Let's measure the correlations between the 11 first variables and the variable RTEN.
+
 
 ## Descriptive statistics analysis of the dataset
 
