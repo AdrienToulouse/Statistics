@@ -20,9 +20,10 @@ This exercise is open. You are asked to use the tools we have seen together to a
 
 Overall, your analysis, including the graphs and the codes should not exceed 15 pages in pdf.
 
-### Introduction and exploration of the dataset
+### Introduction 
 
-The USJudgeRatings dataset contains lawyers’ ratings of state judges in the US Superior Court in 1977.
+The USJudgeRatings dataset contains lawyers’ ratings of state judges in the US Superior Court in 1977.  
+The data is stored in a dataframe.
 
 ```{r upload data}
 data(USJudgeRatings)
@@ -33,15 +34,16 @@ head(USJudgeRatings)
 str(USJudgeRatings)
 ```
 
-The data is stored in a dataframe.
-We are provided with 43 observations and 12 quantitative variables.
-```{r}
+We are provided with n = 43 observations and p = 12 quantitative variables.  
+An observation is the different ratings received by a judge (given by his name) in the US Superior Court in 1977.
+
+```{r Colnames}
 colnames(USJudgeRatings)
 ```
 
 The variables are:
 
-* CONT : Number of contacts of lawyer with judge.
+* CONT : Number of contacts of lawyer with judge
 * INTG : Judicial integrity
 * DMNR : Demeanor
 * DILG : Diligence
@@ -54,17 +56,8 @@ The variables are:
 * PHYS : Physical ability
 * RTEN : Worthy of retention
 
-An observation is the different ratings received by a judge. All the variables (except the variable CONT) are ranged from 0 to 10. 
-```{r}
-summary(USJudgeRatings)
-```
 
-The last variable, RTEN, seems to conclude the analysis. In fact, it says if the lawyers think that the judge is worthy staying in the US Superior Cour or not.
-
-Let's measure the correlations between the 11 first variables and the variable RTEN.
-
-
-## Descriptive statistics analysis of the dataset
+### General description of the data
 
 ```{r missing values?}
 sum(is.na(USJudgeRatings))
@@ -72,51 +65,65 @@ sum(is.na(USJudgeRatings))
 
 There are no missing values in the data frame. 
 
-```{r outliers?}
+```{r Summary}
+summary(USJudgeRatings)
+```
+
+All the variables (except the variable CONT) seem to be ranged between 0 and 10.  
+The last variable, RTEN, seems to conclude the analysis. In fact, it says if the lawyers think that the judge is worthy staying in the US Superior Court or not.  
+First, we can observe that each variable seems to follow a symetric distribution, since median and mean are always close.
+Are u sure? because sometimes the difference is big for values between 5 and 10.
+
+```{r boxplot}
 Outvals = boxplot(USJudgeRatings)
 ```
 
-We observe the presence of outliers for 10 of the 12 variables (with large values for CONT and with low values for the other variables).
+We observe the presence of outliers for 10 of the 12 variables (with larger values for CONT and with lower values for the other variables).
 
-```{r mistakes?}
+We can take a look on some outliers.
+
+```{r max_CONT}
 max(USJudgeRatings$CONT)
 rownames(USJudgeRatings)[which.max(USJudgeRatings$CONT)]
 ```
+The judge with the biggest number of contacts of lawyer is judge Callahan with a a number of 10.6 contacts.
 
 ```{r lowest rating}
 min(USJudgeRatings$RTEN)
 rownames(USJudgeRatings)[which.min(USJudgeRatings$RTEN)]
 ```
-
-The judge with the lowest rating for worthiness of retention is judge Bracken with a rating of 4.8 
+The judge with the lowest rating for worthiness of retention is judge Bracken with a rating of 4.8.
 
 ```{r highest rating}
 max(USJudgeRatings$RTEN)
 rownames(USJudgeRatings)[which.max(USJudgeRatings$RTEN)]
 ```
-The judge with the highest rating for worthiness of retention is judge Rubinow with a rating of 9.2
+The judge with the highest rating for worthiness of retention is judge Rubinow with a rating of 9.2.  
+We are not provided with extra information and we cannot check wether the outliers correspond to mistakes. Thus, we will assume that they aren't mistakes.
 
-```{r summary}
-summary(USJudgeRatings)
-```
+### Descriptive statistics analysis of the dataset
 
-We have a symetric distribution for all of the variables since median and mean are always close.
+
 
 ```{r histograms}
 par(mfrow=c(2,2))
-hist(USJudgeRatings$CONT, main="CONT")
-hist(USJudgeRatings$PREP, main="PREP" )
+hist(USJudgeRatings$CONT[USJudgeRatings$CONT<9], main="CONT")
+hist(USJudgeRatings$PREP[USJudgeRatings$PREP>5], main="PREP" )
 hist(USJudgeRatings$WRIT, main="WRIT")
 hist(USJudgeRatings$RTEN, main="RTEN")
 ```
 
 ```{r dispersion}
 round(sqrt(diag(var(USJudgeRatings))),2)
+print('The smallest standard deviation is: ')
+min(round(sqrt(diag(var(USJudgeRatings))),2))
+print('The largest standard deviation is: ')
+max(round(sqrt(diag(var(USJudgeRatings))),2))
 ```
-
 Regarding the dispersion, we look at the interquartile range (given by the boxplots) and the empirical standard deviation. Overall, the dispersions are not very high (around 1). 
 We find that the variables DMNR and RTEN have the largest standard deviation, while the DECI variable has the smallest.
 
+Let's measure the correlations between the 11 first variables and the variable RTEN.
 ```{r linear relationships between variables 1}
 round(cor(USJudgeRatings),2)
 ```
@@ -125,7 +132,7 @@ round(cor(USJudgeRatings),2)
 library(corrplot)
 corrplot(cor(USJudgeRatings))
 ```
-All the variables have strong positive correlation two by two except the variable CONT which is not correlated to all the other variables.
+All the variables have a strong positive correlation two by two except the variable CONT which is not correlated to all the other variables.
 The number of contacts of a lawyer with the judge doesn't seem to explain the ratings received by the judge. 
 
 ```{r pairs}
@@ -165,7 +172,13 @@ We will try to find which of the other 11 variables explain the best our dependa
 
 
 
+use of ggplot??
 
 
 
+```{r}
+library(e1071)
+kurtosis
+skewness
+```
 
