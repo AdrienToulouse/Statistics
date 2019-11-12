@@ -457,6 +457,9 @@ The judge with the highest rating for worthiness of retention is judge Rubinow w
 
 We are not provided with extra information and nothing indicated that these outliers correspond to mistakes. Thus, we will assume that they aren't mistakes and keep them in our analysis.
 
+The boxplots give us other relevant information on the PHYS variable. This variable has quite a high mean compared to the others and a lower interquartile range. 
+
+
 ```{r}
 library(ggplot2)
 library(dplyr)
@@ -467,12 +470,10 @@ ggpairs(USJudgeRatings)
 
 ```{r histograms}
 hist(USJudgeRatings$CONT, main="CONT")
-
 ```
 
 ```{r}
 hist(USJudgeRatings$PREP, main="PREP" )
-
 ```
 
 ```{r}
@@ -513,7 +514,6 @@ pairs(USJudgeRatings)
 All the variables have a strong positive correlation two by two except the variable CONT which is not correlated to all the other variables.
 The number of contacts of a lawyer with the judge doesn't seem to explain the ratings received by the judge. 
 
-
 ```{r density}
 par(mfrow=c(1,2))
 hist(USJudgeRatings$CONT, probability= TRUE, main="Histogram of CONT", xlab="CONT")
@@ -540,9 +540,10 @@ The QQ plots suggests that the RTEN variable seems to follow a Gaussian distribu
 
 ```{r}
 library(e1071)
-kurtosis
-skewness
+kurtosis(USJudgeRatings$RTEN)
+skewness(USJudgeRatings$RTEN)
 ```
+Skewness and kurtosis figures for the retention variable are both between -1 and 1 which indicates no substantial skewness or kurtosis.
 
 ### Conclusion
 
