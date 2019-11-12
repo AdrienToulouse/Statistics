@@ -6,9 +6,7 @@ output:
 header-includes: \usepackage{dsfont}
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+
 
 
 # Problem 1: Estimating parameters of a Poisson distribution
@@ -108,7 +106,8 @@ By continuous mapping, $\sqrt{\hat\theta_{MLE}}$ converges in probability toward
 Then, by Slutsky's theorem, we have that $\sqrt{n}\frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}}$ converges in law towards a gaussian $\mathcal{N}(0,1)$.
 
 Let's check this result in R by simulating 1000 times our random variable $\sqrt{n}\frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}}$ with a sample size of 100: 
-```{r}
+
+```r
 estim <- function(x, theta){
   n <- length(x)
   est <- sqrt(n) * (mean(x) - theta) / sqrt(mean(x))
@@ -116,7 +115,8 @@ estim <- function(x, theta){
 ```
 
 
-```{r}
+
+```r
 set.seed(42)
 Nattempts = 1e3
 nsample = 100
@@ -130,11 +130,16 @@ d = density(realisations, kernel='gaussian')
 lines(d, col = 'red')
 ```
 
+![](Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/unnamed-chunk-2-1.pdf)<!-- --> 
 
-```{r}
+
+
+```r
 qqnorm(realisations)
 qqline(realisations)
 ```
+
+![](Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/unnamed-chunk-3-1.pdf)<!-- --> 
 
 This confirms what we found theoretically: the random variable $\sqrt{n}\frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}}$ follows a standard gaussian distribution. 
 
@@ -367,35 +372,129 @@ We will start by doing a general description of the data and applying descriptiv
 
 We start by uploading our data.
 
-```{r upload data}
+
+```r
 data(USJudgeRatings)
 ```
 
 First, let's see how the dataset is organized.  
-```{r Introduction}
+
+```r
 str(USJudgeRatings)
+```
+
+```
+## 'data.frame':	43 obs. of  12 variables:
+##  $ CONT: num  5.7 6.8 7.2 6.8 7.3 6.2 10.6 7 7.3 8.2 ...
+##  $ INTG: num  7.9 8.9 8.1 8.8 6.4 8.8 9 5.9 8.9 7.9 ...
+##  $ DMNR: num  7.7 8.8 7.8 8.5 4.3 8.7 8.9 4.9 8.9 6.7 ...
+##  $ DILG: num  7.3 8.5 7.8 8.8 6.5 8.5 8.7 5.1 8.7 8.1 ...
+##  $ CFMG: num  7.1 7.8 7.5 8.3 6 7.9 8.5 5.4 8.6 7.9 ...
+##  $ DECI: num  7.4 8.1 7.6 8.5 6.2 8 8.5 5.9 8.5 8 ...
+##  $ PREP: num  7.1 8 7.5 8.7 5.7 8.1 8.5 4.8 8.4 7.9 ...
+##  $ FAMI: num  7.1 8 7.5 8.7 5.7 8 8.5 5.1 8.4 8.1 ...
+##  $ ORAL: num  7.1 7.8 7.3 8.4 5.1 8 8.6 4.7 8.4 7.7 ...
+##  $ WRIT: num  7 7.9 7.4 8.5 5.3 8 8.4 4.9 8.5 7.8 ...
+##  $ PHYS: num  8.3 8.5 7.9 8.8 5.5 8.6 9.1 6.8 8.8 8.5 ...
+##  $ RTEN: num  7.8 8.7 7.8 8.7 4.8 8.6 9 5 8.8 7.9 ...
 ```
 
 The data is stored in a dataframe.
 
-```{r}
+
+```r
 dim(USJudgeRatings)
+```
+
+```
+## [1] 43 12
 ```
 We are provided with n = 43 observations and p = 12 quantitative variables.
 
 We can have a full view of the dataset by using the kable function:
-```{r view}
+
+```r
 library(knitr)
 library(kableExtra)
 kable(USJudgeRatings, 'latex', caption = "Ratings of US judges", booktabs = T) %>%
   kable_styling(latex_options = "striped", font_size = 6.5)
 ```
 
+\begin{table}
+
+\caption{\label{tab:view}Ratings of US judges}
+\centering
+\fontsize{6.5}{8.5}\selectfont
+\begin{tabular}[t]{lrrrrrrrrrrrr}
+\toprule
+  & CONT & INTG & DMNR & DILG & CFMG & DECI & PREP & FAMI & ORAL & WRIT & PHYS & RTEN\\
+\midrule
+\rowcolor{gray!6}  AARONSON,L.H. & 5.7 & 7.9 & 7.7 & 7.3 & 7.1 & 7.4 & 7.1 & 7.1 & 7.1 & 7.0 & 8.3 & 7.8\\
+ALEXANDER,J.M. & 6.8 & 8.9 & 8.8 & 8.5 & 7.8 & 8.1 & 8.0 & 8.0 & 7.8 & 7.9 & 8.5 & 8.7\\
+\rowcolor{gray!6}  ARMENTANO,A.J. & 7.2 & 8.1 & 7.8 & 7.8 & 7.5 & 7.6 & 7.5 & 7.5 & 7.3 & 7.4 & 7.9 & 7.8\\
+BERDON,R.I. & 6.8 & 8.8 & 8.5 & 8.8 & 8.3 & 8.5 & 8.7 & 8.7 & 8.4 & 8.5 & 8.8 & 8.7\\
+\rowcolor{gray!6}  BRACKEN,J.J. & 7.3 & 6.4 & 4.3 & 6.5 & 6.0 & 6.2 & 5.7 & 5.7 & 5.1 & 5.3 & 5.5 & 4.8\\
+\addlinespace
+BURNS,E.B. & 6.2 & 8.8 & 8.7 & 8.5 & 7.9 & 8.0 & 8.1 & 8.0 & 8.0 & 8.0 & 8.6 & 8.6\\
+\rowcolor{gray!6}  CALLAHAN,R.J. & 10.6 & 9.0 & 8.9 & 8.7 & 8.5 & 8.5 & 8.5 & 8.5 & 8.6 & 8.4 & 9.1 & 9.0\\
+COHEN,S.S. & 7.0 & 5.9 & 4.9 & 5.1 & 5.4 & 5.9 & 4.8 & 5.1 & 4.7 & 4.9 & 6.8 & 5.0\\
+\rowcolor{gray!6}  DALY,J.J. & 7.3 & 8.9 & 8.9 & 8.7 & 8.6 & 8.5 & 8.4 & 8.4 & 8.4 & 8.5 & 8.8 & 8.8\\
+DANNEHY,J.F. & 8.2 & 7.9 & 6.7 & 8.1 & 7.9 & 8.0 & 7.9 & 8.1 & 7.7 & 7.8 & 8.5 & 7.9\\
+\addlinespace
+\rowcolor{gray!6}  DEAN,H.H. & 7.0 & 8.0 & 7.6 & 7.4 & 7.3 & 7.5 & 7.1 & 7.2 & 7.1 & 7.2 & 8.4 & 7.7\\
+DEVITA,H.J. & 6.5 & 8.0 & 7.6 & 7.2 & 7.0 & 7.1 & 6.9 & 7.0 & 7.0 & 7.1 & 6.9 & 7.2\\
+\rowcolor{gray!6}  DRISCOLL,P.J. & 6.7 & 8.6 & 8.2 & 6.8 & 6.9 & 6.6 & 7.1 & 7.3 & 7.2 & 7.2 & 8.1 & 7.7\\
+GRILLO,A.E. & 7.0 & 7.5 & 6.4 & 6.8 & 6.5 & 7.0 & 6.6 & 6.8 & 6.3 & 6.6 & 6.2 & 6.5\\
+\rowcolor{gray!6}  HADDEN,W.L.JR. & 6.5 & 8.1 & 8.0 & 8.0 & 7.9 & 8.0 & 7.9 & 7.8 & 7.8 & 7.8 & 8.4 & 8.0\\
+\addlinespace
+HAMILL,E.C. & 7.3 & 8.0 & 7.4 & 7.7 & 7.3 & 7.3 & 7.3 & 7.2 & 7.1 & 7.2 & 8.0 & 7.6\\
+\rowcolor{gray!6}  HEALEY.A.H. & 8.0 & 7.6 & 6.6 & 7.2 & 6.5 & 6.5 & 6.8 & 6.7 & 6.4 & 6.5 & 6.9 & 6.7\\
+HULL,T.C. & 7.7 & 7.7 & 6.7 & 7.5 & 7.4 & 7.5 & 7.1 & 7.3 & 7.1 & 7.3 & 8.1 & 7.4\\
+\rowcolor{gray!6}  LEVINE,I. & 8.3 & 8.2 & 7.4 & 7.8 & 7.7 & 7.7 & 7.7 & 7.8 & 7.5 & 7.6 & 8.0 & 8.0\\
+LEVISTER,R.L. & 9.6 & 6.9 & 5.7 & 6.6 & 6.9 & 6.6 & 6.2 & 6.0 & 5.8 & 5.8 & 7.2 & 6.0\\
+\addlinespace
+\rowcolor{gray!6}  MARTIN,L.F. & 7.1 & 8.2 & 7.7 & 7.1 & 6.6 & 6.6 & 6.7 & 6.7 & 6.8 & 6.8 & 7.5 & 7.3\\
+MCGRATH,J.F. & 7.6 & 7.3 & 6.9 & 6.8 & 6.7 & 6.8 & 6.4 & 6.3 & 6.3 & 6.3 & 7.4 & 6.6\\
+\rowcolor{gray!6}  MIGNONE,A.F. & 6.6 & 7.4 & 6.2 & 6.2 & 5.4 & 5.7 & 5.8 & 5.9 & 5.2 & 5.8 & 4.7 & 5.2\\
+MISSAL,H.M. & 6.2 & 8.3 & 8.1 & 7.7 & 7.4 & 7.3 & 7.3 & 7.3 & 7.2 & 7.3 & 7.8 & 7.6\\
+\rowcolor{gray!6}  MULVEY,H.M. & 7.5 & 8.7 & 8.5 & 8.6 & 8.5 & 8.4 & 8.5 & 8.5 & 8.4 & 8.4 & 8.7 & 8.7\\
+\addlinespace
+NARUK,H.J. & 7.8 & 8.9 & 8.7 & 8.9 & 8.7 & 8.8 & 8.9 & 9.0 & 8.8 & 8.9 & 9.0 & 9.0\\
+\rowcolor{gray!6}  O'BRIEN,F.J. & 7.1 & 8.5 & 8.3 & 8.0 & 7.9 & 7.9 & 7.8 & 7.8 & 7.8 & 7.7 & 8.3 & 8.2\\
+O'SULLIVAN,T.J. & 7.5 & 9.0 & 8.9 & 8.7 & 8.4 & 8.5 & 8.4 & 8.3 & 8.3 & 8.3 & 8.8 & 8.7\\
+\rowcolor{gray!6}  PASKEY,L. & 7.5 & 8.1 & 7.7 & 8.2 & 8.0 & 8.1 & 8.2 & 8.4 & 8.0 & 8.1 & 8.4 & 8.1\\
+RUBINOW,J.E. & 7.1 & 9.2 & 9.0 & 9.0 & 8.4 & 8.6 & 9.1 & 9.1 & 8.9 & 9.0 & 8.9 & 9.2\\
+\addlinespace
+\rowcolor{gray!6}  SADEN.G.A. & 6.6 & 7.4 & 6.9 & 8.4 & 8.0 & 7.9 & 8.2 & 8.4 & 7.7 & 7.9 & 8.4 & 7.5\\
+SATANIELLO,A.G. & 8.4 & 8.0 & 7.9 & 7.9 & 7.8 & 7.8 & 7.6 & 7.4 & 7.4 & 7.4 & 8.1 & 7.9\\
+\rowcolor{gray!6}  SHEA,D.M. & 6.9 & 8.5 & 7.8 & 8.5 & 8.1 & 8.2 & 8.4 & 8.5 & 8.1 & 8.3 & 8.7 & 8.3\\
+SHEA,J.F.JR. & 7.3 & 8.9 & 8.8 & 8.7 & 8.4 & 8.5 & 8.5 & 8.5 & 8.4 & 8.4 & 8.8 & 8.8\\
+\rowcolor{gray!6}  SIDOR,W.J. & 7.7 & 6.2 & 5.1 & 5.6 & 5.6 & 5.9 & 5.6 & 5.6 & 5.3 & 5.5 & 6.3 & 5.3\\
+\addlinespace
+SPEZIALE,J.A. & 8.5 & 8.3 & 8.1 & 8.3 & 8.4 & 8.2 & 8.2 & 8.1 & 7.9 & 8.0 & 8.0 & 8.2\\
+\rowcolor{gray!6}  SPONZO,M.J. & 6.9 & 8.3 & 8.0 & 8.1 & 7.9 & 7.9 & 7.9 & 7.7 & 7.6 & 7.7 & 8.1 & 8.0\\
+STAPLETON,J.F. & 6.5 & 8.2 & 7.7 & 7.8 & 7.6 & 7.7 & 7.7 & 7.7 & 7.5 & 7.6 & 8.5 & 7.7\\
+\rowcolor{gray!6}  TESTO,R.J. & 8.3 & 7.3 & 7.0 & 6.8 & 7.0 & 7.1 & 6.7 & 6.7 & 6.7 & 6.7 & 8.0 & 7.0\\
+TIERNEY,W.L.JR. & 8.3 & 8.2 & 7.8 & 8.3 & 8.4 & 8.3 & 7.7 & 7.6 & 7.5 & 7.7 & 8.1 & 7.9\\
+\addlinespace
+\rowcolor{gray!6}  WALL,R.A. & 9.0 & 7.0 & 5.9 & 7.0 & 7.0 & 7.2 & 6.9 & 6.9 & 6.5 & 6.6 & 7.6 & 6.6\\
+WRIGHT,D.B. & 7.1 & 8.4 & 8.4 & 7.7 & 7.5 & 7.7 & 7.8 & 8.2 & 8.0 & 8.1 & 8.3 & 8.1\\
+\rowcolor{gray!6}  ZARRILLI,K.J. & 8.6 & 7.4 & 7.0 & 7.5 & 7.5 & 7.7 & 7.4 & 7.2 & 6.9 & 7.0 & 7.8 & 7.1\\
+\bottomrule
+\end{tabular}
+\end{table}
+
 The variables are all numeric.
 An observation in this dataset represents the different ratings received by a judge (given by his name) in the US Superior Court. Let's define properly what each variable means. 
 
-```{r Colnames}
+
+```r
 colnames(USJudgeRatings)
+```
+
+```
+##  [1] "CONT" "INTG" "DMNR" "DILG" "CFMG" "DECI" "PREP" "FAMI" "ORAL" "WRIT"
+## [11] "PHYS" "RTEN"
 ```
 
 The variables are:
@@ -415,8 +514,33 @@ The variables are:
 
 ## Descriptive dataset analysis
 
-```{r Summary}
+
+```r
 summary(USJudgeRatings)
+```
+
+```
+##       CONT             INTG            DMNR            DILG      
+##  Min.   : 5.700   Min.   :5.900   Min.   :4.300   Min.   :5.100  
+##  1st Qu.: 6.850   1st Qu.:7.550   1st Qu.:6.900   1st Qu.:7.150  
+##  Median : 7.300   Median :8.100   Median :7.700   Median :7.800  
+##  Mean   : 7.437   Mean   :8.021   Mean   :7.516   Mean   :7.693  
+##  3rd Qu.: 7.900   3rd Qu.:8.550   3rd Qu.:8.350   3rd Qu.:8.450  
+##  Max.   :10.600   Max.   :9.200   Max.   :9.000   Max.   :9.000  
+##       CFMG            DECI            PREP            FAMI      
+##  Min.   :5.400   Min.   :5.700   Min.   :4.800   Min.   :5.100  
+##  1st Qu.:7.000   1st Qu.:7.100   1st Qu.:6.900   1st Qu.:6.950  
+##  Median :7.600   Median :7.700   Median :7.700   Median :7.600  
+##  Mean   :7.479   Mean   :7.565   Mean   :7.467   Mean   :7.488  
+##  3rd Qu.:8.050   3rd Qu.:8.150   3rd Qu.:8.200   3rd Qu.:8.250  
+##  Max.   :8.700   Max.   :8.800   Max.   :9.100   Max.   :9.100  
+##       ORAL            WRIT            PHYS            RTEN      
+##  Min.   :4.700   Min.   :4.900   Min.   :4.700   Min.   :4.800  
+##  1st Qu.:6.850   1st Qu.:6.900   1st Qu.:7.700   1st Qu.:7.150  
+##  Median :7.500   Median :7.600   Median :8.100   Median :7.800  
+##  Mean   :7.293   Mean   :7.384   Mean   :7.935   Mean   :7.602  
+##  3rd Qu.:8.000   3rd Qu.:8.050   3rd Qu.:8.500   3rd Qu.:8.250  
+##  Max.   :8.900   Max.   :9.000   Max.   :9.100   Max.   :9.200
 ```
 All the variables (except the variable CONT) seem to be ranged between 0 and 10.  
 The last variable, RTEN, is our response variable. It says if the lawyers think that the judge is worthy staying in the US Superior Court or not.  
@@ -425,96 +549,281 @@ We can observe that each variable seems to follow a symetric distribution, since
 
 ### Let's inspect the dataframe for missing values, outliers and errors: 
 
-```{r missing values?}
+
+```r
 sum(is.na(USJudgeRatings))
+```
+
+```
+## [1] 0
 ```
 There are no missing values in the dataframe. 
 
-```{r boxplot}
+
+```r
 Outvals = boxplot(USJudgeRatings)
 ```
+
+![](Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/boxplot-1.pdf)<!-- --> 
 
 We observe the presence of outliers for 10 of the 12 variables (with larger values for CONT and with lower values for the other variables).
 
 Let's take a closer look at these outliers.
-```{r max_CONT}
+
+```r
 max(USJudgeRatings$CONT)
+```
+
+```
+## [1] 10.6
+```
+
+```r
 rownames(USJudgeRatings)[which.max(USJudgeRatings$CONT)]
+```
+
+```
+## [1] "CALLAHAN,R.J."
 ```
 The judge with the biggest number of contacts of lawyer is judge Callahan with a a number of 10.6 contacts.
 
-```{r lowest rating}
+
+```r
 min(USJudgeRatings$RTEN)
+```
+
+```
+## [1] 4.8
+```
+
+```r
 rownames(USJudgeRatings)[which.min(USJudgeRatings$RTEN)]
+```
+
+```
+## [1] "BRACKEN,J.J."
 ```
 The judge with the lowest rating for worthiness of retention is judge Bracken with a rating of 4.8.
 
-```{r highest rating}
+
+```r
 max(USJudgeRatings$RTEN)
+```
+
+```
+## [1] 9.2
+```
+
+```r
 rownames(USJudgeRatings)[which.max(USJudgeRatings$RTEN)]
+```
+
+```
+## [1] "RUBINOW,J.E."
 ```
 The judge with the highest rating for worthiness of retention is judge Rubinow with a rating of 9.2.  
 
 We are not provided with extra information and nothing indicated that these outliers correspond to mistakes. Thus, we will assume that they aren't mistakes and keep them in our analysis.
 
-```{r}
+
+```r
 library(ggplot2)
 library(dplyr)
+```
+
+```
+## 
+## Attaching package: 'dplyr'
+```
+
+```
+## The following object is masked from 'package:kableExtra':
+## 
+##     group_rows
+```
+
+```
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+```
+
+```
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+```
+
+```r
 library(GGally)
+```
+
+```
+## Registered S3 method overwritten by 'GGally':
+##   method from   
+##   +.gg   ggplot2
+```
+
+```
+## 
+## Attaching package: 'GGally'
+```
+
+```
+## The following object is masked from 'package:dplyr':
+## 
+##     nasa
+```
+
+```r
 ggpairs(USJudgeRatings)
 ```
 
+![](Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/unnamed-chunk-5-1.pdf)<!-- --> 
 
-```{r histograms}
+
+
+```r
 hist(USJudgeRatings$CONT, main="CONT")
-
 ```
 
-```{r}
+![](Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/histograms-1.pdf)<!-- --> 
+
+
+```r
 hist(USJudgeRatings$PREP, main="PREP" )
-
 ```
 
-```{r}
+![](Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/unnamed-chunk-6-1.pdf)<!-- --> 
+
+
+```r
 hist(USJudgeRatings$WRIT, main="WRIT")
 ```
 
-```{r}
+![](Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/unnamed-chunk-7-1.pdf)<!-- --> 
+
+
+```r
 hist(USJudgeRatings$RTEN, main="RTEN")
 ```
 
-```{r}
+![](Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/unnamed-chunk-8-1.pdf)<!-- --> 
+
+
+```r
 round(var(USJudgeRatings), 2)
 ```
 
-```{r dispersion}
+```
+##       CONT  INTG  DMNR DILG CFMG DECI PREP  FAMI  ORAL  WRIT PHYS  RTEN
+## CONT  0.89 -0.10 -0.17 0.01 0.11 0.07 0.01 -0.02 -0.01 -0.04 0.05 -0.03
+## INTG -0.10  0.59  0.85 0.60 0.54 0.50 0.64  0.64  0.71  0.67 0.54  0.79
+## DMNR -0.17  0.85  1.31 0.86 0.80 0.74 0.93  0.91  1.05  0.98 0.85  1.19
+## DILG  0.01  0.60  0.86 0.81 0.74 0.69 0.84  0.82  0.87  0.83 0.69  0.92
+## CFMG  0.11  0.54  0.80 0.74 0.74 0.68 0.79  0.76  0.83  0.78 0.71  0.88
+## DECI  0.07  0.50  0.74 0.69 0.68 0.64 0.73  0.72  0.77  0.73 0.66  0.82
+## PREP  0.01  0.64  0.93 0.84 0.79 0.73 0.91  0.90  0.95  0.90 0.76  1.00
+## FAMI -0.02  0.64  0.91 0.82 0.76 0.72 0.90  0.90  0.94  0.90 0.75  0.98
+## ORAL -0.01  0.71  1.05 0.87 0.83 0.77 0.95  0.94  1.02  0.96 0.85  1.09
+## WRIT -0.04  0.67  0.98 0.83 0.78 0.73 0.90  0.90  0.96  0.92 0.77  1.02
+## PHYS  0.05  0.54  0.85 0.69 0.71 0.66 0.76  0.75  0.85  0.77 0.88  0.94
+## RTEN -0.03  0.79  1.19 0.92 0.88 0.82 1.00  0.98  1.09  1.02 0.94  1.21
+```
+
+
+```r
 round(sqrt(diag(var(USJudgeRatings))),2)
+```
+
+```
+## CONT INTG DMNR DILG CFMG DECI PREP FAMI ORAL WRIT PHYS RTEN 
+## 0.94 0.77 1.14 0.90 0.86 0.80 0.95 0.95 1.01 0.96 0.94 1.10
+```
+
+```r
 print('The smallest standard deviation is: ')
+```
+
+```
+## [1] "The smallest standard deviation is: "
+```
+
+```r
 min(round(sqrt(diag(var(USJudgeRatings))),2))
+```
+
+```
+## [1] 0.77
+```
+
+```r
 print('The largest standard deviation is: ')
+```
+
+```
+## [1] "The largest standard deviation is: "
+```
+
+```r
 max(round(sqrt(diag(var(USJudgeRatings))),2))
+```
+
+```
+## [1] 1.14
 ```
 Regarding the dispersion, we look at the interquartile range (given by the boxplots) and the empirical standard deviation. Overall, the dispersions are not very high (around 1). 
 We find that the variables DMNR and RTEN have the largest standard deviation, while the DECI variable has the smallest.
 
 Let's measure the correlations between the 11 first variables and the variable RTEN. For this we use the correlations function and the pairs function to visualize the scatter plots of the variables two by two. 
-```{r linear relationships between variables 1}
+
+```r
 round(cor(USJudgeRatings),2)
 ```
 
-```{r linear relationships between variables 2}
+```
+##       CONT  INTG  DMNR DILG CFMG DECI PREP  FAMI  ORAL  WRIT PHYS  RTEN
+## CONT  1.00 -0.13 -0.15 0.01 0.14 0.09 0.01 -0.03 -0.01 -0.04 0.05 -0.03
+## INTG -0.13  1.00  0.96 0.87 0.81 0.80 0.88  0.87  0.91  0.91 0.74  0.94
+## DMNR -0.15  0.96  1.00 0.84 0.81 0.80 0.86  0.84  0.91  0.89 0.79  0.94
+## DILG  0.01  0.87  0.84 1.00 0.96 0.96 0.98  0.96  0.95  0.96 0.81  0.93
+## CFMG  0.14  0.81  0.81 0.96 1.00 0.98 0.96  0.94  0.95  0.94 0.88  0.93
+## DECI  0.09  0.80  0.80 0.96 0.98 1.00 0.96  0.94  0.95  0.95 0.87  0.92
+## PREP  0.01  0.88  0.86 0.98 0.96 0.96 1.00  0.99  0.98  0.99 0.85  0.95
+## FAMI -0.03  0.87  0.84 0.96 0.94 0.94 0.99  1.00  0.98  0.99 0.84  0.94
+## ORAL -0.01  0.91  0.91 0.95 0.95 0.95 0.98  0.98  1.00  0.99 0.89  0.98
+## WRIT -0.04  0.91  0.89 0.96 0.94 0.95 0.99  0.99  0.99  1.00 0.86  0.97
+## PHYS  0.05  0.74  0.79 0.81 0.88 0.87 0.85  0.84  0.89  0.86 1.00  0.91
+## RTEN -0.03  0.94  0.94 0.93 0.93 0.92 0.95  0.94  0.98  0.97 0.91  1.00
+```
+
+
+```r
 library(corrplot)
+```
+
+```
+## corrplot 0.84 loaded
+```
+
+```r
 corrplot(cor(USJudgeRatings))
 ```
 
-```{r pairs}
+![](Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/linear relationships between variables 2-1.pdf)<!-- --> 
+
+
+```r
 pairs(USJudgeRatings)
 ```
+
+![](Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/pairs-1.pdf)<!-- --> 
 All the variables have a strong positive correlation two by two except the variable CONT which is not correlated to all the other variables.
 The number of contacts of a lawyer with the judge doesn't seem to explain the ratings received by the judge. 
 
 
-```{r density}
+
+```r
 par(mfrow=c(1,2))
 hist(USJudgeRatings$CONT, probability= TRUE, main="Histogram of CONT", xlab="CONT")
 d = density(USJudgeRatings$CONT, kernel = 'c', bw = 0.3)
@@ -525,23 +834,88 @@ d = density(USJudgeRatings$RTEN, kernel = 'o', bw = 0.3)
 lines(d, col="red")
 ```
 
+![](Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/density-1.pdf)<!-- --> 
 
-```{r ecdf}
+
+
+```r
 par(mfrow=c(1,2))
 plot(ecdf(USJudgeRatings$CONT), verticals = TRUE, do.points = FALSE, main = "ECDF CONT")
 plot(ecdf(USJudgeRatings$RTEN), verticals = TRUE, do.points = FALSE, main = "ECDF RTEN")
 ```
 
-```{r QQ plot}
+![](Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/ecdf-1.pdf)<!-- --> 
+
+
+```r
 qqnorm(USJudgeRatings$RTEN)
 qqline(USJudgeRatings$RTEN)
 ```
+
+![](Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/QQ plot-1.pdf)<!-- --> 
 The QQ plots suggests that the RTEN variable seems to follow a Gaussian distribution except for lower values.
 
-```{r}
+
+```r
 library(e1071)
 kurtosis
+```
+
+```
+## function (x, na.rm = FALSE, type = 3) 
+## {
+##     if (any(ina <- is.na(x))) {
+##         if (na.rm) 
+##             x <- x[!ina]
+##         else return(NA)
+##     }
+##     if (!(type %in% (1:3))) 
+##         stop("Invalid 'type' argument.")
+##     n <- length(x)
+##     x <- x - mean(x)
+##     r <- n * sum(x^4)/(sum(x^2)^2)
+##     y <- if (type == 1) 
+##         r - 3
+##     else if (type == 2) {
+##         if (n < 4) 
+##             stop("Need at least 4 complete observations.")
+##         ((n + 1) * (r - 3) + 6) * (n - 1)/((n - 2) * (n - 3))
+##     }
+##     else r * (1 - 1/n)^2 - 3
+##     y
+## }
+## <bytecode: 0x7fa26a546fb8>
+## <environment: namespace:e1071>
+```
+
+```r
 skewness
+```
+
+```
+## function (x, na.rm = FALSE, type = 3) 
+## {
+##     if (any(ina <- is.na(x))) {
+##         if (na.rm) 
+##             x <- x[!ina]
+##         else return(NA)
+##     }
+##     if (!(type %in% (1:3))) 
+##         stop("Invalid 'type' argument.")
+##     n <- length(x)
+##     x <- x - mean(x)
+##     y <- sqrt(n) * sum(x^3)/(sum(x^2)^(3/2))
+##     if (type == 2) {
+##         if (n < 3) 
+##             stop("Need at least 3 complete observations.")
+##         y <- y * sqrt(n * (n - 1))/(n - 2)
+##     }
+##     else if (type == 3) 
+##         y <- y * ((1 - 1/n))^(3/2)
+##     y
+## }
+## <bytecode: 0x7fa26a601258>
+## <environment: namespace:e1071>
 ```
 
 ### Conclusion
