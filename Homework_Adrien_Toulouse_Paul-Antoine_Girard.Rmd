@@ -175,7 +175,7 @@ $$
 $$
  \Leftrightarrow \lim \limits_{n \rightarrow + \infty} \mathbb{P} (\sqrt{\hat\theta_{MLE}} - \frac {z_{1-\alpha/2}} {2 \sqrt{n}} \leq \sqrt{\theta} \leq \sqrt{\hat\theta_{MLE}} + \frac {z_{1-\alpha/2}} {2 \sqrt{n}}) \geq 1- \alpha
 $$
-When n goes towards infinity, {$z_{1-\alpha/2}} {2 \sqrt{n}}$ goes to 0. Since  $\sqrt{\hat\theta_{MLE}}$ is positive, there exists a $n_0$ such that $(\sqrt{\hat\theta_{MLE}} - \frac {z_{1-\alpha/2}} {2 \sqrt{n}}$ is positive and we can take the squares in the inequality without changing the order of the inequalities:
+When n goes towards infinity, $\frac {z_{1-\alpha/2}} {2 \sqrt{n}}$ goes to 0. Since  $\sqrt{\hat\theta_{MLE}}$ is positive, there exists a $n_0$ such that $\sqrt{\hat\theta_{MLE}} - \frac {z_{1-\alpha/2}} {2 \sqrt{n}}$ is positive and we can take the squares in the inequality without changing the order of the inequalities:
 
 $$
 \Leftrightarrow \lim \limits_{n \rightarrow + \infty} \mathbb{P} ((\sqrt{\hat\theta_{MLE}} - \frac {z_{1-\alpha/2}} {2 \sqrt{n}})^2 \leq \theta \leq (\sqrt{\hat\theta_{MLE}} + \frac {z_{1-\alpha/2}} {2 \sqrt{n}})^2) \geq 1- \alpha
@@ -359,9 +359,9 @@ Overall, your analysis, including the graphs and the codes should not exceed 15 
 
 ## Introduction 
 
-We have to analyse a dataset, named USJudgeratings, containing various ratings of state judges in the US Superior Court. 
-The different informations given help us to determine if a judge is worthy staying in the US Superior Court or not.
-To be continued...
+We have to analyse a dataset, named USJudgeratings, containing various ratings of state judges in the US Superior Court made by lawyers. 
+The different variables given help us to determine if a judge is worthy staying in the US Superior Court or not.
+
 
 ## General description
 
