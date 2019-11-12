@@ -1,7 +1,7 @@
 ---
 title: 'MAP 531: Homework'
 author: 'Paul-Antoine GIRARD & Adrien TOULOUSE'
-output: 
+output:
   pdf_document: default
 header-includes: \usepackage{dsfont}
 ---
@@ -56,16 +56,16 @@ $$
 We are provided with n independent observations of a Poisson random variable of parameter $\theta \in \Theta = \mathbb{R_+^*}$. Our observations are $X_k \sim Pois (\theta), \forall k \in {1, ..., n}$.  
 The corresponding statistical model is: $$\mathcal{M}^n = (\mathbb{N}^n, \mathcal{P}(\mathbb{N}^n),\ \{\mathbb{P}^n _{\theta},\ \theta \in\Theta \})$$
 with $\mathbb{P}^n _{\theta} = \mathbb{P} _{\theta} \otimes ... \otimes \mathbb{P} _{\theta}$ (n times)  
-We are trying to estimate the parameter $\theta$. 
+We are trying to estimate the parameter $\theta$.
 
 ### Question 4
 
-The likelihood function is the function on $\theta$ that makes our n observations most likely. 
+The likelihood function is the function on $\theta$ that makes our n observations most likely.
 
 Using the independance of the $X_k$:
 $$
 l(\theta) = \prod_{k=1}^{n} e^{-\theta} \frac{\theta^{X_{k}}}{X_{k}!}
-$$ 
+$$
 
 $$
 L(\theta) = log(l(\theta)) = \sum_{k=1} ^{n}(- \theta + X_k log(\theta) - log(X_k!)) = - n \theta + log(\theta) \sum_{k=1}^{n}X_{k} - \sum_{k=1}^{n}log(X_{k}!)
@@ -74,7 +74,7 @@ $$
 By derivating with respect to $\theta$, we have:
 
 $$
-L'(\theta) = -n +\frac{\sum_{k=1}^{n}X_{k}}{\theta} 
+L'(\theta) = -n +\frac{\sum_{k=1}^{n}X_{k}}{\theta}
 $$
 $$
 L''(\theta) = - \frac{\sum_{k=1}^{n}X_{k}}{\theta^2} < 0
@@ -107,7 +107,7 @@ The weak law of large numbers gives us that $\hat\theta_{MLE}$ converges in prob
 By continuous mapping, $\sqrt{\hat\theta_{MLE}}$ converges in probability towards $\sqrt{\theta}$.
 Then, by Slutsky's theorem, we have that $\sqrt{n}\frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}}$ converges in law towards a gaussian $\mathcal{N}(0,1)$.
 
-Let's check this result in R by simulating 1000 times our random variable $\sqrt{n}\frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}}$ with a sample size of 100: 
+Let's check this result in R by simulating 1000 times our random variable $\sqrt{n}\frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}}$ with a sample size of 100:
 ```{r}
 estim <- function(x, theta){
   n <- length(x)
@@ -136,7 +136,7 @@ qqnorm(realisations)
 qqline(realisations)
 ```
 
-This confirms what we found theoretically: the random variable $\sqrt{n}\frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}}$ follows a standard gaussian distribution. 
+This confirms what we found theoretically: the random variable $\sqrt{n}\frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}}$ follows a standard gaussian distribution.
 
 ### Question 7
 
@@ -148,7 +148,7 @@ $$
 \lim \limits_{n \rightarrow + \infty} \mathbb{P} (-z_{1-\alpha/2} \leq Z_n \leq z_{1-\alpha/2}) \ge 1- \alpha \Leftrightarrow \lim \limits_{n \rightarrow + \infty} \mathbb{P}(-z_{1-\alpha/2} \sqrt{\frac{\hat\theta_{MLE}}{n}} \leq \hat\theta_{MLE} - \theta \leq z_{1-\alpha/2}\sqrt{\frac{\hat\theta_{MLE}}{n}}) \ge 1- \alpha
 $$
 
-For $\alpha \in (0, 1)$,  an asymptotic confidence interval for $\theta$ of level $\alpha$ is therefore : 
+For $\alpha \in (0, 1)$,  an asymptotic confidence interval for $\theta$ of level $\alpha$ is therefore :
 
 $$
 [\hat \theta_{MLE} - z_{1-\alpha/2} \frac{\sqrt{\hat\theta_{MLE}}}{\sqrt{n}} ;\ \hat \theta_{MLE} + z_{1-\alpha/2} \frac{\sqrt{\hat\theta_{MLE}}} {\sqrt{n}}]
@@ -158,7 +158,7 @@ $$
 
 We apply the $\delta$-method with $g(x) = 2 \sqrt{x}$  
 We have: $g'(x) = \frac {1} {\sqrt{x}}$  
-So, 
+So,
 $$
 \sqrt{n} (g(\hat \theta_{MLE}) - g(\theta)) \overset{d} {\to} \mathcal{N}(0,\ g'(\theta)^2 \times \theta) \Leftrightarrow \sqrt{n} (g(\hat \theta_{MLE}) - g(\theta)) \overset{d} {\to} \mathcal{N}(0,1)
 $$
@@ -180,9 +180,9 @@ When n goes towards infinity, $\frac {z_{1-\alpha/2}} {2 \sqrt{n}}$ goes to 0. S
 $$
 \Leftrightarrow \lim \limits_{n \rightarrow + \infty} \mathbb{P} ((\sqrt{\hat\theta_{MLE}} - \frac {z_{1-\alpha/2}} {2 \sqrt{n}})^2 \leq \theta \leq (\sqrt{\hat\theta_{MLE}} + \frac {z_{1-\alpha/2}} {2 \sqrt{n}})^2) \geq 1- \alpha
 $$
-  
 
-For $\alpha \in (0, 1)$,  an asymptotic confidence interval for $\theta$ of level $\alpha$ is therefore: 
+
+For $\alpha \in (0, 1)$,  an asymptotic confidence interval for $\theta$ of level $\alpha$ is therefore:
 $$
 [(\sqrt{\hat\theta_{MLE}} - \frac {z_{1-\alpha/2}} {2 \sqrt{n}})^2 ;\ (\sqrt{\hat\theta_{MLE}} + \frac {z_{1-\alpha/2}} {2 \sqrt{n}})^2]
 $$
@@ -212,22 +212,22 @@ Therefore, $\hat\theta_{MLE}$ is an unbiased estimator of $\theta$, ie. $b_\thet
 $\mathbb{V} (\hat\theta_{MLE}) = \frac{1}{n^2} \sum_{i=1}^{n} \mathbb{V}(X_i)$ by independance of the $X_k$.
 $$\mathbb{V} (\hat\theta_{MLE}) = \frac{1}{n^2} * n * \theta = \frac{\theta}{n}$$
 
-The quadratic risk Q is: 
+The quadratic risk Q is:
 $$Q = b_\theta{^*}(\hat\theta_{MLE})^2 + \mathbb{V^*} (\hat\theta_{MLE}) = 0 + \frac{\theta}{n} = \frac{\theta}{n}$$
 
 ### Question 12
 
 $\hat\theta_{MLE}$ is an unbiased estimator. So the Cramer-Rao bound is given by:  
-$$\frac{1}{I_n(\theta^*)} = \frac{1}{\mathbb{E} [-L''(\theta^*)]}$$ 
+$$\frac{1}{I_n(\theta^*)} = \frac{1}{\mathbb{E} [-L''(\theta^*)]}$$
 
 By derivating the log-likelihood function with respect to $\theta$, we have:
 $$L'(\theta^*) = -n + \frac{\sum_{i=1}^{n} X_k}{\theta}$$
 $$-L''(\theta^*) = \frac{\sum_{i=1}^{n} X_k}{\theta^2}$$
 
-Therefore, 
+Therefore,
 $$\mathbb{E} [-L''(\theta^*)] = \frac{\sum_{i=1}^{n} \mathbb{E}[X_k]}{\theta^2} = \frac{n}{\theta}$$
 
-Finally, 
+Finally,
 $$\frac{1}{I_n(\theta^*)} = \frac{\theta}{n} = \mathbb{V} (\hat\theta_{MLE})$$
 
 We can conclude that our estimator $\hat\theta_{MLE}$ is efficient.
@@ -238,8 +238,8 @@ $$
 \hat\theta_{2} = \frac{1}{n} \sum_{i=1}^{n} (X_i - \overline{X_n})^2 = \frac{1}{n} \sum_{i=1}^{n} (X_i - \theta + \theta - \overline{X_n})^2 = \frac{1}{n} \sum_{i=1}^{n} [(X_i - \theta)^2 + (\theta - \overline{X_n} )^2 +2(X_i - \theta)(\theta - \overline{X_n})]
 $$
 $$
-= \frac{1}{n} \sum_{i=1}^{n} (X_i - \theta)^2 + (\theta - \overline{X_n} )^2  + \frac{2}{n}(\theta - \overline{X_n}) \sum_{i=1}^{n}(X_i - \theta) \\ 
-= \frac{1}{n} \sum_{i=1}^{n} (X_i - \theta)^2 + (\theta - \overline{X_n} )^2 + 2(\theta - \overline{X_n}) (\overline{X_n} - \theta ) 
+= \frac{1}{n} \sum_{i=1}^{n} (X_i - \theta)^2 + (\theta - \overline{X_n} )^2  + \frac{2}{n}(\theta - \overline{X_n}) \sum_{i=1}^{n}(X_i - \theta) \\
+= \frac{1}{n} \sum_{i=1}^{n} (X_i - \theta)^2 + (\theta - \overline{X_n} )^2 + 2(\theta - \overline{X_n}) (\overline{X_n} - \theta )
 $$
 $$
 = \frac{1}{n} \sum_{i=1}^{n} (X_i - \theta)^2 - (\theta - \overline{X_n})^2
@@ -249,7 +249,7 @@ $$
 
 $$
 \mathbb{E}[(\theta - \overline{X_n})^2] = \mathbb{E}[\theta^2 - 2\theta\overline{X_n} + \overline{X_n}^2] = \theta^2 - 2\theta\mathbb{E}[\overline{X_n}] + \mathbb{E}[\overline{X_n^2}]
-$$ 
+$$
 $$
 =- \theta^2 + \mathbb{V}(\overline{X_n}) + \mathbb{E}[\overline{X_n}^2] = - \theta^2 + \frac{\theta}{n} + \theta^2 = \frac{\theta}{n}
 $$
@@ -279,7 +279,7 @@ Since:
 $$
 \mathbb{E}[Y_i] = \mathbb{V}(X_i) = \theta
 $$
-and 
+and
 $$
 \mathbb{V}(Y_i) = 2\theta^2 + \theta
 $$
@@ -300,10 +300,11 @@ Now, we can apply Slutsky's theorem to $\sqrt{n} (\overline{Y_n} - \theta) -  \s
 
 We can now compute an other asymptotic confidence interval centered in $\hat \theta_2$.
 
-Let $V_n = \sqrt{n} (\hat\theta_{2} - \theta)$ be our random variable.
+Let $V_n = \sqrt{n}\frac{(\hat\theta_{2}-\theta)}{\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}}}$ be our random variable.
 
 We know by the first part of question that $\frac{V_n}{\sqrt{2\theta^2 + \theta}} \overset{d} {\to} \mathcal{N}(0,1)$.
 
+Let's use $\hat\theta_{2}$ as an estimator of $\theta$ for the denominator. 
 In order to apply slutsky's theorem, we will prove that $\hat\theta_{2} \overset{p} {\to} \theta$.
 
 Let $\epsilon > 0$.
@@ -313,17 +314,17 @@ P(\mid \hat\theta_{2} - \theta \mid > \epsilon) < \frac{Var(\hat\theta_{2} - \th
 $$
 
 So, we have that $\hat\theta_{2} \overset{p} {\to} \theta$ and by continuous mapping, $$\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}} \overset{p} {\to} \sqrt{2\theta^2 + \theta}$$
-Then, by Slutsky's theorem, we have that $\sqrt{n}\frac{(\hat\theta_{2}-\theta)}{\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}}}$ converges in law towards a gaussian $\mathcal{N}(0,1)$.
+Then, by Slutsky's theorem, we have that $V_n =\sqrt{n}\frac{(\hat\theta_{2}-\theta)}{\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}}}$ converges in law towards a gaussian $\mathcal{N}(0,1)$.
 
 $$
-\lim \limits_{n \rightarrow + \infty} \mathbb{P} (-z_{1-\alpha/2} \leq \frac{V_n}{\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}}} \leq z_{1-\alpha/2}) \geq 1- \alpha \Leftrightarrow \lim \limits_{n \rightarrow + \infty} \mathbb{P}(-z_{1-\alpha/2} \frac{\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}}} {\sqrt{n}} \leq \hat\theta_{2} - \theta \leq z_{1-\alpha/2} \frac{\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}}} {\sqrt{n}}) \geq 1- \alpha
+\lim \limits_{n \rightarrow + \infty} \mathbb{P} (-z_{1-\alpha/2} \leq V_n \leq z_{1-\alpha/2}) \geq 1- \alpha \Leftrightarrow \lim \limits_{n \rightarrow + \infty} \mathbb{P}(-z_{1-\alpha/2} \frac{\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}}} {\sqrt{n}} \leq \hat\theta_{2} - \theta \leq z_{1-\alpha/2} \frac{\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}}} {\sqrt{n}}) \geq 1- \alpha
 $$
 
 $$
  \Leftrightarrow \lim \limits_{n \rightarrow + \infty} \mathbb{P} (\hat\theta_{2} - z_{1-\alpha/2} \frac{\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}}} {\sqrt{n}} \leq \theta \leq \hat\theta_{2} + z_{1-\alpha/2} \frac{\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}}} {\sqrt{n}}) \geq 1- \alpha
 $$
 
-For $\alpha \in (0, 1)$,  an asymptotic confidence interval for $\theta$ of level $\alpha$ is therefore: 
+For $\alpha \in (0, 1)$,  an asymptotic confidence interval for $\theta$ of level $\alpha$ is therefore:
 $$
 [\hat\theta_{2} - z_{1-\alpha/2} \frac{\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}}} {\sqrt{n}};\ \hat\theta_{2} + z_{1-\alpha/2} \frac{\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}}} {\sqrt{n}}]
 $$
@@ -369,14 +370,14 @@ This exercise is open. You are asked to use the tools we have seen together to a
 * an introduction
 * a general description of the data
 * the use of descriptive statistics
-* the use of all techniques we have seen together that might be relevant 
+* the use of all techniques we have seen together that might be relevant
 * a conclusion
 
 Overall, your analysis, including the graphs and the codes should not exceed 15 pages in pdf.
 
-## Introduction 
+## Introduction
 
-We are given to analyse a dataset, named USJudgeratings, containing various ratings of state judges in the US Superior Court made by lawyers. 
+We are given to analyse a dataset, named USJudgeratings, containing various ratings of state judges in the US Superior Court made by lawyers.
 The different variables given help us to determine if a judge is worthy staying in the US Superior Court or not.
 We will start by doing a general description of the data and applying descriptive statistics to better apprehend the data.
 
@@ -409,7 +410,7 @@ kable(USJudgeRatings, 'latex', caption = "Ratings of US judges", booktabs = T) %
 ```
 
 The variables are all numeric.
-An observation in this dataset represents the different ratings received by a judge (given by his name) in the US Superior Court. Let's define properly what each variable means. 
+An observation in this dataset represents the different ratings received by a judge (given by his name) in the US Superior Court. Let's define properly what each variable means.
 
 ```{r Colnames}
 colnames(USJudgeRatings)
@@ -440,12 +441,12 @@ The last variable, RTEN, is our response variable. It says if the lawyers think 
 
 We can observe that each variable seems to follow a symetric distribution, since median and mean are always close.
 
-### Let's inspect the dataframe for missing values, outliers and errors: 
+### Let's inspect the dataframe for missing values, outliers and errors:
 
 ```{r missing values?}
 sum(is.na(USJudgeRatings))
 ```
-There are no missing values in the dataframe. 
+There are no missing values in the dataframe.
 
 ```{r boxplot}
 Outvals = boxplot(USJudgeRatings)
@@ -474,15 +475,23 @@ The judge with the highest rating for worthiness of retention is judge Rubinow w
 
 We are not provided with extra information and nothing indicated that these outliers correspond to mistakes. Thus, we will assume that they aren't mistakes and keep them in our analysis.
 
+The boxplots give us other relevant information on the PHYS variable. This variable has quite a high mean compared to the others and a lower interquartile range.
+
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(GGally)
+ggpairs(USJudgeRatings)
+```
+
 
 ```{r histograms}
 hist(USJudgeRatings$CONT, main="CONT")
-
 ```
 
 ```{r}
 hist(USJudgeRatings$PREP, main="PREP" )
-
 ```
 
 ```{r}
@@ -504,10 +513,10 @@ min(round(sqrt(diag(var(USJudgeRatings))),2))
 print('The largest standard deviation is: ')
 max(round(sqrt(diag(var(USJudgeRatings))),2))
 ```
-Regarding the dispersion, we look at the interquartile range (given by the boxplots) and the empirical standard deviation. Overall, the dispersions are not very high (around 1). 
+Regarding the dispersion, we look at the interquartile range (given by the boxplots) and the empirical standard deviation. Overall, the dispersions are not very high (around 1).
 We find that the variables DMNR and RTEN have the largest standard deviation, while the DECI variable has the smallest.
 
-Let's measure the correlations between the 11 first variables and the variable RTEN. For this we use the correlations function and the pairs function to visualize the scatter plots of the variables two by two. 
+Let's measure the correlations between the 11 first variables and the variable RTEN. For this we use the correlations function and the pairs function to visualize the scatter plots of the variables two by two.
 ```{r linear relationships between variables 1}
 round(cor(USJudgeRatings),2)
 ```
@@ -521,8 +530,7 @@ corrplot(cor(USJudgeRatings))
 pairs(USJudgeRatings)
 ```
 All the variables have a strong positive correlation two by two except the variable CONT which is not correlated to all the other variables.
-The number of contacts of a lawyer with the judge doesn't seem to explain the ratings received by the judge. 
-
+The number of contacts of a lawyer with the judge doesn't seem to explain the ratings received by the judge.
 
 ```{r density}
 par(mfrow=c(1,2))
@@ -550,10 +558,11 @@ The QQ plots suggests that the RTEN variable seems to follow a Gaussian distribu
 
 ```{r}
 library(e1071)
-kurtosis
-skewness
+kurtosis(USJudgeRatings$RTEN)
+skewness(USJudgeRatings$RTEN)
 ```
+Skewness and kurtosis figures for the retention variable are both between -1 and 1 which indicates no substantial skewness or kurtosis.
 
 ### Conclusion
 
-Our analysis has 
+Our analysis has
