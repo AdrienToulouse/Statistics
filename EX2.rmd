@@ -29,6 +29,12 @@ The data is stored in a dataframe.
 data(USJudgeRatings)
 head(USJudgeRatings)
 ```
+```{r}
+library(knitr)
+library(kableExtra)
+kable(USJudgeRatings, 'latex', caption = "Ratings of US judges", booktabs = T) %>% 
+  kable_styling(latex_options = "striped", font_size = 6.5)
+```
 
 ```{r Introduction}
 str(USJudgeRatings)
@@ -39,6 +45,12 @@ An observation is the different ratings received by a judge (given by his name) 
 
 ```{r Colnames}
 colnames(USJudgeRatings)
+```
+```{r}
+round(sqrt(diag(var(USJudgeRatings))),2)
+cat('The smallest standard deviation is: ', min(round(sqrt(diag(var(USJudgeRatings))),2)), '\n')
+cat('The largest standard deviation is: ', max(round(sqrt(diag(var(USJudgeRatings))),2)))
+
 ```
 
 The variables are:
