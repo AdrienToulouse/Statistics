@@ -284,28 +284,37 @@ $$
 \mathbb{V}(Y_i) = 2\theta^2 + \theta
 $$
 
-We can apply the central limit theorem, and we have that $\sqrt{n} (\overline{Y_n} - \theta)$ converges towards a Gaussian $\mathcal{N}(0,2\theta^2 + \theta)$.
+We can apply the central limit theorem, and we have that $$\sqrt{n} (\overline{Y_n} - \theta) \overset{d} {\to} \mathcal{N}(0,2\theta^2 + \theta)$$
 
 We also have that:
 $$
 \sqrt{n} (\theta - \overline{X_n})^2 = \sqrt{n} (\overline{X_n} - \theta)^2 = \sqrt{n} (\overline{X_n} - \theta)(\overline{X_n} - \theta)
 $$
-Applying the central limit theorem, we have that $\sqrt{n} (\overline{X_n} - \theta)$ converges towards a Gaussian $\mathcal{N}(0,\theta)$.  
-On the other hand, applying the law of large numbers: $(\theta - \overline{X_n})$ converges in probability towards 0.
+
+Applying the central limit theorem, we have that: $\sqrt{n} (\overline{X_n} - \theta) \overset{d} {\to} \mathcal{N}(0,\theta)$.  
+On the other hand, applying the law of large numbers: $(\theta - \overline{X_n})\overset{p} {\to} 0$.
 
 Applying Slutsky's theorem, $\sqrt{n} (\theta - \overline{X_n})^2$ converges in distribution towards the constant 0. Therefore, it converges in probability towards 0.
 
-Now, we can apply Slutsky's theorem to $\sqrt{n} (\overline{Y_n} - \theta) -  \sqrt{n} (\theta - \overline{X_n})^2$ which gives us finally that $\sqrt{n} (\hat\theta_{2} - \theta)$ converges in distribution towards a Gaussian $\mathcal{N}(0,2\theta^2 + \theta)$.
+Now, we can apply Slutsky's theorem to $\sqrt{n} (\overline{Y_n} - \theta) -  \sqrt{n} (\theta - \overline{X_n})^2$ which gives us finally that: $$\sqrt{n} (\hat\theta_{2} - \theta) \overset{d} {\to} \mathcal{N}(0,2\theta^2 + \theta)$$  
 
 We can now compute an other asymptotic confidence interval centered in $\hat \theta_2$.
 
 Let $V_n = \sqrt{n} (\hat\theta_{2} - \theta)$ be our random variable.
 
-We know by the last question that $\frac{V_n}{\sqrt{2\theta^2 + \theta}} \overset{d} {\to} \mathcal{N}(0,1)$.
+We know by the first part of question that $\frac{V_n}{\sqrt{2\theta^2 + \theta}} \overset{d} {\to} \mathcal{N}(0,1)$.
 
-The weak law of large numbers gives us that $\hat\theta_{MLE}$ converges in probability towards $\theta$.  
-By continuous mapping, $\sqrt{2\hat\theta_{MLE}^2 + \hat\theta_{MLE}}$ converges in probability towards $\sqrt{2\theta^2 + \theta}$.
-Then, by Slutsky's theorem, we have that $\sqrt{n}\frac{(\hat\theta_{2}-\theta)}{\sqrt{2\hat\theta_{MLE}^2 + \hat\theta_{MLE}}}$ converges in law towards a gaussian $\mathcal{N}(0,1)$.
+In order to apply slutsky's theorem, we will prove that $\hat\theta_{2} \overset{p} {\to} \theta$.
+
+Let $\epsilon > 0$.
+By Chebyshev's inequality,
+$$
+P(\mid \hat\theta_{2} - \theta \mid > \epsilon) < \frac{Var(\hat\theta_{2} - \theta)} {\epsilon^2} = \frac{\theta^2 + \theta} {n\epsilon^2} \underset{n \to + \infty} {\to} 0
+$$
+
+So, we have that $\hat\theta_{2} \overset{p} {\to} \theta$ and by continuous mapping, $$\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}} \overset{p} {\to} \sqrt{2\theta^2 + \theta}$$
+Then, by Slutsky's theorem, we have that $\sqrt{n}\frac{(\hat\theta_{2}-\theta)}{\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}}}$ converges in law towards a gaussian $\mathcal{N}(0,1)$.
+
 $$
 \lim \limits_{n \rightarrow + \infty} \mathbb{P} (-z_{1-\alpha/2} \leq \frac{V_n}{\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}}} \leq z_{1-\alpha/2}) \geq 1- \alpha \Leftrightarrow \lim \limits_{n \rightarrow + \infty} \mathbb{P}(-z_{1-\alpha/2} \frac{\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}}} {\sqrt{n}} \leq \hat\theta_{2} - \theta \leq z_{1-\alpha/2} \frac{\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}}} {\sqrt{n}}) \geq 1- \alpha
 $$
