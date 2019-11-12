@@ -356,22 +356,37 @@ This exercise is open. You are asked to use the tools we have seen together to a
 
 Overall, your analysis, including the graphs and the codes should not exceed 15 pages in pdf.
 
-### Introduction 
+## Introduction 
 
-The USJudgeRatings dataset contains lawyers’ ratings of state judges in the US Superior Court in 1977.  
-The data is stored in a dataframe.
+We have to analyse a dataset, named USJudgeratings, containing various ratings of state judges in the US Superior Court. 
+The different informations given help us to determine if a judge is worthy staying in the US Superior Court or not.
+To be continued...
+
+## General description
+
+First, let's see how the dataset is organized.  
 
 ```{r upload data}
 data(USJudgeRatings)
-head(USJudgeRatings)
 ```
+The data is stored in a dataframe.
+
+We can have a view of the dataset:
+```{r view}
+library(knitr)
+kable(USJudgeRatings)
+```
+
+```{r}
+dim(USJudgeRatings)
+```
+We are provided with n = 43 observations and p = 12 quantitative variables.
 
 ```{r Introduction}
 str(USJudgeRatings)
 ```
-
-We are provided with n = 43 observations and p = 12 quantitative variables.  
-An observation is the different ratings received by a judge (given by his name) in the US Superior Court in 1977.
+The variables are all of numeric nature.
+An observation in this dataset represents the different ratings received by a judge (given by his name) in the US Superior Court.
 
 ```{r Colnames}
 colnames(USJudgeRatings)
@@ -379,32 +394,32 @@ colnames(USJudgeRatings)
 
 The variables are:
 
-* CONT : Number of contacts of lawyer with judge
-* INTG : Judicial integrity
-* DMNR : Demeanor
-* DILG : Diligence
-* CFMG : Case flow managing
-* DECI : Prompt decisions
-* PREP : Preparation for trial
-* FAMI : Familiarity with law
-* ORAL : Sound oral rulings
-* WRIT : Sound written rulings
-* PHYS : Physical ability
-* RTEN : Worthy of retention
+* *CONT* : The number of contacts of lawyer with judge.
+* *INTG* : The judicial integrity of the judge.
+* *DMNR* : Demeanor of the judge.
+* *DILG* : Diligence of the judge.
+* *CFMG* : Case flow managed by the judge.
+* *DECI* : Prompt decisions taken by the judge.
+* *PREP* : How the judge is prepared trial.
+* *FAMI* : His familiarity with law.
+* *ORAL* : His sound oral rulings.
+* *WRIT* : His sound written rulings.
+* *PHYS* : His physical ability.
+* *RTEN* : Scaling if the judge is worthy to retain in the US Superior court.
 
-
-### General description of the data
 
 ```{r missing values?}
 sum(is.na(USJudgeRatings))
 ```
+There are no missing values in the dataframe. 
 
-There are no missing values in the data frame. 
+## Descriptive dataset analysis
+
+Now, let's take a deeper look on the dataset to analyze the different variables.
 
 ```{r Summary}
 summary(USJudgeRatings)
 ```
-
 All the variables (except the variable CONT) seem to be ranged between 0 and 10.  
 The last variable, RTEN, seems to conclude the analysis. In fact, it says if the lawyers think that the judge is worthy staying in the US Superior Court or not.  
 First, we can observe that each variable seems to follow a symetric distribution, since median and mean are always close.
@@ -416,8 +431,7 @@ Outvals = boxplot(USJudgeRatings)
 
 We observe the presence of outliers for 10 of the 12 variables (with larger values for CONT and with lower values for the other variables).
 
-We can take a look on some outliers.
-
+We can take a look at some outliers.
 ```{r max_CONT}
 max(USJudgeRatings$CONT)
 rownames(USJudgeRatings)[which.max(USJudgeRatings$CONT)]
@@ -437,6 +451,13 @@ rownames(USJudgeRatings)[which.max(USJudgeRatings$RTEN)]
 The judge with the highest rating for worthiness of retention is judge Rubinow with a rating of 9.2.  
 We are not provided with extra information and we cannot check wether the outliers correspond to mistakes. Thus, we will assume that they aren't mistakes.
 
+```{r}
+library(ggplot2)
+library(dplyr)
+library(GGally)
+ggpairs(USJudgeRatings)
+```
+
 ### Descriptive statistics analysis of the dataset
 
 
@@ -447,6 +468,10 @@ hist(USJudgeRatings$CONT[USJudgeRatings$CONT<9], main="CONT")
 hist(USJudgeRatings$PREP[USJudgeRatings$PREP>5], main="PREP" )
 hist(USJudgeRatings$WRIT, main="WRIT")
 hist(USJudgeRatings$RTEN, main="RTEN")
+```
+
+```{r}
+round(var(USJudgeRatings), 2)
 ```
 
 ```{r dispersion}
