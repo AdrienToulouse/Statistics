@@ -103,21 +103,21 @@ Applying the central limit theorem, we have that $\sqrt{n}(\hat\theta_{MLE}-\the
 
 ### Question 6
 
-The weak law of large numbers gives us that $\hat\theta_{MLE}$ converges in probability towards $\theta$.  
-By continuous mapping, $\sqrt{\hat\theta_{MLE}}$ converges in probability towards $\sqrt{\theta}$.
-Then, by Slutsky's theorem, we have that $\sqrt{n}\frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}}$ converges in law towards a gaussian $\mathcal{N}(0,1)$.
+The weak law of large numbers gives us that: $$\hat\theta_{MLE} \overset{p} {\to} \theta$$ 
+By continuous mapping, we have: $$\sqrt{\hat\theta_{MLE}} \overset{p} {\to} \sqrt{\theta}$$
+Then, by applying Slutsky's theorem, we have that: $$\sqrt{n}\frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}} \overset{d} {\to} \mathcal{N}(0,1)$$
 
-Let's check this result in R by simulating 1000 times our random variable $\sqrt{n}\frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}}$ with a sample size of 100:
+Now, let's check this result in R by simulating 1000 times our random variable $\sqrt{n}\frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}}$ with a sample size of 100:
 ```{r}
 estim <- function(x, theta){
   n <- length(x)
   est <- sqrt(n) * (mean(x) - theta) / sqrt(mean(x))
-  return(est)}
+  return(est)
+  }
 ```
 
-
 ```{r}
-set.seed(42)
+set.seed(23)
 Nattempts = 1e3
 nsample = 100
 theta = 3
@@ -130,25 +130,26 @@ d = density(realisations, kernel='gaussian')
 lines(d, col = 'red')
 ```
 
+The histogram confirms what we found theoretically. In fact, by plotting the density associated to the histogram we can observe a curve that represents a gaussian distribution. It is symetric around its expectation that seems to be zero. So, we can conclude that the random variable $\sqrt{n}\frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}}$ follows a standard gaussian distribution.  
 
 ```{r}
 qqnorm(realisations)
 qqline(realisations)
 ```
 
-This confirms what we found theoretically: the random variable $\sqrt{n}\frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}}$ follows a standard gaussian distribution.
+The Q-Q plot compares the theoritical quantiles of a standard gaussian distribution to the ones of our estimated distribution. We can observe that the points approximately lie on the line y = x, so the distributions compared are similar and this plot also confirms that the random variable $\sqrt{n}\frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}}$ follows a standard gaussian distribution.
 
 ### Question 7
 
 Let $Z_n = \sqrt{n} \frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}}$ be our random variable.
 
-Denote $z_{alpha}$ the $\alpha$-quantile for the standard Normal distribution for $\alpha \in (0,\ 1)$.
+Denote $z_{\alpha}$ the $\alpha$-quantile for the standard Normal distribution for $\alpha \in (0,\ 1)$.
 
 $$
 \lim \limits_{n \rightarrow + \infty} \mathbb{P} (-z_{1-\alpha/2} \leq Z_n \leq z_{1-\alpha/2}) \ge 1- \alpha \Leftrightarrow \lim \limits_{n \rightarrow + \infty} \mathbb{P}(-z_{1-\alpha/2} \sqrt{\frac{\hat\theta_{MLE}}{n}} \leq \hat\theta_{MLE} - \theta \leq z_{1-\alpha/2}\sqrt{\frac{\hat\theta_{MLE}}{n}}) \ge 1- \alpha
 $$
 
-For $\alpha \in (0, 1)$,  an asymptotic confidence interval for $\theta$ of level $\alpha$ is therefore :
+For $\alpha \in (0, 1)$,  an asymptotic confidence interval of level $\alpha$ for $\theta$ is therefore:
 
 $$
 [\hat \theta_{MLE} - z_{1-\alpha/2} \frac{\sqrt{\hat\theta_{MLE}}}{\sqrt{n}} ;\ \hat \theta_{MLE} + z_{1-\alpha/2} \frac{\sqrt{\hat\theta_{MLE}}} {\sqrt{n}}]
@@ -162,6 +163,7 @@ So,
 $$
 \sqrt{n} (g(\hat \theta_{MLE}) - g(\theta)) \overset{d} {\to} \mathcal{N}(0,\ g'(\theta)^2 \times \theta) \Leftrightarrow \sqrt{n} (g(\hat \theta_{MLE}) - g(\theta)) \overset{d} {\to} \mathcal{N}(0,1)
 $$
+$$\Leftrightarrow \sqrt{n} (2 \sqrt{\hat \theta_{MLE}} - 2 \sqrt{\theta}) \overset{d} {\to} \mathcal{N}(0,1)$$
 
 ### Question 9
 
@@ -175,7 +177,7 @@ $$
 $$
  \Leftrightarrow \lim \limits_{n \rightarrow + \infty} \mathbb{P} (\sqrt{\hat\theta_{MLE}} - \frac {z_{1-\alpha/2}} {2 \sqrt{n}} \leq \sqrt{\theta} \leq \sqrt{\hat\theta_{MLE}} + \frac {z_{1-\alpha/2}} {2 \sqrt{n}}) \geq 1- \alpha
 $$
-When n goes towards infinity, $\frac {z_{1-\alpha/2}} {2 \sqrt{n}}$ goes to 0. Since  $\sqrt{\hat\theta_{MLE}}$ is positive, there exists a $n_0$ such that $\sqrt{\hat\theta_{MLE}} - \frac {z_{1-\alpha/2}} {2 \sqrt{n}}$ is positive and we can take the squares in the inequality without changing the order of the inequalities:
+When n goes towards infinity, $\frac {z_{1-\alpha/2}} {2 \sqrt{n}}$ goes to 0. Since  $\sqrt{\hat\theta_{MLE}}$ is positive, there exists a $n_0$ such that $\forall n \geq n_0$, $\sqrt{\hat\theta_{MLE}} - \frac {z_{1-\alpha/2}} {2 \sqrt{n}}$ is positive and we can take the squares in the inequality without changing the order of the inequalities:
 
 $$
 \Leftrightarrow \lim \limits_{n \rightarrow + \infty} \mathbb{P} ((\sqrt{\hat\theta_{MLE}} - \frac {z_{1-\alpha/2}} {2 \sqrt{n}})^2 \leq \theta \leq (\sqrt{\hat\theta_{MLE}} + \frac {z_{1-\alpha/2}} {2 \sqrt{n}})^2) \geq 1- \alpha
@@ -190,7 +192,6 @@ $$
 ### Question 10
 
 Based on the first moment of a poisson distribution, we easily have that:
-
 $$\hat \theta_{MME} = \overline{X}$$
 
 We can remark that $\hat \theta_{MME} = \hat \theta_{MLE}$
@@ -199,7 +200,7 @@ Based on the second moment of a poisson distribution, we have:
 $$n^{-1} \sum _{k=1} ^{n} X_k^2 = \hat \theta_{2} (\hat \theta_{2} + 1)$$
 
 Let's define the function $h(x) = x(x + 1)$  
-Its inverse on $\mathbb{R}_+^*$ is $h^{-1} (x) = \frac {1}{2} [- 1 + \sqrt{4 x + 1}]$ and this gives us:
+Its inverse on $\mathbb{R}_+^*$ is $h^{-1} (x) = \frac {1}{2} [- 1 + \sqrt{4 x + 1}]$ and this gives us another estimator of $\theta$:
 $$\hat \theta_{2} = \frac {1}{2} [- 1 + \sqrt{(4 n^{-1} \sum _{k=1} ^{n} X_k^2) + 1}]$$
 
 ### Question 11
@@ -279,42 +280,42 @@ Since:
 $$
 \mathbb{E}[Y_i] = \mathbb{V}(X_i) = \theta
 $$
-and
+
 $$
 \mathbb{V}(Y_i) = 2\theta^2 + \theta
 $$
 
-We can apply the central limit theorem, and we have that $$\sqrt{n} (\overline{Y_n} - \theta) \overset{d} {\to} \mathcal{N}(0,2\theta^2 + \theta)$$
+We can apply the central limit theorem, and we have that: $$\sqrt{n} (\overline{Y_n} - \theta) \overset{d} {\to} \mathcal{N}(0,2\theta^2 + \theta)$$
 
-We also have that:
+We also have the following equalities:
 $$
 \sqrt{n} (\theta - \overline{X_n})^2 = \sqrt{n} (\overline{X_n} - \theta)^2 = \sqrt{n} (\overline{X_n} - \theta)(\overline{X_n} - \theta)
 $$
 
-Applying the central limit theorem, we have that: $\sqrt{n} (\overline{X_n} - \theta) \overset{d} {\to} \mathcal{N}(0,\theta)$.  
-On the other hand, applying the law of large numbers: $(\theta - \overline{X_n})\overset{p} {\to} 0$.
+By applying the central limit theorem, we now have: $$\sqrt{n} (\overline{X_n} - \theta) \overset{d} {\to} \mathcal{N}(0,\theta)$$  
+On the other hand, applying the law of large numbers gives us: $$(\theta - \overline{X_n})\overset{p} {\to} 0$$
 
-Applying Slutsky's theorem, $\sqrt{n} (\theta - \overline{X_n})^2$ converges in distribution towards the constant 0. Therefore, it converges in probability towards 0.
+Then, by applying Slutsky's theorem, we have that $\sqrt{n} (\theta - \overline{X_n})^2$ converges in distribution towards the constant 0. Therefore, it converges in probability towards 0.
 
 Now, we can apply Slutsky's theorem to $\sqrt{n} (\overline{Y_n} - \theta) -  \sqrt{n} (\theta - \overline{X_n})^2$ which gives us finally that: $$\sqrt{n} (\hat\theta_{2} - \theta) \overset{d} {\to} \mathcal{N}(0,2\theta^2 + \theta)$$  
 
-We can now compute an other asymptotic confidence interval centered in $\hat \theta_2$.
 
-Let $V_n = \sqrt{n}\frac{(\hat\theta_{2}-\theta)}{\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}}}$ be our random variable.
+We can now compute another asymptotic confidence interval centered in $\hat \theta_2$.
 
-We know by the first part of question that $\frac{V_n}{\sqrt{2\theta^2 + \theta}} \overset{d} {\to} \mathcal{N}(0,1)$.
+We know by the first part of question that $\frac{\sqrt{n} (\hat\theta_{2} - \theta)}{\sqrt{2\theta^2 + \theta}} \overset{d} {\to} \mathcal{N}(0,1)$.
 
-Let's use $\hat\theta_{2}$ as an estimator of $\theta$ for the denominator. 
-In order to apply slutsky's theorem, we will prove that $\hat\theta_{2} \overset{p} {\to} \theta$.
+Let's use $\hat\theta_{2}$ as an estimator of $\theta$ for the denominator.  
+First, in order to apply slutsky's theorem, we need to prove that $\hat\theta_{2} \overset{p} {\to} \theta$.
 
 Let $\epsilon > 0$.
 By Chebyshev's inequality,
 $$
-P(\mid \hat\theta_{2} - \theta \mid > \epsilon) < \frac{Var(\hat\theta_{2} - \theta)} {\epsilon^2} = \frac{\theta^2 + \theta} {n\epsilon^2} \underset{n \to + \infty} {\to} 0
+P(\mid \hat\theta_{2} - \theta \mid > \epsilon) \leq \frac{Var(\hat\theta_{2} - \theta)} {\epsilon^2} = \frac{\theta^2 + \theta} {n\epsilon^2} \underset{n \to + \infty} {\to} 0
 $$
 
 So, we have that $\hat\theta_{2} \overset{p} {\to} \theta$ and by continuous mapping, $$\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}} \overset{p} {\to} \sqrt{2\theta^2 + \theta}$$
-Then, by Slutsky's theorem, we have that $V_n =\sqrt{n}\frac{(\hat\theta_{2}-\theta)}{\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}}}$ converges in law towards a gaussian $\mathcal{N}(0,1)$.
+
+Then, by Slutsky's theorem, we have that $V_n =\sqrt{n}\frac{(\hat\theta_{2}-\theta)}{\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}}}$ converges in law towards a gaussian $\mathcal{N}(0,1)$, and we can use it as pivotal quantity to find a confidence interval for $\theta$.
 
 $$
 \lim \limits_{n \rightarrow + \infty} \mathbb{P} (-z_{1-\alpha/2} \leq V_n \leq z_{1-\alpha/2}) \geq 1- \alpha \Leftrightarrow \lim \limits_{n \rightarrow + \infty} \mathbb{P}(-z_{1-\alpha/2} \frac{\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}}} {\sqrt{n}} \leq \hat\theta_{2} - \theta \leq z_{1-\alpha/2} \frac{\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}}} {\sqrt{n}}) \geq 1- \alpha
@@ -329,6 +330,10 @@ $$
 [\hat\theta_{2} - z_{1-\alpha/2} \frac{\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}}} {\sqrt{n}};\ \hat\theta_{2} + z_{1-\alpha/2} \frac{\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}}} {\sqrt{n}}]
 $$
 
+This asymptotic interval has a bigger range compared to the first one
+
+Furthermore, we have that:
+$$var(\hat\theta_{2}) = \frac{2\theta^2 + \theta} {n} = \frac{\theta (2\theta + 1)} {n} = (2\theta + 1) Var(\hat \theta_{MLE})$$
 
 ### Question 16
 
