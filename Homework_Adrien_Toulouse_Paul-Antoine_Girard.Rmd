@@ -197,10 +197,11 @@ $$\hat \theta_{MME} = \overline{X}$$
 We can remark that $\hat \theta_{MME} = \hat \theta_{MLE}$
 
 Based on the second moment of a poisson distribution, we have:
-$$n^{-1} \sum _{k=1} ^{n} X_k^2 = \hat \theta_{2} (\hat \theta_{2} + 1)$$
+$$n^{-1} \sum _{k=1} ^{n} X_k^2 = \hat \theta_{2} (\hat \theta_{2} + 1) = \hat \theta_{2}^2 + \hat \theta_{2}$$
 
-Let's define the function $h(x) = x(x + 1)$  
-Its inverse on $\mathbb{R}_+^*$ is $h^{-1} (x) = \frac {1}{2} [- 1 + \sqrt{4 x + 1}]$ and this gives us another estimator of $\theta$:
+We can now construct many different estimators by replace one of the $\hat \theta_2$ by $\hat \theta_1$ or we can inverse the function $h(x) = x(x + 1)$ to find an estimator of $\theta$.
+
+The inverse function of $h$ on $\mathbb{R}_+^*$ is $h^{-1} (x) = \frac {1}{2} [- 1 + \sqrt{4 x + 1}]$ and this gives us another estimator of $\theta$:
 $$\hat \theta_{2} = \frac {1}{2} [- 1 + \sqrt{(4 n^{-1} \sum _{k=1} ^{n} X_k^2) + 1}]$$
 
 ### Question 11
@@ -356,10 +357,13 @@ $$\mathbb{V}(\mathbb{X}) = \mathbb{E} [\mathbb{X}^2] - \mathbb{E} [\mathbb{X}]^2
 
 We will now show that: $\mathbb{V}[(\mathbb{X}_i - \theta)^2] = 2 \theta^2 + \theta$
 
+We use the following equalities:
 $$G_\mathbb{X}^{(3)} (s) = (1 + 3 \theta e^{s} + \theta^2 e^{2s}) \theta e^{s + \theta (e^{s}-1)}$$
 $$G_\mathbb{X}^{(4)} (s) = (1 + \theta^3 e^{3s} + 6 \theta^2 e^{2s} + 7\theta e^{s}) \theta e^{s + \theta (e^{s}-1)}$$
 $$\mathbb{E} [\mathbb{X}^3] = G_\mathbb{X}^{(3)} (0) = \theta + 3\theta^2 + \theta^3$$
 $$\mathbb{E} [\mathbb{X}^4] = G_\mathbb{X}^{(4)} (0) = \theta^4 + 6\theta^3 + 7\theta^2 + \theta$$
+
+Finally, we have that:
 $$
 \mathbb{V}[(\mathbb{X}_i - \theta)^2] = \mathbb{E} [(\mathbb{X} - \theta)^4] - \mathbb{E} [(\mathbb{X} - \theta)^2]^2 = \mathbb{E} [\mathbb{X}^4] - 4 \theta \mathbb{E} [\mathbb{X}^3] + 6 \theta^2 \mathbb{E} [\mathbb{X}^2]  - 4 \theta^3 \mathbb{E} [\mathbb{X}] + \theta^4 - Var (\mathbb{X})^2
 $$
@@ -413,7 +417,8 @@ kable(USJudgeRatings, 'latex', caption = "Ratings of US judges", booktabs = T) %
   kable_styling(latex_options = "striped", font_size = 6)
 ```
 
-An observation in this dataset represents the different ratings received by a judge (given by his name) in the US Superior Court. In order to study this dataset, we will first define properly what each variable means.
+An observation in this dataset represents the different ratings received by a judge (given by his name) in the US Superior Court.  
+In order to study this dataset, we will first define properly what each variable means.
 
 ```{r Colnames}
 colnames(USJudgeRatings)
@@ -482,32 +487,59 @@ We can also take a look at his other ratings.
 ```{r}
 USJudgeRatings[which.min(USJudgeRatings$RTEN),]
 ```
-By comparing the ratings of these two judges, we can observe that the judge with the highest RTEN rate has better ratings in the other variables except for the variable CONT. Thus, there seems to be a correlation between the RTEN variable and the others (except CONT). We will look deeper into that correlation later in this report.
+By comparing the ratings of these two judges, we can observe that the judge with the highest RTEN ratings has better ratings in the other variables except for the variable CONT. Thus, there seems to be a correlation between the RTEN variable and the others (except CONT). We will look deeper into that correlation later in this report.
 
 ### Let's see the distribution of the variable
 
 ```{r histograms1}
 par(mfrow=c(2,2))
-hist(USJudgeRatings$CONT, main="CONT")
-hist(USJudgeRatings$INTG, main="INTG")
-hist(USJudgeRatings$DMNR, main="DMNR")
-hist(USJudgeRatings$DILG, main="DILG")
+hist(USJudgeRatings$CONT, probability= TRUE, main="Histogram of CONT", xlab="CONT")
+d = density(USJudgeRatings$CONT, kernel = 'o', bw = 0.3)
+lines(d, col="red")
+hist(USJudgeRatings$INTG, probability= TRUE, main="Histogram of INTG", xlab="INTG")
+d = density(USJudgeRatings$INTG, kernel = 'o', bw = 0.3)
+lines(d, col="red")
+hist(USJudgeRatings$DMNR, probability= TRUE, main="Histogram of DMNR", xlab="DMNR")
+d = density(USJudgeRatings$DMNR, kernel = 'o', bw = 0.3)
+lines(d, col="red")
+hist(USJudgeRatings$DILG, probability= TRUE, main="Histogram of DILG", xlab="DILG")
+d = density(USJudgeRatings$DILG, kernel = 'o', bw = 0.3)
+lines(d, col="red")
 ```
+These histograms give us an approximation of the distribution followed by these variables.  
+For example, for the CONT variable, we can see a bell with its highest point near the mean (near 7.4) of the sample. So we can assume that this variable follow a gaussian distribution. However, we also see the two outliers on the histogram and that modify a bit the distribution and we lose a bit of symmetry.
+For the DMNR variable,
+
 
 ```{r histograms2}
 par(mfrow=c(2,2))
-hist(USJudgeRatings$CFMG, main="CFMG")
-hist(USJudgeRatings$DECI, main="DECI")
-hist(USJudgeRatings$PREP, main="PREP")
-hist(USJudgeRatings$FAMI, main="FAMI")
+hist(USJudgeRatings$CFMG, probability= TRUE, main="Histogram of CFMG", xlab="CFMG")
+d = density(USJudgeRatings$CFMG, kernel = 'o', bw = 0.3)
+lines(d, col="red")
+hist(USJudgeRatings$DECI, probability= TRUE, main="Histogram of DECI", xlab="DECI")
+d = density(USJudgeRatings$DECI, kernel = 'o', bw = 0.3)
+lines(d, col="red")
+hist(USJudgeRatings$PREP, probability= TRUE, main="Histogram of PREP", xlab="PREP")
+d = density(USJudgeRatings$PREP, kernel = 'o', bw = 0.3)
+lines(d, col="red")
+hist(USJudgeRatings$FAMI, probability= TRUE, main="Histogram of FAMI", xlab="FAMI")
+d = density(USJudgeRatings$FAMI, kernel = 'o', bw = 0.3)
+lines(d, col="red")
 ```
+Explain
 
 ```{r histograms3}
 par(mfrow=c(2,2))
-hist(USJudgeRatings$ORAL, main="ORAL")
-hist(USJudgeRatings$WRIT, main="WRIT")
-hist(USJudgeRatings$PHYS, main="PHYS")
-hist(USJudgeRatings$RTEN, probability= TRUE, main="Histogram of RTEN" , xlab="RTEN")
+hist(USJudgeRatings$ORAL, probability= TRUE, main="Histogram of ORAL", xlab="ORAL")
+d = density(USJudgeRatings$ORAL, kernel = 'o', bw = 0.3)
+lines(d, col="red")
+hist(USJudgeRatings$WRIT, probability= TRUE, main="Histogram of WRIT", xlab="WRIT")
+d = density(USJudgeRatings$WRIT, kernel = 'o', bw = 0.3)
+lines(d, col="red")
+hist(USJudgeRatings$PHYS, probability= TRUE, main="Histogram of PHYS", xlab="PHYS")
+d = density(USJudgeRatings$PHYS, kernel = 'o', bw = 0.3)
+lines(d, col="red")
+hist(USJudgeRatings$RTEN, probability= TRUE, main="Histogram of RTEN", xlab="RTEN")
 d = density(USJudgeRatings$RTEN, kernel = 'o', bw = 0.3)
 lines(d, col="red")
 ```
@@ -515,21 +547,23 @@ To comment...
 
 ### Let's analyze the correlation between the variables
 
-```{r}
+First, we can take a look at the covariance matrix, and the standard deviation of eache variable.
+```{r cov}
 round(var(USJudgeRatings), 2)
 ```
 
-```{r dispersion}
+```{r st deviation}
 round(sqrt(diag(var(USJudgeRatings))),2)
 print('The smallest standard deviation is: ')
 min(round(sqrt(diag(var(USJudgeRatings))),2))
 print('The largest standard deviation is: ')
 max(round(sqrt(diag(var(USJudgeRatings))),2))
 ```
-Regarding the dispersion, we look at the interquartile range (given by the boxplots) and the empirical standard deviation. Overall, the dispersions are not very high (around 1).
-We find that the variables DMNR and RTEN have the largest standard deviation, while the DECI variable has the smallest.
+We find that the variables DMNR and RTEN have the largest standard deviation, while the DECI variable has the smallest.  
 
-Let's measure the correlations between the 11 first variables and the variable RTEN. For this we use the correlations function and the pairs function to visualize the scatter plots of the variables two by two.
+Let's measure the correlations between the 11 first variables and the variable RTEN to see if there is a link between the ratings and if the laywers think a judge is worthy staying in the US Superior court.  
+Thus, we will plot the scatter plots of the variables relative to the RTEN variable and we will use the correlation functions.
+
 ```{r linear relationships between variables 1}
 round(cor(USJudgeRatings),2)
 ```
@@ -540,8 +574,11 @@ corrplot(cor(USJudgeRatings))
 ```
 
 ```{r pairs}
-pairs(USJudgeRatings)
+
+pairs(USJudgeRatings, gap=1/5, lower.panel = panel.smooth, upper.panel = NULL, row1attop=FALSE)
+{r pairs.default(), fig.width = 5, fig.asp = .62}
 ```
+
 All the variables have a strong positive correlation two by two except the variable CONT which is not correlated to all the other variables.
 The number of contacts of a lawyer with the judge doesn't seem to explain the ratings received by the judge.
 
