@@ -366,7 +366,7 @@ $$
 $$
 = \theta^4 + 6\theta^3 + 7\theta^2 + \theta - 4\theta (\theta + 3\theta^2 + \theta^3) + 6 \theta^2 (\theta +\theta^2) - 4\theta^4  + \theta^4 - \theta^2 = 2 \theta^2 + \theta
 $$
-
+\newpage
 
 # Problem 2: Analysis of the USJudgeRatings dataset
 
@@ -398,8 +398,7 @@ First, let's see how the dataset is organized.
 ```{r Introduction}
 str(USJudgeRatings)
 ```
-
-The data is stored in a dataframe.
+The data is stored in a dataframe nad we can observe that all the variables are numeric.
 
 ```{r}
 dim(USJudgeRatings)
@@ -414,13 +413,11 @@ kable(USJudgeRatings, 'latex', caption = "Ratings of US judges", booktabs = T) %
   kable_styling(latex_options = "striped", font_size = 6)
 ```
 
-The variables are all numeric.
-An observation in this dataset represents the different ratings received by a judge (given by his name) in the US Superior Court. Let's define properly what each variable means.
+An observation in this dataset represents the different ratings received by a judge (given by his name) in the US Superior Court. In order to study this dataset, we will first define properly what each variable means.
 
 ```{r Colnames}
 colnames(USJudgeRatings)
 ```
-
 The variables are:
 
 * *CONT* : The number of contacts of the lawyer with judge.
@@ -438,14 +435,6 @@ The variables are:
 
 ## Descriptive dataset analysis
 
-```{r Summary}
-summary(USJudgeRatings)
-```
-All the variables (except the variable CONT) seem to be ranged between 0 and 10.  
-The last variable, RTEN, is our response variable. It says if the lawyers think that the judge is worthy staying in the US Superior Court or not.  
-
-We can observe that each variable seems to follow a symetric distribution, since median and mean are always close.
-
 ### Let's inspect the dataframe for missing values, outliers and errors:
 
 ```{r missing values?}
@@ -453,11 +442,19 @@ sum(is.na(USJudgeRatings))
 ```
 There are no missing values in the dataframe.
 
+```{r Summary}
+summary(USJudgeRatings)
+```
+All the variables (except the variable CONT) are ranged between 0 and 10. Furthermore, we can observe that each variable admits a median that is close to the mean. For example, the median for the INTG variable is 8.021 and its median is equal to 8.100. So the variables seem to follow symetric distributions.  
+We will now take a look on the boxplots of the variables to see if there is outliers and errors, and to compare the interquartile ranges.
+
 ```{r boxplot}
 Outvals = boxplot(USJudgeRatings)
 ```
 
-We observe the presence of outliers for 10 of the 12 variables (with larger values for CONT and with lower values for the other variables).
+We observe the presence of outliers for 10 of the 12 variables (with larger values for CONT and with lower values for the other variables). Most of the variables have only one or two outliers, except the variables PHYS and RTEN, which have four outliers each. We are not provided with extra information and nothing indicated that these outliers correspond to mistakes. Thus, we will assume that they aren't mistakes and keep them in our analysis.  
+Note that the PHYS variable has a small interquartile range compare to the other variables. That means that all the judges seem to have a good physical ability (superior to 7) except the four outliers.  
+Also, the four outliers for the RTEN variable mean that the laywers think that these four judges should not stay in the US Superior court. Therefore, we need to see if there a link between the other variable and the variable RTEN.
 
 Let's take a closer look at these outliers.
 ```{r max_CONT}
@@ -466,46 +463,57 @@ rownames(USJudgeRatings)[which.max(USJudgeRatings$CONT)]
 ```
 The judge with the biggest number of contacts of lawyer is judge Callahan with a a number of 10.6 contacts.
 
-```{r lowest rating}
-min(USJudgeRatings$RTEN)
-rownames(USJudgeRatings)[which.min(USJudgeRatings$RTEN)]
-```
-The judge with the lowest rating for worthiness of retention is judge Bracken with a rating of 4.8.
-
 ```{r highest rating}
 max(USJudgeRatings$RTEN)
 rownames(USJudgeRatings)[which.max(USJudgeRatings$RTEN)]
 ```
 The judge with the highest rating for worthiness of retention is judge Rubinow with a rating of 9.2.  
-
-We are not provided with extra information and nothing indicated that these outliers correspond to mistakes. Thus, we will assume that they aren't mistakes and keep them in our analysis.
-
-The boxplots give us other relevant information on the PHYS variable. This variable has quite a high mean compared to the others and a lower interquartile range.
-
-
+We can take a look at his other ratings.
 ```{r}
-library(ggplot2)
-library(dplyr)
-library(GGally)
-ggpairs(USJudgeRatings)
+USJudgeRatings[which.max(USJudgeRatings$RTEN),]
 ```
 
+```{r lowest rating}
+min(USJudgeRatings$RTEN)
+rownames(USJudgeRatings)[which.min(USJudgeRatings$RTEN)]
+```
+The judge with the lowest rating for worthiness of retention is judge Bracken with a rating of 4.8.
+We can also take a look at his other ratings.
+```{r}
+USJudgeRatings[which.min(USJudgeRatings$RTEN),]
+```
+By comparing the ratings of these two judges, we can observe that the judge with the highest RTEN rate has better ratings in the other variables except for the variable CONT. Thus, there seems to be a correlation between the RTEN variable and the others (except CONT). We will look deeper into that correlation later in this report.
 
-```{r histograms}
+### Let's see the distribution of the variable
+
+```{r histograms1}
+par(mfrow=c(2,2))
 hist(USJudgeRatings$CONT, main="CONT")
+hist(USJudgeRatings$INTG, main="INTG")
+hist(USJudgeRatings$DMNR, main="DMNR")
+hist(USJudgeRatings$DILG, main="DILG")
 ```
 
-```{r}
-hist(USJudgeRatings$PREP, main="PREP" )
+```{r histograms2}
+par(mfrow=c(2,2))
+hist(USJudgeRatings$CFMG, main="CFMG")
+hist(USJudgeRatings$DECI, main="DECI")
+hist(USJudgeRatings$PREP, main="PREP")
+hist(USJudgeRatings$FAMI, main="FAMI")
 ```
 
-```{r}
+```{r histograms3}
+par(mfrow=c(2,2))
+hist(USJudgeRatings$ORAL, main="ORAL")
 hist(USJudgeRatings$WRIT, main="WRIT")
+hist(USJudgeRatings$PHYS, main="PHYS")
+hist(USJudgeRatings$RTEN, probability= TRUE, main="Histogram of RTEN" , xlab="RTEN")
+d = density(USJudgeRatings$RTEN, kernel = 'o', bw = 0.3)
+lines(d, col="red")
 ```
+To comment...
 
-```{r}
-hist(USJudgeRatings$RTEN, main="RTEN")
-```
+### Let's analyze the correlation between the variables
 
 ```{r}
 round(var(USJudgeRatings), 2)
@@ -536,17 +544,6 @@ pairs(USJudgeRatings)
 ```
 All the variables have a strong positive correlation two by two except the variable CONT which is not correlated to all the other variables.
 The number of contacts of a lawyer with the judge doesn't seem to explain the ratings received by the judge.
-
-```{r density}
-par(mfrow=c(1,2))
-hist(USJudgeRatings$CONT, probability= TRUE, main="Histogram of CONT", xlab="CONT")
-d = density(USJudgeRatings$CONT, kernel = 'c', bw = 0.3)
-lines(d, col="red")
-
-hist(USJudgeRatings$RTEN, probability= TRUE, main="Histogram of RTEN" , xlab="RTEN")
-d = density(USJudgeRatings$RTEN, kernel = 'o', bw = 0.3)
-lines(d, col="red")
-```
 
 
 ```{r ecdf}
