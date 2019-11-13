@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.10.14)  13 NOV 2019 18:19
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.10.14)  13 NOV 2019 22:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -915,86 +915,86 @@ msy/m/n/10 ^^@\OML/lmm/m/it/10 z[][] \OMS/lmsy/m/n/10 ^^T [] ^^@ \OML/lmm/m/it/
 
 [8] [9]
 
-Package xcolor Warning: Incompatible color definition on input line 629.
+Package xcolor Warning: Incompatible color definition on input line 640.
 
 
-Package xcolor Warning: Incompatible color definition on input line 633.
+Package xcolor Warning: Incompatible color definition on input line 644.
 
 
-Package xcolor Warning: Incompatible color definition on input line 633.
+Package xcolor Warning: Incompatible color definition on input line 644.
 
 
-Package xcolor Warning: Incompatible color definition on input line 637.
+Package xcolor Warning: Incompatible color definition on input line 648.
 
 
-Package xcolor Warning: Incompatible color definition on input line 641.
+Package xcolor Warning: Incompatible color definition on input line 652.
 
 
-Package xcolor Warning: Incompatible color definition on input line 641.
+Package xcolor Warning: Incompatible color definition on input line 652.
 
 
-Package xcolor Warning: Incompatible color definition on input line 662.
-
-
-Package xcolor Warning: Incompatible color definition on input line 666.
-
-
-Package xcolor Warning: Incompatible color definition on input line 666.
+Package xcolor Warning: Incompatible color definition on input line 673.
 
 
 Package xcolor Warning: Incompatible color definition on input line 677.
 
 
-Package xcolor Warning: Incompatible color definition on input line 684.
+Package xcolor Warning: Incompatible color definition on input line 677.
 
 
-Package xcolor Warning: Incompatible color definition on input line 684.
+Package xcolor Warning: Incompatible color definition on input line 688.
+
+
+Package xcolor Warning: Incompatible color definition on input line 695.
+
+
+Package xcolor Warning: Incompatible color definition on input line 695.
 
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 691.
+(Font)              <6> on input line 702.
 [10] [11pdfTeX warning (ext4): destination with the same identifier (name{table
 .1}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.754 
+l.765 
       ]
 
-Package xcolor Warning: Incompatible color definition on input line 755.
+Package xcolor Warning: Incompatible color definition on input line 766.
 
 
-Package xcolor Warning: Incompatible color definition on input line 759.
+Package xcolor Warning: Incompatible color definition on input line 770.
 
 
-Package xcolor Warning: Incompatible color definition on input line 759.
+Package xcolor Warning: Incompatible color definition on input line 770.
 
 
-Package xcolor Warning: Incompatible color definition on input line 806.
+Package xcolor Warning: Incompatible color definition on input line 817.
 
 
-Package xcolor Warning: Incompatible color definition on input line 810.
+Package xcolor Warning: Incompatible color definition on input line 821.
 
 
-Package xcolor Warning: Incompatible color definition on input line 810.
+Package xcolor Warning: Incompatible color definition on input line 821.
 
 
-Package xcolor Warning: Incompatible color definition on input line 818.
+Package xcolor Warning: Incompatible color definition on input line 829.
 
 
-Package xcolor Warning: Incompatible color definition on input line 822.
+Package xcolor Warning: Incompatible color definition on input line 833.
 
 
-Package xcolor Warning: Incompatible color definition on input line 822.
+Package xcolor Warning: Incompatible color definition on input line 833.
 
 [12]
 
-Package xcolor Warning: Incompatible color definition on input line 856.
+Package xcolor Warning: Incompatible color definition on input line 867.
 
 
-Package xcolor Warning: Incompatible color definition on input line 860.
+Package xcolor Warning: Incompatible color definition on input line 871.
 
 
-Package xcolor Warning: Incompatible color definition on input line 860.
+Package xcolor Warning: Incompatible color definition on input line 871.
 
 <Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/boxplot-1.pdf,
  id=219, 407.5225pt x 219.82124pt>
@@ -1003,58 +1003,49 @@ File: Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/boxplot-1
 <use Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/boxplot-1.
 pdf>
 Package pdftex.def Info: Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/fig
-ure-latex/boxplot-1.pdf  used on input line 862.
+ure-latex/boxplot-1.pdf  used on input line 873.
 (pdftex.def)             Requested size: 407.53394pt x 219.8274pt.
 
-Package xcolor Warning: Incompatible color definition on input line 881.
+Package xcolor Warning: Incompatible color definition on input line 892.
 
 
-Package xcolor Warning: Incompatible color definition on input line 885.
+Package xcolor Warning: Incompatible color definition on input line 896.
 
 
-Package xcolor Warning: Incompatible color definition on input line 885.
+Package xcolor Warning: Incompatible color definition on input line 896.
 
 
-Package xcolor Warning: Incompatible color definition on input line 891.
+Package xcolor Warning: Incompatible color definition on input line 902.
 
 
-Package xcolor Warning: Incompatible color definition on input line 895.
+Package xcolor Warning: Incompatible color definition on input line 906.
 
 
-Package xcolor Warning: Incompatible color definition on input line 895.
+Package xcolor Warning: Incompatible color definition on input line 906.
 
 
-Package xcolor Warning: Incompatible color definition on input line 904.
+Package xcolor Warning: Incompatible color definition on input line 915.
 
 
-Package xcolor Warning: Incompatible color definition on input line 908.
+Package xcolor Warning: Incompatible color definition on input line 919.
 
 
-Package xcolor Warning: Incompatible color definition on input line 908.
+Package xcolor Warning: Incompatible color definition on input line 919.
 
 
-Package xcolor Warning: Incompatible color definition on input line 914.
+Package xcolor Warning: Incompatible color definition on input line 925.
 
 
-Package xcolor Warning: Incompatible color definition on input line 918.
+Package xcolor Warning: Incompatible color definition on input line 929.
 
 
-Package xcolor Warning: Incompatible color definition on input line 918.
-
-
-Package xcolor Warning: Incompatible color definition on input line 928.
-
-[13 <./Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/boxplot-
-1.pdf>]
-
-Package xcolor Warning: Incompatible color definition on input line 932.
-
-
-Package xcolor Warning: Incompatible color definition on input line 932.
+Package xcolor Warning: Incompatible color definition on input line 929.
 
 
 Package xcolor Warning: Incompatible color definition on input line 939.
 
+[13 <./Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/boxplot-
+1.pdf>]
 
 Package xcolor Warning: Incompatible color definition on input line 943.
 
@@ -1062,31 +1053,40 @@ Package xcolor Warning: Incompatible color definition on input line 943.
 Package xcolor Warning: Incompatible color definition on input line 943.
 
 
-Package xcolor Warning: Incompatible color definition on input line 949.
+Package xcolor Warning: Incompatible color definition on input line 950.
 
 
-Package xcolor Warning: Incompatible color definition on input line 953.
+Package xcolor Warning: Incompatible color definition on input line 954.
 
 
-Package xcolor Warning: Incompatible color definition on input line 953.
+Package xcolor Warning: Incompatible color definition on input line 954.
 
 
-Package xcolor Warning: Incompatible color definition on input line 963.
+Package xcolor Warning: Incompatible color definition on input line 960.
 
 
-Package xcolor Warning: Incompatible color definition on input line 967.
+Package xcolor Warning: Incompatible color definition on input line 964.
 
 
-Package xcolor Warning: Incompatible color definition on input line 967.
+Package xcolor Warning: Incompatible color definition on input line 964.
 
 
-Package xcolor Warning: Incompatible color definition on input line 984.
+Package xcolor Warning: Incompatible color definition on input line 974.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1000.
+Package xcolor Warning: Incompatible color definition on input line 978.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1000.
+Package xcolor Warning: Incompatible color definition on input line 978.
+
+
+Package xcolor Warning: Incompatible color definition on input line 995.
+
+
+Package xcolor Warning: Incompatible color definition on input line 1011.
+
+
+Package xcolor Warning: Incompatible color definition on input line 1011.
 
 <Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/histograms1-1.
 pdf, id=232, 441.65pt x 291.0875pt>
@@ -1095,17 +1095,17 @@ s1-1.pdf Graphic file (type pdf)
 <use Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/histograms
 1-1.pdf>
 Package pdftex.def Info: Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/fig
-ure-latex/histograms1-1.pdf  used on input line 1002.
+ure-latex/histograms1-1.pdf  used on input line 1013.
 (pdftex.def)             Requested size: 441.66911pt x 291.1001pt.
 [14]
 
-Package xcolor Warning: Incompatible color definition on input line 1011.
+Package xcolor Warning: Incompatible color definition on input line 1022.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1027.
+Package xcolor Warning: Incompatible color definition on input line 1038.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1027.
+Package xcolor Warning: Incompatible color definition on input line 1038.
 
 <Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/histograms2-1.
 pdf, id=238, 441.65pt x 291.0875pt>
@@ -1114,23 +1114,23 @@ s2-1.pdf Graphic file (type pdf)
 <use Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/histograms
 2-1.pdf>
 Package pdftex.def Info: Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/fig
-ure-latex/histograms2-1.pdf  used on input line 1029.
+ure-latex/histograms2-1.pdf  used on input line 1040.
 (pdftex.def)             Requested size: 441.66911pt x 291.1001pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 1029--1031
+Underfull \hbox (badness 10000) in paragraph at lines 1040--1042
 [][] \T1/lmr/m/n/10 (+20) Ex-
  []
 
 [15 <./Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/histogra
 ms1-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 1032.
+Package xcolor Warning: Incompatible color definition on input line 1043.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1048.
+Package xcolor Warning: Incompatible color definition on input line 1059.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1048.
+Package xcolor Warning: Incompatible color definition on input line 1059.
 
 <Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/histograms3-1.
 pdf, id=251, 441.65pt x 291.0875pt>
@@ -1139,32 +1139,23 @@ s3-1.pdf Graphic file (type pdf)
 <use Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/histograms
 3-1.pdf>
 Package pdftex.def Info: Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/fig
-ure-latex/histograms3-1.pdf  used on input line 1050.
+ure-latex/histograms3-1.pdf  used on input line 1061.
 (pdftex.def)             Requested size: 441.66911pt x 291.1001pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 1050--1052
+Underfull \hbox (badness 10000) in paragraph at lines 1061--1063
 [][] \T1/lmr/m/n/10 (+20) To
  []
 
 [16 <./Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/histogra
 ms2-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 1060.
+Package xcolor Warning: Incompatible color definition on input line 1071.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1064.
+Package xcolor Warning: Incompatible color definition on input line 1075.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1064.
-
-
-Package xcolor Warning: Incompatible color definition on input line 1082.
-
-
-Package xcolor Warning: Incompatible color definition on input line 1086.
-
-
-Package xcolor Warning: Incompatible color definition on input line 1086.
+Package xcolor Warning: Incompatible color definition on input line 1075.
 
 
 Package xcolor Warning: Incompatible color definition on input line 1093.
@@ -1176,60 +1167,69 @@ Package xcolor Warning: Incompatible color definition on input line 1097.
 Package xcolor Warning: Incompatible color definition on input line 1097.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1103.
+Package xcolor Warning: Incompatible color definition on input line 1104.
+
+
+Package xcolor Warning: Incompatible color definition on input line 1108.
+
+
+Package xcolor Warning: Incompatible color definition on input line 1108.
+
+
+Package xcolor Warning: Incompatible color definition on input line 1114.
 
 [17 <./Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/histogra
 ms3-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 1107.
+Package xcolor Warning: Incompatible color definition on input line 1118.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1107.
+Package xcolor Warning: Incompatible color definition on input line 1118.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1113.
+Package xcolor Warning: Incompatible color definition on input line 1124.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1117.
+Package xcolor Warning: Incompatible color definition on input line 1128.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1117.
+Package xcolor Warning: Incompatible color definition on input line 1128.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1123.
+Package xcolor Warning: Incompatible color definition on input line 1134.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1127.
+Package xcolor Warning: Incompatible color definition on input line 1138.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1127.
+Package xcolor Warning: Incompatible color definition on input line 1138.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1142.
+Package xcolor Warning: Incompatible color definition on input line 1153.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1146.
+Package xcolor Warning: Incompatible color definition on input line 1157.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1146.
+Package xcolor Warning: Incompatible color definition on input line 1157.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1164.
+Package xcolor Warning: Incompatible color definition on input line 1175.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1168.
+Package xcolor Warning: Incompatible color definition on input line 1179.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1168.
+Package xcolor Warning: Incompatible color definition on input line 1179.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1174.
+Package xcolor Warning: Incompatible color definition on input line 1185.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1178.
+Package xcolor Warning: Incompatible color definition on input line 1189.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1178.
+Package xcolor Warning: Incompatible color definition on input line 1189.
 
 <Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/linear relatio
 nships between variables 2-1.pdf, id=277, 355.3275pt x 321.2pt>
@@ -1239,17 +1239,17 @@ lationships between variables 2-1.pdf Graphic file (type pdf)
 ationships between variables 2-1.pdf>
 Package pdftex.def Info: Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/fig
 ure-latex/linear relationships between variables 2-1.pdf  used on input line 11
-80.
+91.
 (pdftex.def)             Requested size: 355.33745pt x 321.20901pt.
 
-Package xcolor Warning: Incompatible color definition on input line 1182.
+Package xcolor Warning: Incompatible color definition on input line 1193.
 
 [18]
 
-Package xcolor Warning: Incompatible color definition on input line 1186.
+Package xcolor Warning: Incompatible color definition on input line 1197.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1186.
+Package xcolor Warning: Incompatible color definition on input line 1197.
 
 <Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/pairs-1.pdf, i
 d=282, 427.5975pt x 283.0575pt>
@@ -1258,19 +1258,19 @@ df Graphic file (type pdf)
 <use Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/pairs-1.pd
 f>
 Package pdftex.def Info: Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/fig
-ure-latex/pairs-1.pdf  used on input line 1188.
+ure-latex/pairs-1.pdf  used on input line 1199.
 (pdftex.def)             Requested size: 427.59645pt x 283.0568pt.
 [19 <./Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/linear r
 elationships between variables 2-1.pdf> <./Homework_Adrien_Toulouse_Paul-Antoin
 e_Girard_files/figure-latex/pairs-1.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 1195.
+Package xcolor Warning: Incompatible color definition on input line 1206.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1201.
+Package xcolor Warning: Incompatible color definition on input line 1212.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1201.
+Package xcolor Warning: Incompatible color definition on input line 1212.
 
 <Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/ecdf-1.pdf, id
 =303, 436.63126pt x 283.0575pt>
@@ -1279,33 +1279,8 @@ f Graphic file (type pdf)
 <use Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/ecdf-1.pdf
 >
 Package pdftex.def Info: Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/fig
-ure-latex/ecdf-1.pdf  used on input line 1203.
+ure-latex/ecdf-1.pdf  used on input line 1214.
 (pdftex.def)             Requested size: 436.63019pt x 283.0568pt.
-
-Package xcolor Warning: Incompatible color definition on input line 1205.
-
-
-Package xcolor Warning: Incompatible color definition on input line 1210.
-
-
-Package xcolor Warning: Incompatible color definition on input line 1210.
-
-<Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/QQ plot-1.pdf,
- id=304, 440.64626pt x 286.06876pt>
-File: Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/QQ plot-1
-.pdf Graphic file (type pdf)
-<use Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/QQ plot-1.
-pdf>
-Package pdftex.def Info: Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/fig
-ure-latex/QQ plot-1.pdf  used on input line 1212.
-(pdftex.def)             Requested size: 440.65189pt x 286.07242pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 1212--1215
-[][] \T1/lmr/m/n/10 (+20) The
- []
-
-[20 <./Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/ecdf-1.p
-df>]
 
 Package xcolor Warning: Incompatible color definition on input line 1216.
 
@@ -1315,34 +1290,59 @@ Package xcolor Warning: Incompatible color definition on input line 1221.
 
 Package xcolor Warning: Incompatible color definition on input line 1221.
 
+<Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/QQ plot-1.pdf,
+ id=304, 440.64626pt x 286.06876pt>
+File: Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/QQ plot-1
+.pdf Graphic file (type pdf)
+<use Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/QQ plot-1.
+pdf>
+Package pdftex.def Info: Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/fig
+ure-latex/QQ plot-1.pdf  used on input line 1223.
+(pdftex.def)             Requested size: 440.65189pt x 286.07242pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 1223--1226
+[][] \T1/lmr/m/n/10 (+20) The
+ []
+
+[20 <./Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/ecdf-1.p
+df>]
 
 Package xcolor Warning: Incompatible color definition on input line 1227.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1231.
+Package xcolor Warning: Incompatible color definition on input line 1232.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1231.
+Package xcolor Warning: Incompatible color definition on input line 1232.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1246.
+
+Package xcolor Warning: Incompatible color definition on input line 1238.
+
+
+Package xcolor Warning: Incompatible color definition on input line 1242.
+
+
+Package xcolor Warning: Incompatible color definition on input line 1242.
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1257.
 [21 <./Homework_Adrien_Toulouse_Paul-Antoine_Girard_files/figure-latex/QQ plot-
 1.pdf>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1246.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1257.
 (./Homework_Adrien_Toulouse_Paul-Antoine_Girard.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1246.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1246.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1257.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1257.
 
 Package rerunfilecheck Info: File `Homework_Adrien_Toulouse_Paul-Antoine_Girard
 .out' has not changed.
 (rerunfilecheck)             Checksum: 92B0EB364E55620D18BBF37E4282C7E7;4048.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1246.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1257.
  ) 
 Here is how much of TeX's memory you used:
- 14947 strings out of 492616
- 220516 string characters out of 6129480
+ 14949 strings out of 492616
+ 220536 string characters out of 6129480
  380696 words of memory out of 5000000
  18491 multiletter control sequences out of 15000+600000
- 56865 words of font info for 76 fonts, out of 8000000 for 9000
+ 56948 words of font info for 77 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  32i,9n,38p,1007b,359s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2019/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/
@@ -1369,7 +1369,7 @@ xlive/2019/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2019
 /texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/
 2019/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
 Output written on Homework_Adrien_Toulouse_Paul-Antoine_Girard.pdf (21 pages, 6
-73307 bytes).
+73583 bytes).
 PDF statistics:
  422 PDF objects out of 1000 (max. 8388607)
  345 compressed objects within 4 object streams
