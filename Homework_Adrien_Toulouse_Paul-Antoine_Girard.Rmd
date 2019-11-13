@@ -105,7 +105,10 @@ Applying the central limit theorem, we have that $\sqrt{n}(\hat\theta_{MLE}-\the
 
 The weak law of large numbers gives us that: $$\hat\theta_{MLE} \overset{p} {\to} \theta$$ 
 By continuous mapping, we have: $$\sqrt{\hat\theta_{MLE}} \overset{p} {\to} \sqrt{\theta}$$
-Then, by applying Slutsky's theorem, we have that: $$\sqrt{n}\frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}} \overset{d} {\to} \mathcal{N}(0,1)$$
+
+Then, by applying Slutsky's theorem, we finally have that: $$\sqrt{n}\frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}} \overset{d} {\to} \mathcal{N}(0,1)$$
+
+\newpage
 
 Now, let's check this result in R by simulating 1000 times our random variable $\sqrt{n}\frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}}$ with a sample size of 100:
 ```{r}
@@ -132,6 +135,8 @@ lines(d, col = 'red')
 
 The histogram confirms what we found theoretically. In fact, by plotting the density associated to the histogram we can observe a curve that represents a gaussian distribution. It is symetric around its expectation that seems to be zero. So, we can conclude that the random variable $\sqrt{n}\frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}}$ follows a standard gaussian distribution.  
 
+\newpage
+
 ```{r}
 qqnorm(realisations)
 qqline(realisations)
@@ -154,6 +159,8 @@ For $\alpha \in (0, 1)$,  an asymptotic confidence interval of level $\alpha$ fo
 $$
 [\hat \theta_{MLE} - z_{1-\alpha/2} \frac{\sqrt{\hat\theta_{MLE}}}{\sqrt{n}} ;\ \hat \theta_{MLE} + z_{1-\alpha/2} \frac{\sqrt{\hat\theta_{MLE}}} {\sqrt{n}}]
 $$
+
+\newpage
 
 ### Question 8
 
@@ -229,10 +236,10 @@ $$-L''(\theta^*) = \frac{\sum_{i=1}^{n} X_k}{\theta^2}$$
 Therefore,
 $$\mathbb{E} [-L''(\theta^*)] = \frac{\sum_{i=1}^{n} \mathbb{E}[X_k]}{\theta^2} = \frac{n}{\theta}$$
 
-Finally,
+and finally,
 $$\frac{1}{I_n(\theta^*)} = \frac{\theta}{n} = \mathbb{V} (\hat\theta_{MLE})$$
 
-We can conclude that our estimator $\hat\theta_{MLE}$ is efficient.
+Then, we can conclude that our estimator $\hat\theta_{MLE}$ is efficient.
 
 ### Question 13
 
@@ -269,7 +276,7 @@ We can get an unbiased estimator $\hat\theta_3$ by defining $\hat\theta_3 = (1-\
 
 Using the previous questions, we know that:
 $$\hat\theta_{2} = \frac{1}{n} \sum_{i=1}^{n} (X_i - \theta)^2 - (\theta - \overline{X_n})^2$$
-therefore, we have:
+therefore:
 $$
 \sqrt{n} (\hat\theta_{2} - \theta) = \frac{1}{\sqrt{n}} \sum_{i=1}^{n} (X_i - \theta)^2 - \sqrt{n} (\theta - \overline{X_n})^2 - \sqrt{n} \theta = \sqrt{n} (\overline{Y_n} - \theta) -  \sqrt{n} (\theta - \overline{X_n})^2
 $$
@@ -277,39 +284,38 @@ where:
 $$\forall i \in[\![1,n]\!], Yi = (X_i - \theta)^2 $$
 $$\bar{Y_n} = \frac{1}{n} \sum_{i=1}^{n}Y_i $$
 
-Since:
-$$
-\mathbb{E}[Y_i] = \mathbb{V}(X_i) = \theta
-$$
+Since, we know that:
+$$\mathbb{E}[Y_i] = \mathbb{V}(X_i) = \theta$$
+$$\mathbb{V}(Y_i) = 2\theta^2 + \theta$$
 
-$$
-\mathbb{V}(Y_i) = 2\theta^2 + \theta
-$$
+We can apply the central limit theorem, and we find that: $$\sqrt{n} (\overline{Y_n} - \theta) \overset{d} {\to} \mathcal{N}(0,2\theta^2 + \theta)$$
 
-We can apply the central limit theorem, and we have that: $$\sqrt{n} (\overline{Y_n} - \theta) \overset{d} {\to} \mathcal{N}(0,2\theta^2 + \theta)$$
 
-We also have the following equalities:
+On the other hand, we have the following equalities:
 $$
 \sqrt{n} (\theta - \overline{X_n})^2 = \sqrt{n} (\overline{X_n} - \theta)^2 = \sqrt{n} (\overline{X_n} - \theta)(\overline{X_n} - \theta)
 $$
+By applying the central limit theorem to the left part of the quantity, we have that: $$\sqrt{n} (\overline{X_n} - \theta) \overset{d} {\to} \mathcal{N}(0,\theta)$$
+and applying the law of large numbers gives us: $$(\theta - \overline{X_n})\overset{p} {\to} 0$$
 
-By applying the central limit theorem, we now have: $$\sqrt{n} (\overline{X_n} - \theta) \overset{d} {\to} \mathcal{N}(0,\theta)$$  
-On the other hand, applying the law of large numbers gives us: $$(\theta - \overline{X_n})\overset{p} {\to} 0$$
-
-Then, by applying Slutsky's theorem, we have that $\sqrt{n} (\theta - \overline{X_n})^2$ converges in distribution towards the constant 0. Therefore, it converges in probability towards 0.
-
-Now, we can apply Slutsky's theorem to $\sqrt{n} (\overline{Y_n} - \theta) -  \sqrt{n} (\theta - \overline{X_n})^2$ which gives us finally that: $$\sqrt{n} (\hat\theta_{2} - \theta) \overset{d} {\to} \mathcal{N}(0,2\theta^2 + \theta)$$  
+Then, by applying Slutsky's theorem to these two quantities, we have that:
+$$\sqrt{n} (\theta - \overline{X_n})^2 \overset{d} {\to} 0$$
+Since it converges in distribution to a constant, it also converges in probability:
+$$\sqrt{n} (\theta - \overline{X_n})^2 \overset{p} {\to} 0$$
 
 
-We can now compute another asymptotic confidence interval centered in $\hat \theta_2$.
+So, we can apply Slutsky's theorem to $\sqrt{n} (\overline{Y_n} - \theta) -  \sqrt{n} (\theta - \overline{X_n})^2$ which finally gives us that: $$\sqrt{n} (\hat\theta_{2} - \theta) \overset{d} {\to} \mathcal{N}(0,2\theta^2 + \theta)$$  
 
-We know by the first part of question that $\frac{\sqrt{n} (\hat\theta_{2} - \theta)}{\sqrt{2\theta^2 + \theta}} \overset{d} {\to} \mathcal{N}(0,1)$.
 
-Let's use $\hat\theta_{2}$ as an estimator of $\theta$ for the denominator.  
-First, in order to apply slutsky's theorem, we need to prove that $\hat\theta_{2} \overset{p} {\to} \theta$.
+Now, let's compute another asymptotic confidence interval centered in $\hat \theta_2$.
 
-Let $\epsilon > 0$.
-By Chebyshev's inequality,
+We know by the first part of question that: $$\frac{\sqrt{n} (\hat\theta_{2} - \theta)}{\sqrt{2\theta^2 + \theta}} \overset{d} {\to} \mathcal{N}(0,1)$$
+
+Let's use $\hat\theta_{2}$ as an estimator of $\theta$ for the denominator (by applying Slutsky's theorem).  
+In fact, we need to find a pivotal quantity to compute our asymptotic confidence interval.
+We want to prove that $\hat\theta_{2} \overset{p} {\to} \theta$.
+
+By applying the law of large numbers to **
 $$
 P(\mid \hat\theta_{2} - \theta \mid > \epsilon) \leq \frac{Var(\hat\theta_{2} - \theta)} {\epsilon^2} = \frac{\theta^2 + \theta} {n\epsilon^2} \underset{n \to + \infty} {\to} 0
 $$
@@ -574,9 +580,7 @@ corrplot(cor(USJudgeRatings))
 ```
 
 ```{r pairs}
-
 pairs(USJudgeRatings, gap=1/5, lower.panel = panel.smooth, upper.panel = NULL, row1attop=FALSE)
-{r pairs.default(), fig.width = 5, fig.asp = .62}
 ```
 
 All the variables have a strong positive correlation two by two except the variable CONT which is not correlated to all the other variables.
