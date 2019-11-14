@@ -260,7 +260,7 @@ $$
 \mathbb{E}[(\theta - \overline{X_n})^2] = \mathbb{E}[\theta^2 - 2\theta\overline{X_n} + \overline{X_n}^2] = \theta^2 - 2\theta\mathbb{E}[\overline{X_n}] + \mathbb{E}[\overline{X_n^2}]
 $$
 $$
-=- \theta^2 + \mathbb{V}(\overline{X_n}) + \mathbb{E}[\overline{X_n}^2] = - \theta^2 + \frac{\theta}{n} + \theta^2 = \frac{\theta}{n}
+=- \theta^2 + \mathbb{V}(\overline{X_n}) + \mathbb{E}[\overline{X_n}]^2 = - \theta^2 + \frac{\theta}{n} + \theta^2 = \frac{\theta}{n}
 $$
 
 $$
@@ -413,7 +413,7 @@ First, let's see how the dataset is organized.
 ```{r Introduction}
 str(USJudgeRatings)
 ```
-The data is stored in a dataframe nad we can observe that all the variables are numeric.
+The data is stored in a dataframe and we can observe that all the variables are numeric.
 
 ```{r}
 dim(USJudgeRatings)
@@ -425,10 +425,10 @@ We can have a full view of the dataset by using the kable function:
 library(knitr)
 library(kableExtra)
 kable(USJudgeRatings, 'latex', caption = "Ratings of US judges", booktabs = T) %>%
-  kable_styling(latex_options = "striped", font_size = 6)
+  kable_styling(latex_options = "striped", font_size = 6.5)
 ```
 
-An observation in this dataset represents the different ratings received by a judge (given by his name) in the US Superior Court.  
+An observation in this dataset represents twelve different ratings received by a judge (given by his name) in the US Superior Court. The ratings are given by different laywers but we don't have any information on them.  
 In order to study this dataset, we will first define properly what each variable means.
 
 ```{r Colnames}
@@ -436,13 +436,13 @@ colnames(USJudgeRatings)
 ```
 The variables are:
 
-* *CONT* : The number of contacts of the lawyer with judge.
+* *CONT* : The number of contacts of lawyer with the judge.
 * *INTG* : The judicial integrity of the judge.
 * *DMNR* : Demeanor of the judge.
 * *DILG* : Diligence of the judge.
 * *CFMG* : Case flow managed by the judge.
 * *DECI* : Prompt decisions taken by the judge.
-* *PREP* : How the judge is prepared trial.
+* *PREP* : How the judge is prepared for trials.
 * *FAMI* : The judge's familiarity with law.
 * *ORAL* : The judge's sound oral rulings.
 * *WRIT* : The judge's sound written rulings.
@@ -456,13 +456,15 @@ The variables are:
 ```{r missing values?}
 sum(is.na(USJudgeRatings))
 ```
-There are no missing values in the dataframe.
+There is no missing values in the dataframe.
 
 ```{r Summary}
 summary(USJudgeRatings)
 ```
-All the variables (except the variable CONT) are ranged between 0 and 10. Furthermore, we can observe that each variable admits a median that is close to the mean. For example, the median for the INTG variable is 8.021 and its median is equal to 8.100. So the variables seem to follow symetric distributions.  
-We will now take a look on the boxplots of the variables to see if there is outliers and errors, and to compare the interquartile ranges.
+All the variables (except the variable CONT) are ranged between 0 and 10.  
+By looking at the medians and means, we know that we can have information on the distribution of the variables. In fact, means are really sensible of outliers when medians aren't. However, in our case, each variable admits a median that is close to the mean. For example, the median for the INTG variable is 8.021 and its median is equal to 8.100. So we don't have any information on possible outliers but the variables seem to follow symetric distributions.  
+In order to have more information on the distributions followed by our variables, we will now take a look on the boxplots of the variables to see if there is outliers and errors, and to compare the interquartile ranges.
+
 
 ```{r boxplot}
 Outvals = boxplot(USJudgeRatings)
