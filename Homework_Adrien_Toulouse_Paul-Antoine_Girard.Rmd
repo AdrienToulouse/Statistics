@@ -103,21 +103,24 @@ Applying the central limit theorem, we have that $\sqrt{n}(\hat\theta_{MLE}-\the
 
 ### Question 6
 
-The weak law of large numbers gives us that $\hat\theta_{MLE}$ converges in probability towards $\theta$.  
-By continuous mapping, $\sqrt{\hat\theta_{MLE}}$ converges in probability towards $\sqrt{\theta}$.
-Then, by Slutsky's theorem, we have that $\sqrt{n}\frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}}$ converges in law towards a gaussian $\mathcal{N}(0,1)$.
+The weak law of large numbers gives us that: $$\hat\theta_{MLE} \overset{p} {\to} \theta$$ 
+By continuous mapping, we have: $$\sqrt{\hat\theta_{MLE}} \overset{p} {\to} \sqrt{\theta}$$
 
-Let's check this result in R by simulating 1000 times our random variable $\sqrt{n}\frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}}$ with a sample size of 100:
+Then, by applying Slutsky's theorem, we finally have that: $$\sqrt{n}\frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}} \overset{d} {\to} \mathcal{N}(0,1)$$
+
+\newpage
+
+Now, let's check this result in R by simulating 1000 times our random variable $\sqrt{n}\frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}}$ with a sample size of 100:
 ```{r}
 estim <- function(x, theta){
   n <- length(x)
   est <- sqrt(n) * (mean(x) - theta) / sqrt(mean(x))
-  return(est)}
+  return(est)
+  }
 ```
 
-
 ```{r}
-set.seed(42)
+set.seed(23)
 Nattempts = 1e3
 nsample = 100
 theta = 3
@@ -130,29 +133,34 @@ d = density(realisations, kernel='gaussian')
 lines(d, col = 'red')
 ```
 
+The histogram confirms what we found theoretically. In fact, by plotting the density associated to the histogram we can observe a curve that represents a gaussian distribution. It is symetric around its expectation that seems to be zero. So, we can conclude that the random variable $\sqrt{n}\frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}}$ follows a standard gaussian distribution.  
+
+\newpage
 
 ```{r}
 qqnorm(realisations)
 qqline(realisations)
 ```
 
-This confirms what we found theoretically: the random variable $\sqrt{n}\frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}}$ follows a standard gaussian distribution.
+The Q-Q plot compares the theoritical quantiles of a standard gaussian distribution to the ones of our estimated distribution. We can observe that the points approximately lie on the line y = x, so the distributions compared are similar and this plot also confirms that the random variable $\sqrt{n}\frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}}$ follows a standard gaussian distribution.
 
 ### Question 7
 
 Let $Z_n = \sqrt{n} \frac{(\hat\theta_{MLE}-\theta)}{\sqrt{\hat\theta_{MLE}}}$ be our random variable.
 
-Denote $z_{alpha}$ the $\alpha$-quantile for the standard Normal distribution for $\alpha \in (0,\ 1)$.
+Denote $z_{\alpha}$ the $\alpha$-quantile for the standard Normal distribution for $\alpha \in (0,\ 1)$.
 
 $$
 \lim \limits_{n \rightarrow + \infty} \mathbb{P} (-z_{1-\alpha/2} \leq Z_n \leq z_{1-\alpha/2}) \ge 1- \alpha \Leftrightarrow \lim \limits_{n \rightarrow + \infty} \mathbb{P}(-z_{1-\alpha/2} \sqrt{\frac{\hat\theta_{MLE}}{n}} \leq \hat\theta_{MLE} - \theta \leq z_{1-\alpha/2}\sqrt{\frac{\hat\theta_{MLE}}{n}}) \ge 1- \alpha
 $$
 
-For $\alpha \in (0, 1)$,  an asymptotic confidence interval for $\theta$ of level $\alpha$ is therefore :
+For $\alpha \in (0, 1)$,  an asymptotic confidence interval of level $\alpha$ for $\theta$ is therefore:
 
 $$
 [\hat \theta_{MLE} - z_{1-\alpha/2} \frac{\sqrt{\hat\theta_{MLE}}}{\sqrt{n}} ;\ \hat \theta_{MLE} + z_{1-\alpha/2} \frac{\sqrt{\hat\theta_{MLE}}} {\sqrt{n}}]
 $$
+
+\newpage
 
 ### Question 8
 
@@ -162,6 +170,7 @@ So,
 $$
 \sqrt{n} (g(\hat \theta_{MLE}) - g(\theta)) \overset{d} {\to} \mathcal{N}(0,\ g'(\theta)^2 \times \theta) \Leftrightarrow \sqrt{n} (g(\hat \theta_{MLE}) - g(\theta)) \overset{d} {\to} \mathcal{N}(0,1)
 $$
+$$\Leftrightarrow \sqrt{n} (2 \sqrt{\hat \theta_{MLE}} - 2 \sqrt{\theta}) \overset{d} {\to} \mathcal{N}(0,1)$$
 
 ### Question 9
 
@@ -175,7 +184,7 @@ $$
 $$
  \Leftrightarrow \lim \limits_{n \rightarrow + \infty} \mathbb{P} (\sqrt{\hat\theta_{MLE}} - \frac {z_{1-\alpha/2}} {2 \sqrt{n}} \leq \sqrt{\theta} \leq \sqrt{\hat\theta_{MLE}} + \frac {z_{1-\alpha/2}} {2 \sqrt{n}}) \geq 1- \alpha
 $$
-When n goes towards infinity, $\frac {z_{1-\alpha/2}} {2 \sqrt{n}}$ goes to 0. Since  $\sqrt{\hat\theta_{MLE}}$ is positive, there exists a $n_0$ such that $\sqrt{\hat\theta_{MLE}} - \frac {z_{1-\alpha/2}} {2 \sqrt{n}}$ is positive and we can take the squares in the inequality without changing the order of the inequalities:
+When n goes towards infinity, $\frac {z_{1-\alpha/2}} {2 \sqrt{n}}$ goes to 0. Since  $\sqrt{\hat\theta_{MLE}}$ is positive, there exists a $n_0$ such that $\forall n \geq n_0$, $\sqrt{\hat\theta_{MLE}} - \frac {z_{1-\alpha/2}} {2 \sqrt{n}}$ is positive and we can take the squares in the inequality without changing the order of the inequalities:
 
 $$
 \Leftrightarrow \lim \limits_{n \rightarrow + \infty} \mathbb{P} ((\sqrt{\hat\theta_{MLE}} - \frac {z_{1-\alpha/2}} {2 \sqrt{n}})^2 \leq \theta \leq (\sqrt{\hat\theta_{MLE}} + \frac {z_{1-\alpha/2}} {2 \sqrt{n}})^2) \geq 1- \alpha
@@ -190,16 +199,16 @@ $$
 ### Question 10
 
 Based on the first moment of a poisson distribution, we easily have that:
-
 $$\hat \theta_{MME} = \overline{X}$$
 
 We can remark that $\hat \theta_{MME} = \hat \theta_{MLE}$
 
 Based on the second moment of a poisson distribution, we have:
-$$n^{-1} \sum _{k=1} ^{n} X_k^2 = \hat \theta_{2} (\hat \theta_{2} + 1)$$
+$$n^{-1} \sum _{k=1} ^{n} X_k^2 = \hat \theta_{2} (\hat \theta_{2} + 1) = \hat \theta_{2}^2 + \hat \theta_{2}$$
 
-Let's define the function $h(x) = x(x + 1)$  
-Its inverse on $\mathbb{R}_+^*$ is $h^{-1} (x) = \frac {1}{2} [- 1 + \sqrt{4 x + 1}]$ and this gives us:
+We can now construct many different estimators by replace one of the $\hat \theta_2$ by $\hat \theta_1$ or we can inverse the function $h(x) = x(x + 1)$ to find an estimator of $\theta$.
+
+The inverse function of $h$ on $\mathbb{R}_+^*$ is $h^{-1} (x) = \frac {1}{2} [- 1 + \sqrt{4 x + 1}]$ and this gives us another estimator of $\theta$:
 $$\hat \theta_{2} = \frac {1}{2} [- 1 + \sqrt{(4 n^{-1} \sum _{k=1} ^{n} X_k^2) + 1}]$$
 
 ### Question 11
@@ -227,10 +236,10 @@ $$-L''(\theta^*) = \frac{\sum_{i=1}^{n} X_k}{\theta^2}$$
 Therefore,
 $$\mathbb{E} [-L''(\theta^*)] = \frac{\sum_{i=1}^{n} \mathbb{E}[X_k]}{\theta^2} = \frac{n}{\theta}$$
 
-Finally,
+and finally,
 $$\frac{1}{I_n(\theta^*)} = \frac{\theta}{n} = \mathbb{V} (\hat\theta_{MLE})$$
 
-We can conclude that our estimator $\hat\theta_{MLE}$ is efficient.
+Then, we can conclude that our estimator $\hat\theta_{MLE}$ reach the Cramer-Rao bound and is therefore efficient.
 
 ### Question 13
 
@@ -251,7 +260,7 @@ $$
 \mathbb{E}[(\theta - \overline{X_n})^2] = \mathbb{E}[\theta^2 - 2\theta\overline{X_n} + \overline{X_n}^2] = \theta^2 - 2\theta\mathbb{E}[\overline{X_n}] + \mathbb{E}[\overline{X_n^2}]
 $$
 $$
-=- \theta^2 + \mathbb{V}(\overline{X_n}) + \mathbb{E}[\overline{X_n}^2] = - \theta^2 + \frac{\theta}{n} + \theta^2 = \frac{\theta}{n}
+=- \theta^2 + \mathbb{V}(\overline{X_n}) + \mathbb{E}[\overline{X_n}]^2 = - \theta^2 + \frac{\theta}{n} + \theta^2 = \frac{\theta}{n}
 $$
 
 $$
@@ -267,7 +276,7 @@ We can get an unbiased estimator $\hat\theta_3$ by defining $\hat\theta_3 = (1-\
 
 Using the previous questions, we know that:
 $$\hat\theta_{2} = \frac{1}{n} \sum_{i=1}^{n} (X_i - \theta)^2 - (\theta - \overline{X_n})^2$$
-therefore, we have:
+therefore:
 $$
 \sqrt{n} (\hat\theta_{2} - \theta) = \frac{1}{\sqrt{n}} \sum_{i=1}^{n} (X_i - \theta)^2 - \sqrt{n} (\theta - \overline{X_n})^2 - \sqrt{n} \theta = \sqrt{n} (\overline{Y_n} - \theta) -  \sqrt{n} (\theta - \overline{X_n})^2
 $$
@@ -275,46 +284,47 @@ where:
 $$\forall i \in[\![1,n]\!], Yi = (X_i - \theta)^2 $$
 $$\bar{Y_n} = \frac{1}{n} \sum_{i=1}^{n}Y_i $$
 
-Since:
-$$
-\mathbb{E}[Y_i] = \mathbb{V}(X_i) = \theta
-$$
-and
-$$
-\mathbb{V}(Y_i) = 2\theta^2 + \theta
-$$
+Since, we know that:
+$$\mathbb{E}[Y_i] = \mathbb{V}(X_i) = \theta$$
+$$\mathbb{V}(Y_i) = 2\theta^2 + \theta$$
 
-We can apply the central limit theorem, and we have that $$\sqrt{n} (\overline{Y_n} - \theta) \overset{d} {\to} \mathcal{N}(0,2\theta^2 + \theta)$$
+We can apply the central limit theorem, and we find that: $$\sqrt{n} (\overline{Y_n} - \theta) \overset{d} {\to} \mathcal{N}(0,2\theta^2 + \theta)$$
 
-We also have that:
+
+On the other hand, we have the following equalities:
 $$
 \sqrt{n} (\theta - \overline{X_n})^2 = \sqrt{n} (\overline{X_n} - \theta)^2 = \sqrt{n} (\overline{X_n} - \theta)(\overline{X_n} - \theta)
 $$
+By applying the central limit theorem to the left part of the quantity, we have that: $$\sqrt{n} (\overline{X_n} - \theta) \overset{d} {\to} \mathcal{N}(0,\theta)$$
+and applying the law of large numbers gives us: $$(\overline{X_n} - \theta)\overset{p} {\to} 0$$
 
-Applying the central limit theorem, we have that: $\sqrt{n} (\overline{X_n} - \theta) \overset{d} {\to} \mathcal{N}(0,\theta)$.  
-On the other hand, applying the law of large numbers: $(\theta - \overline{X_n})\overset{p} {\to} 0$.
+Then, by applying Slutsky's theorem to these two quantities, we have that:
+$$\sqrt{n} (\theta - \overline{X_n})^2 \overset{d} {\to} 0$$
+Since it converges in distribution to a constant, it also converges in probability:
+$$\sqrt{n} (\theta - \overline{X_n})^2 \overset{p} {\to} 0$$
 
-Applying Slutsky's theorem, $\sqrt{n} (\theta - \overline{X_n})^2$ converges in distribution towards the constant 0. Therefore, it converges in probability towards 0.
 
-Now, we can apply Slutsky's theorem to $\sqrt{n} (\overline{Y_n} - \theta) -  \sqrt{n} (\theta - \overline{X_n})^2$ which gives us finally that: $$\sqrt{n} (\hat\theta_{2} - \theta) \overset{d} {\to} \mathcal{N}(0,2\theta^2 + \theta)$$  
+So, we can apply Slutsky's theorem to $\sqrt{n} (\overline{Y_n} - \theta) -  \sqrt{n} (\theta - \overline{X_n})^2$ which finally gives us that: $$\sqrt{n} (\hat\theta_{2} - \theta) \overset{d} {\to} \mathcal{N}(0,2\theta^2 + \theta)$$  
 
-We can now compute an other asymptotic confidence interval centered in $\hat \theta_2$.
 
-Let $V_n = \sqrt{n}\frac{(\hat\theta_{2}-\theta)}{\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}}}$ be our random variable.
+Now, let's compute another asymptotic confidence interval centered in $\hat \theta_2$.
 
-We know by the first part of question that $\frac{V_n}{\sqrt{2\theta^2 + \theta}} \overset{d} {\to} \mathcal{N}(0,1)$.
+We know by the first part of question that: $$\frac{\sqrt{n} (\hat\theta_{2} - \theta)}{\sqrt{2\theta^2 + \theta}} \overset{d} {\to} \mathcal{N}(0,1)$$
 
-Let's use $\hat\theta_{2}$ as an estimator of $\theta$ for the denominator. 
-In order to apply slutsky's theorem, we will prove that $\hat\theta_{2} \overset{p} {\to} \theta$.
+Let's use $\hat\theta_{2}$ as an estimator of $\theta$ for the denominator (by applying Slutsky's theorem).  
+In fact, we need to find a pivotal quantity to compute our asymptotic confidence interval.  
 
-Let $\epsilon > 0$.
-By Chebyshev's inequality,
-$$
-P(\mid \hat\theta_{2} - \theta \mid > \epsilon) < \frac{Var(\hat\theta_{2} - \theta)} {\epsilon^2} = \frac{\theta^2 + \theta} {n\epsilon^2} \underset{n \to + \infty} {\to} 0
-$$
+First, we will prove that $\hat\theta_{2} \overset{p} {\to} \theta$.
 
-So, we have that $\hat\theta_{2} \overset{p} {\to} \theta$ and by continuous mapping, $$\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}} \overset{p} {\to} \sqrt{2\theta^2 + \theta}$$
-Then, by Slutsky's theorem, we have that $V_n =\sqrt{n}\frac{(\hat\theta_{2}-\theta)}{\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}}}$ converges in law towards a gaussian $\mathcal{N}(0,1)$.
+By applying the law of large numbers to $\bar{Y_n}$, we have:
+$$\bar{Y_n} \overset{p} {\to} \theta$$
+and we saw that:
+$$(\theta - \overline{X_n})^2 \overset{p} {\to} 0$$
+So, by stability of the convergence in probability, we have that $\hat\theta_{2} \overset{p} {\to} \theta$ and by continuous mapping, $$\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}} \overset{p} {\to} \sqrt{2\theta^2 + \theta}$$
+
+Then, by applying Slutsky's theorem, we have that:
+$$V_n = \sqrt{n} \frac {(\hat\theta_{2}-\theta)} {\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}}} \overset{d} {\to} \mathcal{N}(0,1)$$
+and we can use it as pivotal quantity to find a confidence interval for $\theta$.
 
 $$
 \lim \limits_{n \rightarrow + \infty} \mathbb{P} (-z_{1-\alpha/2} \leq V_n \leq z_{1-\alpha/2}) \geq 1- \alpha \Leftrightarrow \lim \limits_{n \rightarrow + \infty} \mathbb{P}(-z_{1-\alpha/2} \frac{\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}}} {\sqrt{n}} \leq \hat\theta_{2} - \theta \leq z_{1-\alpha/2} \frac{\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}}} {\sqrt{n}}) \geq 1- \alpha
@@ -328,7 +338,14 @@ For $\alpha \in (0, 1)$,  an asymptotic confidence interval for $\theta$ of leve
 $$
 [\hat\theta_{2} - z_{1-\alpha/2} \frac{\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}}} {\sqrt{n}};\ \hat\theta_{2} + z_{1-\alpha/2} \frac{\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}}} {\sqrt{n}}]
 $$
+This asymptotic confidence interval has a range equal to $2 \cdot z_{1-\alpha/2} \frac{\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}}} {\sqrt{n}}$.  
+The asymptotic confidence interval found at the question 7 has a range equal to $2 \cdot z_{1-\alpha/2} \frac{\sqrt{\hat\theta_{MLE}}} {\sqrt{n}}$.  
+So, the range of the confidence interval found with the estimator $\hat\theta_{2}$ is larger and is less precise.
 
+Furthermore, we have that:
+$$var(\hat\theta_{2}) = \frac{2\theta^2 + \theta} {n} = \frac{\theta (2\theta + 1)} {n} = (2\theta + 1) Var(\hat \theta_{MLE}) > Var(\hat \theta_{MLE}) = \frac{1}{I_n(\theta^*)}$$
+So the asymptotic variance of this estimator is larger than the variance of the MLE. It is then less efficient than the MLE.  
+Furthermore, the quadratic risk of this estimator is also larger than the one of the MLE since $\hat\theta_{2}$ is a biaised estimator of $\theta$ and has a larger asymptotic variance. So, $\hat \theta_{MLE}$ is a better estimator for $\theta$ than $\hat\theta_{2}$.
 
 ### Question 16
 
@@ -351,17 +368,20 @@ $$\mathbb{V}(\mathbb{X}) = \mathbb{E} [\mathbb{X}^2] - \mathbb{E} [\mathbb{X}]^2
 
 We will now show that: $\mathbb{V}[(\mathbb{X}_i - \theta)^2] = 2 \theta^2 + \theta$
 
+We use the following equalities:
 $$G_\mathbb{X}^{(3)} (s) = (1 + 3 \theta e^{s} + \theta^2 e^{2s}) \theta e^{s + \theta (e^{s}-1)}$$
 $$G_\mathbb{X}^{(4)} (s) = (1 + \theta^3 e^{3s} + 6 \theta^2 e^{2s} + 7\theta e^{s}) \theta e^{s + \theta (e^{s}-1)}$$
 $$\mathbb{E} [\mathbb{X}^3] = G_\mathbb{X}^{(3)} (0) = \theta + 3\theta^2 + \theta^3$$
 $$\mathbb{E} [\mathbb{X}^4] = G_\mathbb{X}^{(4)} (0) = \theta^4 + 6\theta^3 + 7\theta^2 + \theta$$
+
+Finally, we have that:
 $$
 \mathbb{V}[(\mathbb{X}_i - \theta)^2] = \mathbb{E} [(\mathbb{X} - \theta)^4] - \mathbb{E} [(\mathbb{X} - \theta)^2]^2 = \mathbb{E} [\mathbb{X}^4] - 4 \theta \mathbb{E} [\mathbb{X}^3] + 6 \theta^2 \mathbb{E} [\mathbb{X}^2]  - 4 \theta^3 \mathbb{E} [\mathbb{X}] + \theta^4 - Var (\mathbb{X})^2
 $$
 $$
 = \theta^4 + 6\theta^3 + 7\theta^2 + \theta - 4\theta (\theta + 3\theta^2 + \theta^3) + 6 \theta^2 (\theta +\theta^2) - 4\theta^4  + \theta^4 - \theta^2 = 2 \theta^2 + \theta
 $$
-
+\newpage
 
 # Problem 2: Analysis of the USJudgeRatings dataset
 
@@ -393,8 +413,7 @@ First, let's see how the dataset is organized.
 ```{r Introduction}
 str(USJudgeRatings)
 ```
-
-The data is stored in a dataframe.
+The data is stored in a dataframe and we can observe that all the variables are numeric.
 
 ```{r}
 dim(USJudgeRatings)
@@ -406,25 +425,24 @@ We can have a full view of the dataset by using the kable function:
 library(knitr)
 library(kableExtra)
 kable(USJudgeRatings, 'latex', caption = "Ratings of US judges", booktabs = T) %>%
-  kable_styling(latex_options = "striped", font_size = 6)
+  kable_styling(latex_options = "striped", font_size = 6.5)
 ```
 
-The variables are all numeric.
-An observation in this dataset represents the different ratings received by a judge (given by his name) in the US Superior Court. Let's define properly what each variable means.
+An observation in this dataset represents twelve different ratings received by a judge (given by his name) in the US Superior Court. The ratings are given by different laywers but we don't have any information on them.  
+In order to study this dataset, we will first define properly what each variable means.
 
 ```{r Colnames}
 colnames(USJudgeRatings)
 ```
-
 The variables are:
 
-* *CONT* : The number of contacts of the lawyer with judge.
+* *CONT* : The number of contacts of lawyer with the judge.
 * *INTG* : The judicial integrity of the judge.
 * *DMNR* : Demeanor of the judge.
 * *DILG* : Diligence of the judge.
 * *CFMG* : Case flow managed by the judge.
 * *DECI* : Prompt decisions taken by the judge.
-* *PREP* : How the judge is prepared trial.
+* *PREP* : How the judge is prepared for trials.
 * *FAMI* : The judge's familiarity with law.
 * *ORAL* : The judge's sound oral rulings.
 * *WRIT* : The judge's sound written rulings.
@@ -433,26 +451,28 @@ The variables are:
 
 ## Descriptive dataset analysis
 
-```{r Summary}
-summary(USJudgeRatings)
-```
-All the variables (except the variable CONT) seem to be ranged between 0 and 10.  
-The last variable, RTEN, is our response variable. It says if the lawyers think that the judge is worthy staying in the US Superior Court or not.  
-
-We can observe that each variable seems to follow a symetric distribution, since median and mean are always close.
-
 ### Let's inspect the dataframe for missing values, outliers and errors:
 
 ```{r missing values?}
 sum(is.na(USJudgeRatings))
 ```
-There are no missing values in the dataframe.
+There is no missing values in the dataframe.
+
+```{r Summary}
+summary(USJudgeRatings)
+```
+All the variables (except the variable CONT) are ranged between 0 and 10.  
+By looking at the medians and means, we know that we can have information on the distribution of the variables. In fact, means are really sensible of outliers when medians aren't. However, in our case, each variable admits a median that is close to the mean. For example, the median for the INTG variable is 8.021 and its median is equal to 8.100. So we don't have any information on possible outliers but the variables seem to follow symetric distributions.  
+In order to have more information on the distributions followed by our variables, we will now take a look on the boxplots of the variables to see if there is outliers and errors, and to compare the interquartile ranges.
+
 
 ```{r boxplot}
 Outvals = boxplot(USJudgeRatings)
 ```
 
-We observe the presence of outliers for 10 of the 12 variables (with larger values for CONT and with lower values for the other variables).
+We observe the presence of outliers for 10 of the 12 variables (with larger values for CONT and with lower values for the other variables). Most of the variables have only one or two outliers, except the variables PHYS and RTEN, which have four outliers each. We are not provided with extra information and nothing indicated that these outliers correspond to mistakes. Thus, we will assume that they aren't mistakes and keep them in our analysis.  
+Note that the PHYS variable has a small interquartile range compare to the other variables. That means that all the judges seem to have a good physical ability (superior to 7) except the four outliers.  
+Also, the four outliers for the RTEN variable mean that the laywers think that these four judges should not stay in the US Superior court. Therefore, we need to see if there a link between the other variable and the variable RTEN.
 
 Let's take a closer look at these outliers.
 ```{r max_CONT}
@@ -461,62 +481,102 @@ rownames(USJudgeRatings)[which.max(USJudgeRatings$CONT)]
 ```
 The judge with the biggest number of contacts of lawyer is judge Callahan with a a number of 10.6 contacts.
 
-```{r lowest rating}
-min(USJudgeRatings$RTEN)
-rownames(USJudgeRatings)[which.min(USJudgeRatings$RTEN)]
-```
-The judge with the lowest rating for worthiness of retention is judge Bracken with a rating of 4.8.
-
 ```{r highest rating}
 max(USJudgeRatings$RTEN)
 rownames(USJudgeRatings)[which.max(USJudgeRatings$RTEN)]
 ```
 The judge with the highest rating for worthiness of retention is judge Rubinow with a rating of 9.2.  
-
-We are not provided with extra information and nothing indicated that these outliers correspond to mistakes. Thus, we will assume that they aren't mistakes and keep them in our analysis.
-
-The boxplots give us other relevant information on the PHYS variable. This variable has quite a high mean compared to the others and a lower interquartile range.
-
-
+We can take a look at his other ratings.
 ```{r}
-library(ggplot2)
-library(dplyr)
-library(GGally)
-ggpairs(USJudgeRatings)
+USJudgeRatings[which.max(USJudgeRatings$RTEN),]
 ```
 
-
-```{r histograms}
-hist(USJudgeRatings$CONT, main="CONT")
+```{r lowest rating}
+min(USJudgeRatings$RTEN)
+rownames(USJudgeRatings)[which.min(USJudgeRatings$RTEN)]
 ```
-
+The judge with the lowest rating for worthiness of retention is judge Bracken with a rating of 4.8.
+We can also take a look at his other ratings.
 ```{r}
-hist(USJudgeRatings$PREP, main="PREP" )
+USJudgeRatings[which.min(USJudgeRatings$RTEN),]
 ```
+By comparing the ratings of these two judges, we can observe that the judge with the highest RTEN ratings has better ratings in the other variables except for the variable CONT. Thus, there seems to be a correlation between the RTEN variable and the others (except CONT). We will look deeper into that correlation later in this report.
 
-```{r}
-hist(USJudgeRatings$WRIT, main="WRIT")
+### Let's see the distribution of the variable
+
+```{r histograms1}
+par(mfrow=c(2,2))
+hist(USJudgeRatings$CONT, probability= TRUE, main="Histogram of CONT", xlab="CONT")
+d = density(USJudgeRatings$CONT, kernel = 'o', bw = 0.3)
+lines(d, col="red")
+hist(USJudgeRatings$INTG, probability= TRUE, main="Histogram of INTG", xlab="INTG")
+d = density(USJudgeRatings$INTG, kernel = 'o', bw = 0.3)
+lines(d, col="red")
+hist(USJudgeRatings$DMNR, probability= TRUE, main="Histogram of DMNR", xlab="DMNR")
+d = density(USJudgeRatings$DMNR, kernel = 'o', bw = 0.3)
+lines(d, col="red")
+hist(USJudgeRatings$DILG, probability= TRUE, main="Histogram of DILG", xlab="DILG")
+d = density(USJudgeRatings$DILG, kernel = 'o', bw = 0.3)
+lines(d, col="red")
 ```
+These histograms give us an approximation of the distribution followed by these variables.  
+For example, for the CONT variable, we can see a bell with its highest point near the mean (near 7.4) of the sample. So we can assume that this variable follow a gaussian distribution. However, we also see the two outliers on the histogram and that modify a bit the distribution and we lose a bit of symmetry.
+For the DMNR variable,
 
-```{r}
-hist(USJudgeRatings$RTEN, main="RTEN")
+
+```{r histograms2}
+par(mfrow=c(2,2))
+hist(USJudgeRatings$CFMG, probability= TRUE, main="Histogram of CFMG", xlab="CFMG")
+d = density(USJudgeRatings$CFMG, kernel = 'o', bw = 0.3)
+lines(d, col="red")
+hist(USJudgeRatings$DECI, probability= TRUE, main="Histogram of DECI", xlab="DECI")
+d = density(USJudgeRatings$DECI, kernel = 'o', bw = 0.3)
+lines(d, col="red")
+hist(USJudgeRatings$PREP, probability= TRUE, main="Histogram of PREP", xlab="PREP")
+d = density(USJudgeRatings$PREP, kernel = 'o', bw = 0.3)
+lines(d, col="red")
+hist(USJudgeRatings$FAMI, probability= TRUE, main="Histogram of FAMI", xlab="FAMI")
+d = density(USJudgeRatings$FAMI, kernel = 'o', bw = 0.3)
+lines(d, col="red")
 ```
+Explain
 
-```{r}
+```{r histograms3}
+par(mfrow=c(2,2))
+hist(USJudgeRatings$ORAL, probability= TRUE, main="Histogram of ORAL", xlab="ORAL")
+d = density(USJudgeRatings$ORAL, kernel = 'o', bw = 0.3)
+lines(d, col="red")
+hist(USJudgeRatings$WRIT, probability= TRUE, main="Histogram of WRIT", xlab="WRIT")
+d = density(USJudgeRatings$WRIT, kernel = 'o', bw = 0.3)
+lines(d, col="red")
+hist(USJudgeRatings$PHYS, probability= TRUE, main="Histogram of PHYS", xlab="PHYS")
+d = density(USJudgeRatings$PHYS, kernel = 'o', bw = 0.3)
+lines(d, col="red")
+hist(USJudgeRatings$RTEN, probability= TRUE, main="Histogram of RTEN", xlab="RTEN")
+d = density(USJudgeRatings$RTEN, kernel = 'o', bw = 0.3)
+lines(d, col="red")
+```
+To comment...
+
+### Let's analyze the correlation between the variables
+
+First, we can take a look at the covariance matrix, and the standard deviation of eache variable.
+```{r cov}
 round(var(USJudgeRatings), 2)
 ```
 
-```{r dispersion}
+```{r st deviation}
 round(sqrt(diag(var(USJudgeRatings))),2)
 print('The smallest standard deviation is: ')
 min(round(sqrt(diag(var(USJudgeRatings))),2))
 print('The largest standard deviation is: ')
 max(round(sqrt(diag(var(USJudgeRatings))),2))
 ```
-Regarding the dispersion, we look at the interquartile range (given by the boxplots) and the empirical standard deviation. Overall, the dispersions are not very high (around 1).
-We find that the variables DMNR and RTEN have the largest standard deviation, while the DECI variable has the smallest.
+We find that the variables DMNR and RTEN have the largest standard deviation, while the DECI variable has the smallest.  
 
-Let's measure the correlations between the 11 first variables and the variable RTEN. For this we use the correlations function and the pairs function to visualize the scatter plots of the variables two by two.
+Let's measure the correlations between the 11 first variables and the variable RTEN to see if there is a link between the ratings and if the laywers think a judge is worthy staying in the US Superior court.  
+Thus, we will plot the scatter plots of the variables relative to the RTEN variable and we will use the correlation functions.
+
 ```{r linear relationships between variables 1}
 round(cor(USJudgeRatings),2)
 ```
@@ -527,21 +587,11 @@ corrplot(cor(USJudgeRatings))
 ```
 
 ```{r pairs}
-pairs(USJudgeRatings)
+pairs(USJudgeRatings, gap=1/5, lower.panel = panel.smooth, upper.panel = NULL, row1attop=FALSE)
 ```
+
 All the variables have a strong positive correlation two by two except the variable CONT which is not correlated to all the other variables.
 The number of contacts of a lawyer with the judge doesn't seem to explain the ratings received by the judge.
-
-```{r density}
-par(mfrow=c(1,2))
-hist(USJudgeRatings$CONT, probability= TRUE, main="Histogram of CONT", xlab="CONT")
-d = density(USJudgeRatings$CONT, kernel = 'c', bw = 0.3)
-lines(d, col="red")
-
-hist(USJudgeRatings$RTEN, probability= TRUE, main="Histogram of RTEN" , xlab="RTEN")
-d = density(USJudgeRatings$RTEN, kernel = 'o', bw = 0.3)
-lines(d, col="red")
-```
 
 
 ```{r ecdf}
