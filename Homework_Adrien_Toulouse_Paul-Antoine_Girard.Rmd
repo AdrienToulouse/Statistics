@@ -495,7 +495,7 @@ cat('The judge with the highest rating for worthiness of retention is judge',
     'with a rating of', max(USJudgeRatings$RTEN))
 ```
 
-We can take a look at his other ratings.
+We can take a look at his ratings.
 ```{r}
 USJudgeRatings[which.max(USJudgeRatings$RTEN),]
 ```
@@ -506,7 +506,7 @@ cat('The judge with the lowest rating for worthiness of retention is judge',
     'with a rating of', min(USJudgeRatings$RTEN))
 ```
 
-We can also take a look at his other ratings.
+We can also take a look at his ratings.
 ```{r}
 USJudgeRatings[which.min(USJudgeRatings$RTEN),]
 ```
@@ -553,8 +553,6 @@ hist(USJudgeRatings$FAMI, probability= TRUE, main="Histogram of FAMI", xlab="FAM
 d = density(USJudgeRatings$FAMI, kernel = 'o', bw = 0.3)
 lines(d, col="red")
 ```
-
-These four histograms tell us that the variables aren't symmetric. However, they all seem to have a bell curve as density.
 \newline
 
 ```{r histograms3}
@@ -573,7 +571,8 @@ d = density(USJudgeRatings$RTEN, kernel = 'o', bw = 0.3)
 lines(d, col="red")
 ```
 
-Finally, these four variables seem to have a symmetric law if we don't take a deeper look on outliers. In fact, they all seem to have extreme lower values but there densities are bell curves with the highest point of probability near there mean. However, these histograms aren't precise. Maybe, we could gain in accuracy with a larger dataset.  
+Finally, these four variables seem to have a symmetric law if we don't look too much on the outliers. In fact, they all seem to have extreme lower values but their densities are bell curves with the highest point of probability near their means. However, these histograms aren't precise. Maybe, we could gain in accuracy with a larger dataset.  
+\newline
 Let's try other statiscal tools to look deeper at the distributions followed by these variables.
 \newline
 
@@ -602,11 +601,10 @@ qqnorm(USJudgeRatings$CONT)
 qqline(USJudgeRatings$CONT)
 ```
 
-The QQ-plots are really interesting to analyse for these two variables. In fact, the qq-plot for the RTEN variable shows us until -1 the variable doesn't seem to follow a gaussian distribution but from -1 to 2, the quartile of the variable are really close to the quantiles of a gaussian distribution of a mean approximately equal to 7.4.  
+The QQ-plots are really interesting to analyse for these two variables. In fact, the QQ-plot for the RTEN variable shows us that until -1 the variable doesn't seem to follow a gaussian distribution but from -1 to 2, the quantiles of the variable are really close to the quantiles of a gaussian distribution of a mean approximately equal to 7.4.  
 The second QQ-plot suggests that the CONT variable seems to follow a Gaussian distribution until 1.5. It's the contrary of the RTEN variable.  
-Thys analysis can be explain by the outliers we found at the beginning. In fact, we found outliers with upper value for the CONT variable and outliers with lower values for the RTEN variable. So that explain why we don't find a gaussian distribution for these extreme values.  
+This analysis can be explain by the outliers we found at the beginning. In fact, we found outliers with upper value for the CONT variable and outliers with lower values for the RTEN variable. So that explain why we don't find a gaussian distribution for these extreme values.  
 \newline
-
 
 ### Let's analyze the correlation between the variables
 
@@ -645,7 +643,7 @@ Following this trend, we will take a look at the scatter plots between the diffe
 pairs(USJudgeRatings, gap=1/5, lower.panel = panel.smooth, upper.panel = NULL, row1attop=FALSE)
 ```
 
-These plots show us what we suggest before. In fact, there is a linear correlation between eleven of the twelve variables (all the variables except CONT). if the subject would have been to predict the values of one of these variables, we could in fact have use a linear regression model.  
+These plots show us what we suggest before. In fact, there is a linear correlation between eleven of the twelve variables (all the variables except CONT). If the subject would have been to predict the values of one of these variables, we could have used a linear regression model.
 \newline
 
 ### Let's take a look at some indicators
@@ -658,7 +656,7 @@ skewness(USJudgeRatings$FAMI)
 skewness(USJudgeRatings$RTEN)
 ```
 
-We calculate the Skewness of four variables. Skewness is an indicator that measure the assymetry of a distribution. In our case, we always have a negative indicator. That means that the tail is on the left side of the distributions.
+We calculate the Skewness of four variables. Skewness is an indicator that measures the assymetry of a distribution. In our case, we always have a negative indicator. That means that the tail is on the left side of the distributions.
 \newline
 
 ```{r}
@@ -668,13 +666,62 @@ kurtosis(USJudgeRatings$FAMI)
 kurtosis(USJudgeRatings$RTEN)
 ```
 
-Kurtosis is an indicator that measure the propension of a distribution to produce outliers.  
-However, we have seen that the variable PREP has a very lower outlier but its kurtosis is near 0. On the other side, we saw that the variable DECI doesn't have any outlier but its kurtosis is negative and near -0.5.
+Kurtosis is an indicator that measures the propension of a distribution to produce outliers.  
+However, we have seen that the variable PREP has a very lower outlier but its kurtosis is near 0. On the other side, we saw that the variable DECI doesn't have any outlier but its kurtosis is negative and near -0.5.  
+But all these Kurtosis values are ranged between -1 and 1, so their values aren't extreme and that don't show any extreme particularity.
 \newline
 
 ## Application of statiscal methods
 
-find the paratemer of distribution of rten
+in order to apply some statistic methods, we will construct a confidence interval for the mean of the RTEN variable. In fact, we assumed during this report that this variable follow a gaussian distribution. So, it will be interesting to estimate its mean without knowing its variance.  
+
+We assume that we have n = 43 observations of a gaussian distribution:  $X_k \sim \mathcal{N}(\mu, \sigma^2)$, $\forall k \in {1, ..., n}$ such that  $\mu \in \mathbb{R}, \ \sigma \in \mathbb{R}_+^*$.  
+
+Our statiscal model is therefore:
+$$\mathcal{M}^n = (\mathbb{R}^n, \mathcal{B}(\mathbb{R}^n),\ \{\mathbb{P}^n _{\mu},\ (\mu, \sigma^2) \in\Theta \})$$
+with $\mathbb{P}^n _{\mu} = \mathbb{P} _{\mu} \otimes ... \otimes \mathbb{P} _{\mu}$ (n times)  
+
+We are trying to estimate the parameter $\mu$.
+
+Since, we don't know the variance but we assumed that the observations are gaussians, we will use the fact that $S^2 = \frac{1}{n-1} \sum_{i=1}^{n} (X_i - \overline{X_n})^2$ is an unbiaised estimator of $\sigma^2$.  
+
+We know that a confidence interval of level $\alpha$ for $\mu$ is:
+$$[\overline{X_n} - t_{\alpha/2, df=n-1} \frac {S} {\sqrt(n-1)}, \ \overline{X_n} - t_{\alpha/2, df=n-1} \frac {S} {\sqrt(n-1)}]$$
+With $t_{\alpha, df=n-1}$ the quantile of level $\alpha$ of a Student's distribution of degree of freedom $n-1$.  
+
+Let's compute the confidence interval for $\mu$ in our case:
+```{r}
+n = 43
+alpha = 0.05
+moy = mean(USJudgeRatings$RTEN)
+t = qt(1-alpha/2, df=n-1)
+S = sqrt(sum((USJudgeRatings$RTEN - moy)^2)/(n-1))
+CI = c(moy - (t * S) / (sqrt(n-1)), moy + (t * S) / (sqrt(n-1)))
+print(CI)
+```
+So ,we find under our assumptions that the RTEN variable follows a gaussian distribution of mean $\mu$, with a confidence interval of level $\alpha$ for $\mu$ equal to:
+$$[7.259487, 7.945164]$$
+
+Now, if we don't assume that the RTEN variable follows a gaussian distribution. We can also construct a confidence interval for $\mu$ using Slutsky's theorem (which is possible because we have more than 30 observations).  
+In fact, we assume that our observations are independent from a distribution, which has a mean equal to $\mu$ and a variance equal to $\sigma^2$.  
+We use the central limit theorem and we apply Slutsky's theorem, using the fact that $S \overset{p} {\to} \sigma$ (generalisation of a result found in the first exercise).  
+
+The confidence interval for $\mu$ is then given by:
+$$[\overline{X_n} - z_{\alpha/2} \frac {S} {\sqrt{n}}, \ \overline{X_n} - z_{\alpha/2} \frac {S} {\sqrt{n}}]$$
+
+```{r}
+n = 43
+alpha = 0.05
+moy = mean(USJudgeRatings$RTEN)
+z = qnorm(1-alpha/2)
+S = sqrt(sum((USJudgeRatings$RTEN - moy)^2)/(n-1))
+CI = c(moy - (z * S) / (sqrt(n)), moy + (z * S) / (sqrt(n)))
+print(CI)
+```
+
+So , if we don't assume that RTEN follows a gaussian distribution, we find a confidence interval of level $\alpha$ for $\mu$ equal to:
+$$[7.273254, 7.931397]$$
+This asymptotic confidence interval has a smaller size than the previous one and is therefore more precise.
 
 ## Conclusion
 
