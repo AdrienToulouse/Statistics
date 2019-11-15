@@ -28,7 +28,7 @@ For example a poisson distribution can model:
 
 * The number of network failures per day.
 
-* In quality control, the number of manufacturing defect.
+* In quality control, the number of manufacturing defects.
 
 
 ### Question 2
@@ -239,7 +239,7 @@ $$\mathbb{E} [-L''(\theta^*)] = \frac{\sum_{i=1}^{n} \mathbb{E}[X_k]}{\theta^2} 
 and finally,
 $$\frac{1}{I_n(\theta^*)} = \frac{\theta}{n} = \mathbb{V} (\hat\theta_{MLE})$$
 
-Then, we can conclude that our estimator $\hat\theta_{MLE}$ reach the Cramer-Rao bound and is therefore efficient.
+Then, we can conclude that our estimator $\hat\theta_{MLE}$ reaches the Cramer-Rao bound and is therefore efficient.
 
 ### Question 13
 
@@ -296,7 +296,7 @@ $$
 \sqrt{n} (\theta - \overline{X_n})^2 = \sqrt{n} (\overline{X_n} - \theta)^2 = \sqrt{n} (\overline{X_n} - \theta)(\overline{X_n} - \theta)
 $$
 By applying the central limit theorem to the left part of the quantity, we have that: $$\sqrt{n} (\overline{X_n} - \theta) \overset{d} {\to} \mathcal{N}(0,\theta)$$
-and applying the law of large numbers gives us: $$(\overline{X_n} - \theta)\overset{p} {\to} 0$$
+and applying the law of large numbers to the right part gives us: $$(\overline{X_n} - \theta)\overset{p} {\to} 0$$
 
 Then, by applying Slutsky's theorem to these two quantities, we have that:
 $$\sqrt{n} (\theta - \overline{X_n})^2 \overset{d} {\to} 0$$
@@ -320,11 +320,11 @@ By applying the law of large numbers to $\bar{Y_n}$, we have:
 $$\bar{Y_n} \overset{p} {\to} \theta$$
 and we saw that:
 $$(\theta - \overline{X_n})^2 \overset{p} {\to} 0$$
-So, by stability of the convergence in probability, we have that $\hat\theta_{2} \overset{p} {\to} \theta$ and by continuous mapping, $$\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}} \overset{p} {\to} \sqrt{2\theta^2 + \theta}$$
+So, by stability of the convergence in probability, we have that $\hat\theta_{2} = \frac{1}{n} \sum_{i=1}^{n} Y_i - (\theta - \overline{X_n})^2 \overset{p} {\to} \theta$ and by continuous mapping, $$\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}} \overset{p} {\to} \sqrt{2\theta^2 + \theta}$$
 
 Then, by applying Slutsky's theorem, we have that:
 $$V_n = \sqrt{n} \frac {(\hat\theta_{2}-\theta)} {\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}}} \overset{d} {\to} \mathcal{N}(0,1)$$
-and we can use it as pivotal quantity to find a confidence interval for $\theta$.
+and we can use it as a pivotal quantity to find a confidence interval for $\theta$.
 
 $$
 \lim \limits_{n \rightarrow + \infty} \mathbb{P} (-z_{1-\alpha/2} \leq V_n \leq z_{1-\alpha/2}) \geq 1- \alpha \Leftrightarrow \lim \limits_{n \rightarrow + \infty} \mathbb{P}(-z_{1-\alpha/2} \frac{\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}}} {\sqrt{n}} \leq \hat\theta_{2} - \theta \leq z_{1-\alpha/2} \frac{\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}}} {\sqrt{n}}) \geq 1- \alpha
@@ -338,9 +338,9 @@ For $\alpha \in (0, 1)$,  an asymptotic confidence interval for $\theta$ of leve
 $$
 [\hat\theta_{2} - z_{1-\alpha/2} \frac{\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}}} {\sqrt{n}};\ \hat\theta_{2} + z_{1-\alpha/2} \frac{\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}}} {\sqrt{n}}]
 $$
-This asymptotic confidence interval has a range equal to $2 \cdot z_{1-\alpha/2} \frac{\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}}} {\sqrt{n}}$.  
-The asymptotic confidence interval found at the question 7 has a range equal to $2 \cdot z_{1-\alpha/2} \frac{\sqrt{\hat\theta_{MLE}}} {\sqrt{n}}$.  
-So, the range of the confidence interval found with the estimator $\hat\theta_{2}$ is larger and is less precise.
+This asymptotic confidence interval has a size equal to $2 \cdot z_{1-\alpha/2} \frac{\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}}} {\sqrt{n}}$.  
+The asymptotic confidence interval found at the question 7 has a size equal to $2 \cdot z_{1-\alpha/2} \frac{\sqrt{\hat\theta_{MLE}}} {\sqrt{n}}$.  
+So, the range of the confidence interval found with the estimator $\hat\theta_{2}$ is larger and is therefore less precise.
 
 Furthermore, we have that:
 $$var(\hat\theta_{2}) = \frac{2\theta^2 + \theta} {n} = \frac{\theta (2\theta + 1)} {n} = (2\theta + 1) Var(\hat \theta_{MLE}) > Var(\hat \theta_{MLE}) = \frac{1}{I_n(\theta^*)}$$
