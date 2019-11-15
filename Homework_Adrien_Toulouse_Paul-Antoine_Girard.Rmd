@@ -340,7 +340,7 @@ $$
 $$
 This asymptotic confidence interval has a size equal to $2 \cdot z_{1-\alpha/2} \frac{\sqrt{2\hat\theta_{2}^2 + \hat\theta_{2}}} {\sqrt{n}}$.  
 The asymptotic confidence interval found at the question 7 has a size equal to $2 \cdot z_{1-\alpha/2} \frac{\sqrt{\hat\theta_{MLE}}} {\sqrt{n}}$.  
-So, the range of the confidence interval found with the estimator $\hat\theta_{2}$ is larger and is therefore less precise.
+So, the range of the confidence interval found with the estimator $\hat\theta_{2}$ is larger and is therefore less precise. In fact, $2\hat\theta_{2}^2 + \hat\theta_{2} > \hat\theta_{MLE}$.
 
 Furthermore, we have that:
 $$var(\hat\theta_{2}) = \frac{2\theta^2 + \theta} {n} = \frac{\theta (2\theta + 1)} {n} = (2\theta + 1) Var(\hat \theta_{MLE}) > Var(\hat \theta_{MLE}) = \frac{1}{I_n(\theta^*)}$$
@@ -516,64 +516,22 @@ By comparing the ratings of these two judges, we can observe that the judge with
 
 ### Let's now look at the distribution of the variables
 
-```{r histograms1}
-par(mfrow=c(2,2))
-hist(USJudgeRatings$CONT, probability= TRUE, main="Histogram of CONT", xlab="CONT")
-d = density(USJudgeRatings$CONT, kernel = 'o', bw = 0.3)
-lines(d, col="red")
-hist(USJudgeRatings$INTG, probability= TRUE, main="Histogram of INTG", xlab="INTG")
-d = density(USJudgeRatings$INTG, kernel = 'o', bw = 0.3)
-lines(d, col="red")
-hist(USJudgeRatings$DMNR, probability= TRUE, main="Histogram of DMNR", xlab="DMNR")
-d = density(USJudgeRatings$DMNR, kernel = 'o', bw = 0.3)
-lines(d, col="red")
-hist(USJudgeRatings$DILG, probability= TRUE, main="Histogram of DILG", xlab="DILG")
-d = density(USJudgeRatings$DILG, kernel = 'o', bw = 0.3)
-lines(d, col="red")
+```{r hist}
+par(mfrow=c(3,4))
+for (var in colnames(USJudgeRatings)) {
+  hist(USJudgeRatings[, var], main=var, probability=TRUE, xlab=var)
+d = density(USJudgeRatings[, var], kernel = 'o', bw = 0.3)
+lines(d, col="red")}
 ```
 
 These histograms give us an idea of the distribution followed by these variables.  
-For example, for the CONT variable, we can see a bell curve with its highest point near the mean of the sample. So we can assume that this variable follow a gaussian distribution. However, we also see the two outliers on the histogram and which modify a bit the symmetry of the distribution.  
+For example, for the CONT variable, we can see a bell curve with its highest point near the mean of the sample. So we can assume that this variable follows a gaussian distribution. However, we also see the two outliers on the histogram and they modify a bit the symmetry of the distribution.  
 The INTG variable also seems to follow a gaussian distribution, but it is less obvious. The bell curve is not exactly symetric. The other two variables don't seem to follow any usual distribution and it is difficult to see any real particularity.
 \newline
 
-
-```{r histograms2}
-par(mfrow=c(2,2))
-hist(USJudgeRatings$CFMG, probability= TRUE, main="Histogram of CFMG", xlab="CFMG")
-d = density(USJudgeRatings$CFMG, kernel = 'o', bw = 0.3)
-lines(d, col="red")
-hist(USJudgeRatings$DECI, probability= TRUE, main="Histogram of DECI", xlab="DECI")
-d = density(USJudgeRatings$DECI, kernel = 'o', bw = 0.3)
-lines(d, col="red")
-hist(USJudgeRatings$PREP, probability= TRUE, main="Histogram of PREP", xlab="PREP")
-d = density(USJudgeRatings$PREP, kernel = 'o', bw = 0.3)
-lines(d, col="red")
-hist(USJudgeRatings$FAMI, probability= TRUE, main="Histogram of FAMI", xlab="FAMI")
-d = density(USJudgeRatings$FAMI, kernel = 'o', bw = 0.3)
-lines(d, col="red")
-```
-\newline
-
-```{r histograms3}
-par(mfrow=c(2,2))
-hist(USJudgeRatings$ORAL, probability= TRUE, main="Histogram of ORAL", xlab="ORAL")
-d = density(USJudgeRatings$ORAL, kernel = 'o', bw = 0.3)
-lines(d, col="red")
-hist(USJudgeRatings$WRIT, probability= TRUE, main="Histogram of WRIT", xlab="WRIT")
-d = density(USJudgeRatings$WRIT, kernel = 'o', bw = 0.3)
-lines(d, col="red")
-hist(USJudgeRatings$PHYS, probability= TRUE, main="Histogram of PHYS", xlab="PHYS")
-d = density(USJudgeRatings$PHYS, kernel = 'o', bw = 0.3)
-lines(d, col="red")
-hist(USJudgeRatings$RTEN, probability= TRUE, main="Histogram of RTEN", xlab="RTEN")
-d = density(USJudgeRatings$RTEN, kernel = 'o', bw = 0.3)
-lines(d, col="red")
-```
-
 Finally, these four variables seem to have a symmetric law if we don't look too much on the outliers. In fact, they all seem to have extreme lower values but their densities are bell curves with the highest point of probability near their means. However, these histograms aren't precise enough and we would gain in accuracy with a larger dataset.  
 \newline
-Let's look at other statiscal tools to look deeper at the distributions followed by these variables.
+Let's look at other statistical tools to look deeper at the distributions followed by these variables.
 \newline
 
 
@@ -586,7 +544,7 @@ plot(ecdf(USJudgeRatings$RTEN), verticals = TRUE, do.points = FALSE, main = "ECD
 ```
 
 
-We focuse on four of the variables and we look at their empirical cumulative distribution functions.  
+We focus on four of the variables and we look at their empirical cumulative distribution functions.  
 The cumulative distribution function of the variable CONT is different from the others empirical cumulative distribution functions. In fact, the range of values taken by this variable is larger than for the other variables (from 6 to 11, compared to 5 to 9). However, the shape of the functions are pretty similar. The steps are bigger for extreme values but we can associate all these ECDF to ECDF of gaussian distributions.  
 \newline
 Finally, let's compare the quantiles of our variables to the quantiles of a gaussian distribution to see if we can really associate these variables to gaussian distributions.
