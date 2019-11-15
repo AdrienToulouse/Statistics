@@ -725,7 +725,7 @@ This asymptotic confidence interval has a smaller range than the previous one an
 
 ## Conclusion
 
-Overall, descriptive statistics have allowed us to better understand the dataset. The USJudgeRatings dataset gives us 12 ratings received by 43 judges. We have seen that this dataset had no missing values but contained several outliers. We found for example that 4 judges had particularly low retention ratings. 
+Overall, descriptive statistics have allowed us to better understand the dataset. The USJudgeRatings dataset gives us 12 ratings received by 43 judges. We have seen that this dataset has no missing values but contains several outliers. We found for example that 4 judges had particularly low retention ratings. 
 This led us to look at the distributions of the different variables. By looking at histograms, empirical cumlative distribution functions and qqplots we were able to determine that some of the variables follow gaussian distributions. 
 Then, we looked at the correlation between the variables to discover that, put aside the CONT variable, all the variables are extremely correlated. A judge either has good grades in all competencies or lower grades everywhere. 
 Finally, we decided to build two confidence intervals to have a closer idea of the mean of the RTEN variable.
