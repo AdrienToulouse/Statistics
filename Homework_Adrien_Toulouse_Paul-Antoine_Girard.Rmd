@@ -466,22 +466,24 @@ There are no missing values in the dataframe.
 summary(USJudgeRatings)
 ```
 
+  
 All the variables (except the variable CONT) are ranged between 0 and 10.  
 By looking at the medians and means, we know that we can have information on the distribution of the variables. In fact, means are really sensible of outliers when medians aren't. However, in our case, each variable admits a median that is close to the mean. For example, the median for the INTG variable is 8.021 and its median is equal to 8.100. So this doesn't give us any information yet on possible outliers.  
 
-In order to have more information on the distributions followed by our variables, we will now take a look at the boxplots of the variables to see if there are outliers and errors, and to compare interquartile ranges.
+In order to have more information on the distributions followed by our variables, we will now take a look at the boxplots of the variables to see if there are outliers and errors, and to compare interquartile ranges.  
 \newline
 
 ```{r boxplot}
 Outvals = boxplot(USJudgeRatings)
 ```
 
+  
 We observe the presence of outliers for 10 of the 12 variables (with larger values for CONT and with lower values for the other variables). Most of the variables have only one or two outliers, except the variables PHYS and RTEN, which have four outliers each. We are not provided with extra information and nothing indicates that these outliers correspond to mistakes. Thus, we will assume that they aren't mistakes and keep them in our analysis.  
 
 Note that the PHYS variable has a small interquartile range compare to the other variables. This means that all the judges seem to have a good physical ability (superior to 7) except the four outliers.  
 Also, the four outliers for the RTEN variable indicate that the laywers think that these four judges should not stay in the US Superior court.
-Therefore, we have to see if there a link between the other variables and the variable RTEN.
-
+Therefore, we have to see if there a link between the other variables and the variable RTEN.  
+\newline
 Let's take a closer look at some of the outliers.
 ```{r max_CONT}
 cat('The judge with the largest number of contacts of lawyer is judge', 
@@ -526,16 +528,14 @@ lines(d, col="red")}
 
 These histograms give us an idea of the distribution followed by these variables.  
 For example, for the CONT variable, we can see a bell curve with its highest point near the mean of the sample. So we can assume that this variable follows a gaussian distribution. However, we also see the two outliers on the histogram and they modify a bit the symmetry of the distribution.  
-The INTG variable also seems to follow a gaussian distribution, but it is less obvious. The bell curve is not exactly symetric. The other two variables don't seem to follow any usual distribution and it is difficult to see any real particularity.
-\newline
 
-Finally, these four variables seem to have a symmetric law if we don't look too much on the outliers. In fact, they all seem to have extreme lower values but their densities are bell curves with the highest point of probability near their means. However, these histograms aren't precise enough and we would gain in accuracy with a larger dataset.  
+Finally, we can say that most of the variables seem to have a symmetric law if we don't look too much at the outliers. In fact, most of the densities are bell curves with the highest point of probability near the means. However, these histograms would be more precise with a larger dataset.  
 \newline
-Let's look at other statistical tools to look deeper at the distributions followed by these variables.
+Let's look at other statistical tools to study the distributions followed by these variables.
 \newline
 
 
-```{r ecdf 1}
+```{r ecdf}
 par(mfrow=c(2,2))
 plot(ecdf(USJudgeRatings$CONT), verticals = TRUE, do.points = FALSE, main = "ECDF CONT")
 plot(ecdf(USJudgeRatings$DECI), verticals = TRUE, do.points = FALSE, main = "ECDF DECI")
@@ -544,7 +544,7 @@ plot(ecdf(USJudgeRatings$RTEN), verticals = TRUE, do.points = FALSE, main = "ECD
 ```
 
 
-We focus on four of the variables and we look at their empirical cumulative distribution functions.  
+We focus here on the variables CONT, DECI, WRIT and RTEN and we look at their empirical cumulative distribution functions.  
 The cumulative distribution function of the variable CONT is different from the others empirical cumulative distribution functions. In fact, the range of values taken by this variable is larger than for the other variables (from 6 to 11, compared to 5 to 9). However, the shape of the functions are pretty similar. The steps are bigger for extreme values but we can associate all these ECDF to ECDF of gaussian distributions.  
 \newline
 Finally, let's compare the quantiles of our variables to the quantiles of a gaussian distribution to see if we can really associate these variables to gaussian distributions.
@@ -619,8 +619,7 @@ round(kurtosi(USJudgeRatings),2)
 ```
 
 Kurtosis is an indicator that measures the propension of a distribution to produce outliers.  
-However, we have seen that the variable PREP has a very lower outlier but its kurtosis is near 0. On the other side, we saw that the variable DECI doesn't have any outlier but its kurtosis is negative and near -0.5. The variable PHYS has a kurtosis of 2.16. This is quite high which is logical with the fact that there are 4 outliers for this variable. 
-
+However, we have seen that the variable PREP has a very lower outlier but its kurtosis is near 0. On the other side, we saw that the variable DECI doesn't have any outlier but its kurtosis is negative and near -0.5. The variable PHYS has a kurtosis of 2.16. This is quite high which is logical with the fact that there are 4 outliers for this variable.
 \newline
 
 ## Building confidence intervals
@@ -635,7 +634,7 @@ with $\mathbb{P}^n _{\mu} = \mathbb{P} _{\mu} \otimes ... \otimes \mathbb{P} _{\
 
 We are trying to estimate the parameter $\mu$.
 
-Since, we don't know the variance but we assumed that the observations are gaussians, we will use the fact that $S^2 = \frac{1}{n-1} \sum_{i=1}^{n} (X_i - \overline{X_n})^2$ is an unbiaised estimator of $\sigma^2$.  
+Since, we don't know the variance but we assumed that the observations are gaussians, we will use the fact that $S^2 = \frac{1}{n} \sum_{i=1}^{n} (X_i - \overline{X_n})^2$ is an asymptotically unbiased estimator of $\sigma^2$.  
 
 We know that a confidence interval of level $\alpha$ for $\mu$ is (not proven):
 $$[\overline{X_n} - t_{\alpha/2, df=n-1} \frac {S} {\sqrt(n-1)}, \ \overline{X_n} - t_{\alpha/2, df=n-1} \frac {S} {\sqrt(n-1)}]$$
@@ -647,12 +646,12 @@ n = 43
 alpha = 0.05
 moy = mean(USJudgeRatings$RTEN)
 t = qt(1-alpha/2, df=n-1)
-S = sqrt(sum((USJudgeRatings$RTEN - moy)^2)/(n-1))
+S = sqrt(sum((USJudgeRatings$RTEN - moy)^2)/(n))
 CI = c(moy - (t * S) / (sqrt(n-1)), moy + (t * S) / (sqrt(n-1)))
 print(CI)
 ```
 We find, under the assumption that the RTEN variable follows a gaussian distribution of mean $\mu$, a confidence interval of level $\alpha = 0.05$ for $\mu$ equal to:
-$$[7.259487, 7.945164]$$
+$$[7.263497, 7.941154]$$
 
 Now, let's drop the gaussian distribution assumption for the RTEN variable. We can also construct a confidence interval for $\mu$ using Slutsky's theorem (which is possible because we have more than 30 observations).  
 In fact, we assume that our observations are independent, with a distribution with a mean equal to $\mu$ and a variance equal to $\sigma^2$.  
@@ -666,19 +665,19 @@ n = 43
 alpha = 0.05
 moy = mean(USJudgeRatings$RTEN)
 z = qnorm(1-alpha/2)
-S = sqrt(sum((USJudgeRatings$RTEN - moy)^2)/(n-1))
+S = sqrt(sum((USJudgeRatings$RTEN - moy)^2)/(n))
 CI = c(moy - (z * S) / (sqrt(n)), moy + (z * S) / (sqrt(n)))
 print(CI)
 ```
 
 So, if we don't assume that RTEN follows a gaussian distribution, we find a confidence interval of level $\alpha = 0.05$ for $\mu$ equal to:
-$$[7.273254, 7.931397]$$
+$$[7.277103, 7.927548]$$
 This asymptotic confidence interval has a smaller range than the previous one and is therefore more precise.
 
 ## Conclusion
 
 Overall, descriptive statistics have allowed us to better understand the dataset. The USJudgeRatings dataset gives us 12 ratings received by 43 judges. We have seen that this dataset has no missing values but contains several outliers. We found for example that 4 judges had particularly low retention ratings. 
-This led us to look at the distributions of the different variables. By looking at histograms, empirical cumlative distribution functions and qqplots we were able to determine that some of the variables follow gaussian distributions. 
+This led us to look at the distributions of the different variables. By looking at histograms, empirical cumlative distribution functions and QQ-plots we were able to determine that some of the variables follow gaussian distributions. 
 Then, we looked at the correlation between the variables to discover that, put aside the CONT variable, all the variables are extremely correlated. A judge either has good grades in all competencies or lower grades everywhere. 
 Finally, we decided to build two confidence intervals to have a closer idea of the mean of the RTEN variable.
 This could for example allow us to build a statistical test to decide whether to keep a judge or not based on his retention rating. 
