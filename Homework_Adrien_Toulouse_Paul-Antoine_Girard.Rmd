@@ -607,26 +607,20 @@ These plots confirm what we suggested before. In fact, there is a linear correla
 ### Let's take a look at the skewness and kurtosis indicators
 
 ```{r}
-library(e1071)
-skewness(USJudgeRatings$DILG)
-skewness(USJudgeRatings$PREP)
-skewness(USJudgeRatings$FAMI)
-skewness(USJudgeRatings$RTEN)
+library(psych)
+round(skew(USJudgeRatings),2)
 ```
 
-We calculate the skewness of four variables. Skewness is an indicator that measures the assymetry of a distribution. In our case, we always have a negative indicator. That means that the tail is on the left side of the distributions.
+We calculate the skewness of each variable. Skewness is an indicator that measures the assymetry of a distribution. In our case, we always have a negative indicator except for the variable CONT. That means that the tail is on the right side of the distribution of the variable CONT and on the left for every other variable.
 \newline
 
 ```{r}
-kurtosis(USJudgeRatings$DECI)
-kurtosis(USJudgeRatings$PREP)
-kurtosis(USJudgeRatings$FAMI)
-kurtosis(USJudgeRatings$RTEN)
+round(kurtosi(USJudgeRatings),2)
 ```
 
 Kurtosis is an indicator that measures the propension of a distribution to produce outliers.  
-However, we have seen that the variable PREP has a very lower outlier but its kurtosis is near 0. On the other side, we saw that the variable DECI doesn't have any outlier but its kurtosis is negative and near -0.5.  
-But all these kurtosis values are ranged between -1 and 1, so their values aren't extreme and do not show any extreme particularities.
+However, we have seen that the variable PREP has a very lower outlier but its kurtosis is near 0. On the other side, we saw that the variable DECI doesn't have any outlier but its kurtosis is negative and near -0.5. The variable PHYS has a kurtosis of 2.16. This is quite high which is logical with the fact that there are 4 outliers for this variable. 
+
 \newline
 
 ## Building confidence intervals
