@@ -673,7 +673,7 @@ But all these Kurtosis values are ranged between -1 and 1, so their values aren'
 
 ## Application of statiscal methods
 
-in order to apply some statistic methods, we will construct a confidence interval for the mean of the RTEN variable. In fact, we assumed during this report that this variable follow a gaussian distribution. So, it will be interesting to estimate its mean without knowing its variance.  
+In order to apply some statistic methods, we will construct a confidence interval for the mean of the RTEN variable. In fact, we assumed during this report that this variable follows a gaussian distribution. So, it will be interesting to estimate its mean without knowing its variance.  
 
 We assume that we have n = 43 observations of a gaussian distribution:  $X_k \sim \mathcal{N}(\mu, \sigma^2)$, $\forall k \in {1, ..., n}$ such that  $\mu \in \mathbb{R}, \ \sigma \in \mathbb{R}_+^*$.  
 
@@ -685,7 +685,7 @@ We are trying to estimate the parameter $\mu$.
 
 Since, we don't know the variance but we assumed that the observations are gaussians, we will use the fact that $S^2 = \frac{1}{n-1} \sum_{i=1}^{n} (X_i - \overline{X_n})^2$ is an unbiaised estimator of $\sigma^2$.  
 
-We know that a confidence interval of level $\alpha$ for $\mu$ is:
+We know that a confidence interval of level $\alpha$ for $\mu$ is (not proven):
 $$[\overline{X_n} - t_{\alpha/2, df=n-1} \frac {S} {\sqrt(n-1)}, \ \overline{X_n} - t_{\alpha/2, df=n-1} \frac {S} {\sqrt(n-1)}]$$
 With $t_{\alpha, df=n-1}$ the quantile of level $\alpha$ of a Student's distribution of degree of freedom $n-1$.  
 
